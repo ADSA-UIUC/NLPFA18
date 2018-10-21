@@ -1,7 +1,7 @@
 ###
 #
 #   FROM GOOGLE COLAB Dataset_creation.ipynb
-#   Edit according to comment at bottom of test.py
+#   Edit according to comment at bottom of testingselenium.py
 #   TODO: change output path of csv files
 #
 ###
