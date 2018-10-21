@@ -1,6 +1,6 @@
 ###
 #
-#   Thread Scraper Object
+#   Thread Scraper Object (From Shaw's code)
 #   TODO: get more data? (i.e. likes/hugs)
 #
 ###
