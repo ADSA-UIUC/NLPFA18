@@ -17,6 +17,11 @@ to group people together.
 
 ### Web Scraping Group
 
+Our group is gathering the data from mental health forums. Our main focus is to gather 
+posts and the usernames of those who wrote each post. Other useful information that we 
+could collect includes dates, likes/hugs, and mentions within posts. Since forums are 
+so large, we will be using a mix of Selenium and Beautiful Soup to move through pages 
+and collect the relavent data.
 
 ### Algorithms Group
 
