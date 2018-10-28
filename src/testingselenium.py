@@ -6,7 +6,7 @@ driver = webdriver.Chrome()
 driver.get("https://www.mentalhealthforum.net/forum/forum299.html")
 
 threadstats = driver.find_elements_by_class_name("threadstats")
-replies = threadstats.find_elements_by_tag_name("a")
+replies = threadstats[0].find_elements_by_tag_name("a")
 replies[0].click()
 
 

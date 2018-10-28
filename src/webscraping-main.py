@@ -15,4 +15,3 @@ num_posts = 100
 
 for forum_id, output_file in zip(forum_ids, output_files):
     threadscraper.getNPosts(forum_id, num_posts).to_csv(output_file + str(num_posts) + '.csv')
-
