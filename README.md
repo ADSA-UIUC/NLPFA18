@@ -38,13 +38,13 @@ post in order to cut down on computation requirements.
 ## Contributors
 
 ### Web Scraping Group
-+ Anwesa Goswami
-+ Aareana Reza
-+ Areeba Ahmed
-+ Danielle Curammeng
++ Anwesa Goswami (
++ Aareana Reza (
++ Areeba Ahmed (aahmed70)
++ Danielle Curammeng (
 
 ### Algorithms Group
-+ Isa Dash
-+ Kevin Zhang
-+ Qi Yu Kang
-+ Shaw Kagawa
++ Isa Dash (
++ Kevin Zhang (kevinyz2)
++ Qi Yu Kang (
++ Shaw Kagawa (skagawa2)
