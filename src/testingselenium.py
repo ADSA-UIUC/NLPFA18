@@ -1,3 +1,7 @@
+'''
+PSEUDO CODE ON GOOGLE DOC IN SHARED NLP FOLDER
+'''
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
@@ -9,35 +13,33 @@ threadstats = driver.find_elements_by_class_name("threadstats")
 replies = threadstats[0].find_elements_by_tag_name("a")
 replies[0].click()
 
+total_threads = 0
+#### WHILE ####
+
+# Store Return Link
+return_link = driver.current_url
 
 # Get threads
-threads = driver.find_elements_by_class_name('title')
-print(threads[4].text)  # must do this before click
-threads[4].click()
+all_threads = driver.find_element_by_class_name('threads') # still leaves stickies
+threads = driver.find_elements_by_class_name('threadbit')[1:]
 
+for thread in threads:
+    # check number of replies
+    stats = thread.find_element_by_class_name('threadstats')
+    replies_text = (stats.find_elements_by_tag_name('li')[0]).text
+    num_replies = int(replies_text[9:].replace(',', ''))
+    if num_replies < 150:
+        break
 
-'''
-PSEUDO CODE FOR MAIN (note difference between forums and threads)
-threadscraper might need minor alterations, but should be fine
+    title = thread.find_element_by_class_name('title')
+    print(title.text)
+    print(num_replies)
+    total_threads++
 
+    title.click()
+    # scrape thread
+    driver.get(return_link)
 
-Make list of forums to scrape (hardcode for now)
-
-for each forum:
-
-    while (page is not end (or max)):
-
-        threads = driver.find_elements_by_class_name('title')
-
-        for each thread:
-            title = thread.text
-            scrape thread
-            save to file
-
-        click next page button
-
-
-'''
-
+#### END WHILE ####
 
 driver.close()
