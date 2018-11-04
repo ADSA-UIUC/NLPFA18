@@ -4,6 +4,7 @@ PSEUDO CODE ON GOOGLE DOC IN SHARED NLP FOLDER
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+import threadscraper
 
 driver = webdriver.Chrome()
 # Mental Health Experiences Forum
@@ -22,8 +23,14 @@ return_link = driver.current_url
 # Get threads
 all_threads = driver.find_element_by_class_name('threads') # still leaves stickies
 threads = driver.find_elements_by_class_name('threadbit')[1:]
+# TODO: fix sticky issue so that we don't have to hard-code skips
 
-for thread in threads:
+for i in range(len(threads)):
+    # Get threads
+    all_threads = driver.find_element_by_class_name('threads') # still leaves stickies
+    threads = driver.find_elements_by_class_name('threadbit')[1:]
+    thread = threads[i]
+
     # check number of replies
     stats = thread.find_element_by_class_name('threadstats')
     replies_text = (stats.find_elements_by_tag_name('li')[0]).text
@@ -34,10 +41,21 @@ for thread in threads:
     title = thread.find_element_by_class_name('title')
     print(title.text)
     print(num_replies)
-    total_threads++
+    total_threads += 1
 
-    title.click()
+    # get thread info before clicking
+    num_posts = 100
+    forum_id = thread.get_attribute('id')[7:]
+    forum_title = title.text
+    # Need to clean forum_title (see TODO below)
+
     # scrape thread
+    title.click()
+    threadscraper.getNPosts(forum_id, num_posts).to_csv('data/' + forum_title + str(num_posts) + '.csv')
+    # TODO CURRENTLY HAS PROBLEM W '/' IN TITLE
+    # (i.e. Sex/Love Addict: https://www.mentalhealthforum.net/forum/thread144368.html)
+
+    # return to forum page
     driver.get(return_link)
 
 #### END WHILE ####
