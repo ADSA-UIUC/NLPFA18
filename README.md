@@ -46,5 +46,5 @@ post in order to cut down on computation requirements.
 ### Algorithms Group
 + Isa Dash (anchald2)
 + Kevin Zhang (kevinyz2)
-+ Qi Yu Kang (
++ Qi Yu Kang (yuqik2)
 + Shaw Kagawa (skagawa2)
