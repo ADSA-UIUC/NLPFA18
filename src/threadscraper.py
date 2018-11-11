@@ -14,7 +14,7 @@ from datetime import datetime
 
 
 # Actually a THREAD scraper
-def _mentalHealthForumScraper(threadnum=97215, pagenum=1):
+def _mentalHealthThreadScraper(threadnum=97215, pagenum=1):
     if pagenum == 1:
         url = 'https://www.mentalhealthforum.net/forum/thread{}.html'.format(threadnum)
     else:
@@ -75,7 +75,7 @@ def getNPosts(threadnum=97215, n=50):
     posts = []
     pagenum = 1
     while numPosts < n:
-        newPosts = _mentalHealthForumScraper(threadnum, pagenum)
+        newPosts = _mentalHealthThreadScraper(threadnum, pagenum)
         for post in newPosts:
             posts.append(post)
         pagenum += 1
