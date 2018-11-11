@@ -32,6 +32,11 @@ def _mentalHealthThreadScraper(threadnum=97215, pagenum=1):
         username_html = post_user.find("strong")
 
         # if username is not in <strong></strong> tags then this found users who liked
+        other_username_html = post_user.find("a")
+        users_who_liked = []
+        if other_username_html is not None:
+            users_who_liked.append(other_username_html.text)
+
         # the post rather than the poster
         if username_html is not None:
             username = username_html.text
