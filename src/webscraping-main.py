@@ -22,15 +22,42 @@ import testingselenium
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
+
 forum_home = 'https://www.mentalhealthforum.net/forum/'
 
 driver = webdriver.Chrome()
 # Mental Health Experiences Forum
-driver.get('https://www.mentalhealthforum.net/forum/forum299.html')
+driver.get(forum_home)
 
-content_container = driver.find_element_by_id_name('forums')
-experience_forums = content_container.find_elements_by_tag_name('id')[0]
-forum_elements = experience_forums.find_element_by_class_name('forumtitle')
+content_container = driver.find_element_by_id('forums')
+experience_forums = content_container.find_elements_by_tag_name('li')[0]
+forum_elements = experience_forums.find_elements_by_class_name('forumtitle')[1:]
+# TODO: remove hard coded [1:] (figure why getting extra link)
 
 forum_links = []
 forum_titles = []
+
+for element in forum_elements:
+    a = element.find_element_by_tag_name('a')
+    forum_links.append(a.get_attribute('href'))
+    forum_titles.append(a.text)
+
+
+while True:
+    print('------ COMMAND OPTIONS ------')
+    for i in range(len(forum_titles)):
+        print(i, ':', forum_titles[i])
+    print('q : quit program')
+    print('-----------------------------')
+
+    user_input = input()
+
+    if user_input == 'q':
+        break
+    else:
+        selection = int(user_input)
+        if selection >= len(forum_links) or selection < 0:
+            print('invalid input\n')
+        else:
+            print('scraping', forum_titles[selection])
+            testingselenium._mentalHealthForumScraper(forum_links[i])
