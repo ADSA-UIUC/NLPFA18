@@ -102,3 +102,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# dataset for keyword extraction
+GoogleNews-vectors-negative300.bin
