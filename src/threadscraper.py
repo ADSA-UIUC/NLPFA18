@@ -37,6 +37,11 @@ def _mentalHealthThreadScraper(threadnum=97215, pagenum=1):
         if other_username_html is not None:
             users_who_liked.append(other_username_html.text)
 
+        # finds the mood of the post
+        post_mood_class = post.find("dd", {"class": "vmood-dd-legact"})
+        post_mood_image = post_mood_class.find("img")
+        post_mood = post_mood_image['alt']
+
         # the post rather than the poster
         if username_html is not None:
             username = username_html.text
