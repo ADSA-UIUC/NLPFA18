@@ -38,9 +38,11 @@ def _mentalHealthThreadScraper(threadnum=97215, pagenum=1):
             users_who_liked.append(other_username_html.text)
 
         # finds the mood of the post
-        post_mood_class = post.find("dd", {"class": "vmood-dd-legact"})
-        post_mood_image = post_mood_class.find("img")
-        post_mood = post_mood_image['alt']
+        post_mood_class = post.find("dd", {"class": "vmood-dd-legacy"})
+        post_mood = "None"
+        if post_mood_class is not None:
+            post_mood_image = post_mood_class.find("img")
+            post_mood = post_mood_image['alt']
 
         # the post rather than the poster
         if username_html is not None:
@@ -76,7 +78,7 @@ def _mentalHealthThreadScraper(threadnum=97215, pagenum=1):
             # edit out any '\n' s
             post_final = re.sub("\\n", "", post_text).encode('utf-8', 'replace')
 
-            users_posts.append([time_obj, username, post_final, quote_author])
+            users_posts.append([time_obj, username, post_mood, post_final, quote_author])
 
     return users_posts
 
@@ -90,4 +92,4 @@ def getNPosts(threadnum=97215, n=50):
             posts.append(post)
         pagenum += 1
         numPosts += len(newPosts)
-    return pd.DataFrame(posts, columns=['date', 'username', 'post content', 'quoted user'])
+    return pd.DataFrame(posts, columns=['date', 'username', 'post mood', 'post content', 'quoted user'])
