@@ -60,4 +60,5 @@ while True:
             print('invalid input\n')
         else:
             print('scraping', forum_titles[selection])
-            testingselenium._mentalHealthForumScraper(forum_links[i])
+            print('link: ', forum_links[selection])
+            testingselenium._mentalHealthForumScraper(forum_links[selection])

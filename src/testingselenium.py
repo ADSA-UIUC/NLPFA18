@@ -10,6 +10,7 @@ import re
 def _mentalHealthForumScraper(link='https://www.mentalhealthforum.net/forum/forum299.html'):
     driver = webdriver.Chrome()
     # Mental Health Experiences Forum
+    print(link)
     driver.get(link)
 
     threadstats = driver.find_elements_by_class_name("threadstats")
@@ -40,6 +41,7 @@ def _mentalHealthForumScraper(link='https://www.mentalhealthforum.net/forum/foru
                 continue;
             else:
                 print('UNEXPECED PREFIX', prefixes[0].text)
+                continue;
 
 
         # check number of replies
