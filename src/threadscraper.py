@@ -78,7 +78,7 @@ def _mentalHealthThreadScraper(threadnum=97215, pagenum=1):
             # edit out any '\n' s
             post_final = re.sub("\\n", "", post_text).encode('utf-8', 'replace')
 
-            users_posts.append([time_obj, username, post_mood, post_final, quote_author])
+            users_posts.append([time_obj, username, post_final, quote_author, post_mood])
 
     return users_posts
 
@@ -92,4 +92,4 @@ def getNPosts(threadnum=97215, n=50):
             posts.append(post)
         pagenum += 1
         numPosts += len(newPosts)
-    return pd.DataFrame(posts, columns=['date', 'username', 'post mood', 'post content', 'quoted user'])
+    return pd.DataFrame(posts, columns=['date', 'username', 'post content', 'quoted user', 'post mood'])
