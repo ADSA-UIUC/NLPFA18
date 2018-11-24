@@ -62,11 +62,14 @@ class kmeans():
         :param xs: the coordinate of the point to classify, in iterable form
         """
 
-        # euclidean distance between each coordinate and center
-        dists = [sum([(xs[dim] - center[dim]) ** 2 for dim in range(len(center))]) ** (0.5) for center in self.centers]
+        # defined distance function between two points
+        def distance(a, b):
+            return np.sum(np.power(np.array(a) - np.array(b), 2)) ** (0.5)
+        dists = [distance(xs, center) for center in self.centers]
 
         # find the smallest distance between all centers
         return np.argmin(dists)
+
 
     def _change_centers(self, threshold=1e-10):
         """
@@ -175,9 +178,9 @@ def get_data(filepath):
 
 def main():
     path = "../../data/raw/sentiments/"
-    file = "battlingdepressionnomeds200_doclevelsentiments.csv"
+    file = "mamistruggling" + "200_sentencelevelsentiments.csv"
     for k in range(11, 19):
-        a = kmeans(path + file, k=k, pca_dims=3)
+        a = kmeans(path + file, k=k, pca_dims=2)
         a.run(n=500, display_every=100)
 
 if __name__ == "__main__":
