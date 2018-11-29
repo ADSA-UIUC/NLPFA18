@@ -7,7 +7,7 @@ import pandas as pd
 
 class kmeans():
 
-    def __init__(self, path, k, pca_dims=2):
+    def __init__(self, path, k, display_dims=2):
         """
         initializes the kmeans algorithm by specifying important information
         for algorithm to know
@@ -25,7 +25,7 @@ class kmeans():
         # current classes
         self.classes = [[[] for dim in range(self.dimensions)] for _ in range(k)]
 
-        self.pca_dims = pca_dims
+        self.pca_dims = display_dims
 
     def run(self, n=100, display_every=10):
         """
@@ -161,27 +161,32 @@ class kmeans():
 #     return data
 
 
-def get_data(filepath):
+def get_data(folderpath, all_files=True):
     """
     convert data into format:
     [[x1's], [x2's], [x3's], ...] (depending on number of dimensions data is in)
     :param filepath: path to specific file type in format: 
     data.frame with columns: "post #", "username", "text", (7 Watson API output emotions)
     """
-    all_data = pd.read_csv(filepath)
-    # get the appropriate columns' values
-    select_vals = all_data.iloc[:,all_data.columns.get_loc('Anger'):].values
+    filenames = ['battlingdepressionnomeds', 'lonely', 'mamistruggling', 'relationshipproblems', 'singlesentence']
+    ext = "200_sentencelevelsentiments.csv"
+    all_values = pd.DataFrame()
+    for filename in filenames:
+        all_data = pd.read_csv(folderpath + filename + ext)
+        # get the appropriate columns' values
+        select_vals = all_data.iloc[:,all_data.columns.get_loc('Anger'):]
+        all_values = all_values.append(select_vals)
 
     # required format is all values of 1 dimension are in same array
-    return select_vals.T.tolist()
+    return all_values.values.T.tolist()
+
 
 
 def main():
     path = "../../data/raw/sentiments/"
-    file = "mamistruggling" + "200_sentencelevelsentiments.csv"
-    for k in range(11, 19):
-        a = kmeans(path + file, k=k, pca_dims=2)
-        a.run(n=500, display_every=100)
+    for k in range(11, 16):
+        a = kmeans(path, k=k, display_dims=3)
+        a.run(n=20, display_every=10)
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
