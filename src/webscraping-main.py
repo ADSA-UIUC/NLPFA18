@@ -48,12 +48,19 @@ while True:
     for i in range(len(forum_titles)):
         print(i, ':', forum_titles[i])
     print('q : quit program')
+    print('a : all')
     print('-----------------------------')
 
     user_input = input()
 
     if user_input == 'q':
         break
+    elif user_input == 'a':
+        print('scraping all')
+        for i in range(len(forum_titles)):
+            print('scraping', forum_titles[i])
+            print('link: ', forum_links[i])
+            testingselenium._mentalHealthForumScraper(forum_links[i])
     else:
         selection = int(user_input)
         if selection >= len(forum_links) or selection < 0:

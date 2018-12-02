@@ -48,7 +48,7 @@ def _mentalHealthForumScraper(link='https://www.mentalhealthforum.net/forum/foru
         stats = thread.find_element_by_class_name('threadstats')
         replies_text = (stats.find_elements_by_tag_name('li')[0]).text
         num_replies = int(replies_text[9:].replace(',', ''))
-        if num_replies < 150:
+        if num_replies < 100:
             break
 
         title = thread.find_element_by_class_name('title')
@@ -57,9 +57,9 @@ def _mentalHealthForumScraper(link='https://www.mentalhealthforum.net/forum/foru
         total_threads += 1
 
         # get thread info before clicking
-        num_posts = 100
+        num_posts = 120
         forum_id = thread.get_attribute('id')[7:]
-        forum_title = (re.sub(r'\W+', '', title.text)).lower()
+        forum_title = ((re.sub(r'\W+', '', title.text)).lower())[:20]
         print(forum_title)
 
         # scrape thread
