@@ -2,7 +2,7 @@
 
 ## Objective
 
-Our goal is to use posts from [this](mentalhealthforum.net/forum) mental health forum to identify people with similar 
+Our goal is to use posts from [this](https://mentalhealthforum.net/forum) mental health forum to identify people with similar 
 backgrounds/concerns so they can identify with each other. We thought that this way, 
 people undergoing depression/mental issues who simply need attention can receive 
 attention from individuals who understand what the person is going through. We hope 
