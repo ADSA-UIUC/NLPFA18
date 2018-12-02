@@ -1,4 +1,4 @@
-import random, sys
+import random, sys, os, re
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
@@ -168,24 +168,24 @@ def get_data(folderpath, all_files=True):
     :param filepath: path to specific file type in format: 
     data.frame with columns: "post #", "username", "text", (7 Watson API output emotions)
     """
-    filenames = ['battlingdepressionnomeds', 'lonely', 'mamistruggling', 'relationshipproblems', 'singlesentence']
-    ext = "200_sentencelevelsentiments.csv"
+    filenames = os.listdir(folderpath)
     all_values = pd.DataFrame()
     for filename in filenames:
-        all_data = pd.read_csv(folderpath + filename + ext)
+        if not re.match(".+_sentencelevelsentiments\.csv", filename):
+            continue
+        all_data = pd.read_csv(folderpath + filename)
         # get the appropriate columns' values
         select_vals = all_data.iloc[:,all_data.columns.get_loc('Anger'):]
         all_values = all_values.append(select_vals)
-
+    print('total points displayed: {}'.format(len(all_values)))
     # required format is all values of 1 dimension are in same array
     return all_values.values.T.tolist()
 
 
-
 def main():
-    path = "../../data/raw/sentiments/"
+    path = "../data/raw/sentiments/"
     for k in range(11, 16):
-        a = kmeans(path, k=k, display_dims=3)
+        a = kmeans(path, k=k, display_dims=2)
         a.run(n=20, display_every=10)
 
 if __name__ == "__main__":
