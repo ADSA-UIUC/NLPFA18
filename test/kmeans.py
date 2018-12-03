@@ -7,7 +7,7 @@ import pandas as pd
 
 class kmeans():
 
-    def __init__(self, path, k, display_dims=2):
+    def __init__(self, data, k, display_dims=2):
         """
         initializes the kmeans algorithm by specifying important information
         for algorithm to know
@@ -16,12 +16,12 @@ class kmeans():
         classify into
         """
 
-        # split into test, train data
-        self.train = get_data(path)
+        self.data = data
 
         # create k x-dimensional center coordinates randomly
-        self.dimensions = len(self.train)
-        self.centers = [random.choice([*zip(*self.train)]) for _ in range(k)]
+        self.dimensions = len(self.data)
+        self.centers = [random.choice([*zip(*self.data)]) for _ in range(k)]
+        
         # current classes
         self.classes = [[[] for dim in range(self.dimensions)] for _ in range(k)]
 
@@ -36,9 +36,10 @@ class kmeans():
         for i in range(n):
             self._iterations = i
             self._classify()
-            if i % display_every == 0: self._visualize()
-            if self._change_centers(1e-12): break
-        self._visualize()
+            # if i % display_every == 0: self._visualize()
+            # if self._change_centers(1e-16): break
+            if self.error() < 0.5: break
+        # self._visualize()
 
     def _classify(self):
         """
@@ -49,11 +50,10 @@ class kmeans():
         self.classes = [[[] for dim in range(self.dimensions)] for _ in range(len(self.classes))]
 
         # classify the current coordinate, add to identified classes
-        for xs in zip(*self.train):
+        for xs in zip(*self.data):
             curr_class = self._classify_helper(xs)
             for _ind, _class in enumerate(self.classes[curr_class]):
                 _class.append(xs[_ind])
-        # print(self.classes)
 
     def _classify_helper(self, xs):
         """
@@ -69,7 +69,6 @@ class kmeans():
 
         # find the smallest distance between all centers
         return np.argmin(dists)
-
 
     def _change_centers(self, threshold=1e-10):
         """
@@ -141,24 +140,25 @@ class kmeans():
         plt.title("k: {}, iterations: {}".format(len(self.centers), self._iterations))
         plt.show()
 
+    def _euclidean_distance(self, a, b):
+        """
+        find euclidean distance between two points
+        :return: euclidean distance
+        """
+        return sum([(p1 - p2) ** 2 for p1, p2 in zip(a, b)]) ** (0.5)
 
-### ONLY FOR PRELIMINARY TESTING ###
-#
-# def data_gen(filepath, dimensions):
-#     with open(filepath) as f:
-#         d = json.load(f)
-#     data = [[] for i in range(dimensions)]
-#     for c in d:
-#         bounddistance = d[c]["BoundDistance"]
-#         size = d[c]["Number"]
-#         for i in range(dimensions):
-#             cur_centre = d[c]["Centres"][i]
-#             data[i] += np.random.uniform(
-#                 low=(cur_centre - bounddistance),
-#                 high=(cur_centre + bounddistance),
-#                 size=size
-#             ).tolist()
-#     return data
+    def error(self):
+        """
+        find the error of the kmeans algorithm at the current state
+        :return: average distance from each point to its center 
+        """
+
+        sum, count = 0, 0
+        for dim, center in enumerate(self.centers):
+            for point in self.classes[dim]:
+                sum += self._euclidean_distance(point, center)
+            count += len(self.classes[dim])
+        return sum / count 
 
 
 def get_data(folderpath, all_files=True):
@@ -177,16 +177,23 @@ def get_data(folderpath, all_files=True):
         # get the appropriate columns' values
         select_vals = all_data.iloc[:,all_data.columns.get_loc('Anger'):]
         all_values = all_values.append(select_vals)
-    print('total points displayed: {}'.format(len(all_values)))
     # required format is all values of 1 dimension are in same array
     return all_values.values.T.tolist()
 
 
 def main():
     path = "../data/raw/sentiments/"
-    for k in range(11, 16):
-        a = kmeans(path, k=k, display_dims=2)
+    data = get_data(path)
+    errors = []
+    kmin, kmax = 50, 55
+    for k in range(kmin, kmax):
+        a = kmeans(data, k=k, display_dims=2)
         a.run(n=20, display_every=10)
+        error = a.error()
+        errors.append(error)
+        print("k: {}, error: {}".format(k, error))
+    plt.plot(range(kmin, kmax), errors)
+    plt.show()
 
 if __name__ == "__main__":
     sys.exit(main())
