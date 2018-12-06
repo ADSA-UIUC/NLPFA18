@@ -82,7 +82,7 @@ def _mentalHealthThreadScraper(url):
         users_posts.append([time_obj, username, post_final, quote_author, post_mood])
 
     return users_posts
-    
+
 '''
 def getMaxPages(url):
     forum_html = requests.get(url)
@@ -99,22 +99,24 @@ def getMaxPosts(url):
 
     forum_soup = BeautifulSoup(forum_json, 'html.parser')
 
-    page_button = forum_soup.find("div", {"id": "threadpagestats"}).text
-    # parse by word, get last word
-    return int(page_button[10:])
+    stats = forum_soup.find("div", {"class": "postpagestats"}).text
+    print(stats)
+    num_posts = int(stats.split(' ')[-1])
+    print(num_posts)
+    return num_posts
 
 def getNPosts(threadnum=97215, n=50):
-    numPosts = 0
+    num_posts = 0
     posts = []
     pagenum = 1
-    maxPages = getMaxPages('https://www.mentalhealthforum.net/forum/thread{}.html'.format(threadnum))
+    max_posts = getMaxPosts('https://www.mentalhealthforum.net/forum/thread{}.html'.format(threadnum))
 
-    while numPosts < n and pagenum <= maxPages:
+    while num_posts < n and num_posts < max_posts:
         url = 'https://www.mentalhealthforum.net/forum/thread{}-{}.html'.format(threadnum, pagenum)
-        newPosts = _mentalHealthThreadScraper(threadnum, pagenum)
-        for post in newPosts:
+        new_posts = _mentalHealthThreadScraper(url)
+        for post in new_posts:
             posts.append(post)
         pagenum += 1
-        numPosts += len(newPosts)
+        num_posts += len(new_posts)
 
-    return pd.DataFrame(posts, columns=['date', 'username', 'post content', 'quoted user', 'post mood'])
+    return pd.DataFrame(posts, columns=['date', 'username', 'post content', 'quoted user', 'post mood']), num_posts

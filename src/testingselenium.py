@@ -57,14 +57,15 @@ def _mentalHealthForumScraper(link='https://www.mentalhealthforum.net/forum/foru
         total_threads += 1
 
         # get thread info before clicking
-        num_posts = 120
+        num_posts = 2000
         forum_id = thread.get_attribute('id')[7:]
         forum_title = ((re.sub(r'\W+', '', title.text)).lower())[:20]
         print(forum_title)
 
         # scrape thread
         title.click()
-        threadscraper.getNPosts(forum_id, num_posts).to_csv('data/' + forum_title + str(num_posts) + '.csv')
+        data, posts_gathered = threadscraper.getNPosts(forum_id, num_posts)
+        data.to_csv('data/' + forum_title + str(posts_gathered) + '.csv')
         print(forum_title, 'saved')
 
         # return to forum page
