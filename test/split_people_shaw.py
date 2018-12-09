@@ -32,6 +32,9 @@
 #     ...
 # }
 
+import json
+import sys
+
 class PeopleStorer:
     def __init__(self, data_loc, output_file):
         # defined constants
@@ -70,7 +73,6 @@ class PeopleStorer:
 
     def _dump_to_file(self):
         pass
-
 
 def main():
     PeopleStorer("../data/raw/sentiments/", "../data/processed/people.json")
