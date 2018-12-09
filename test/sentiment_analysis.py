@@ -20,8 +20,8 @@ def analyze_tones(text):
         ).get_result()
         return result
     except WatsonApiException as ex:
-        print("Method failed with status code " + str(ex.code) + ": " + ex.message)
-        return None
+        error_msg = "Method failed with status code " + str(ex.code) + ": " + ex.message
+        throw Exception(error_msg)
 
 def to_tone_dict(tone_arr_json):
     """
