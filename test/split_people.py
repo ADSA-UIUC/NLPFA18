@@ -31,3 +31,11 @@
 #     },
 #     ...
 # }
+
+class PeopleStorer:
+    def __init__(self, data_loc):
+        self._filenames = os.listdir(data_loc)
+        self._people_dict = {}
+
+    def dump_to_file(self):
+        pass
