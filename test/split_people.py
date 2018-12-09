@@ -1,4 +1,3 @@
-'''
 # use map to call same function on all the different sentencelevelsentiment csv's
 # add to single database (dict?) of every person
 # find way to store it in a file so it can be accessed + appended to later
@@ -32,7 +31,6 @@
 #     },
 #     ...
 # }
-'''
 
 import json
 import sys
@@ -86,3 +84,13 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
+=======
+
+class PeopleStorer:
+    def __init__(self, data_loc):
+        self._filenames = os.listdir(data_loc)
+        self._people_dict = {}
+
+    def dump_to_file(self):
+        pass
+>>>>>>> e0f5950bf1a1993ae069125d01c55aab29abdf09
