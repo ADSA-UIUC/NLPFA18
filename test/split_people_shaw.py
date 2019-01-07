@@ -32,8 +32,11 @@
 #     ...
 # }
 
-import json
-import sys
+import json, re, sys, os
+import pandas as pd
+from pprint import pprint
+import numpy as np
+from kmeans import kmeans
 
 class PeopleStorer:
     def __init__(self, data_loc, output_file):
@@ -44,38 +47,68 @@ class PeopleStorer:
 
         filenames = os.listdir(data_loc)
         # filter through filenames and make sure to only use doclevel sentiments
-        self._filenames = [data_loc + x for x in filenames if re.match("^.+[0-9]+_doclevelsentiments\.csv$", x)]
-        self._people_dict = defaultdict(defaultdict(list))
-        _store_people()
-        _dump_to_file(output_file)
+        filenames = [data_loc.replace('posts/_finished', 'sentiments') + x.replace('.csv', '_doclevelsentiments.csv') for x in filenames]
 
-    def _store_people(self):
-        map(lambda x: _individual_file(x), self._filenames)
+        self._people_dict = {}
+        for x in filenames:
+            self._individual_file(x)
+        
+        for name in self._people_dict:
+            self._calculate_centroids(name)
 
-    def _individual_file(filename):
-        orig_filepath = filename.replace("sentiments", "posts/_finished", 1).replace("doclevelsentiments", "")
-        orig_file_reader = csv.reader(open(orig_filepath, 'rb'))
-        with open(filename, 'rb') as f:
-            csv_reader = csv.reader(f, delimiter=',')
-            for index, row in enumerate(csv_reader):
-                # need the original file for time of post and post mood
-                orig_file_row = orig_file_reader[index]
-                self._people_dict[row['username']]['posts'].append({
-                    'forum_name': re.findall("(?<=/)[a-zA-Z]+(?=[0-9]+_doclevelsentiments\.csv)", filename)[0],
-                    'time': orig_file_row['date'],
-                    'text': row['text'],
-                    'mood': orig_file_row['post mood'],
-                    'sentiments': {name: row[name] for name in self._sentiments_list}})
+        self._dump_to_file(output_file)
 
-    def _sentiment_to_num_centroids:
-        sentiment_thresholds = []
+    def _individual_file(self, filename):
+        orig_filepath = filename.replace("sentiments", "posts/_finished", 1).replace("_doclevelsentiments", "")
+        orig_file_reader = pd.read_csv(orig_filepath)
+
+        csv_reader = pd.read_csv(filename)
+        for ind, row in enumerate(csv_reader.iterrows()):
+            # need the original file for time of post and post mood
+            orig_file_row = orig_file_reader.iloc[ind]
+            row = row[1]
+
+            if row['username'] not in self._people_dict:
+                self._people_dict[row['username']] = {}
+            if 'posts' not in self._people_dict[row['username']]:
+                self._people_dict[row['username']]['posts'] = []
+            to_add = {
+                'forum_name': re.findall("(?<=/)[a-zA-Z0-9]+(?=[0-9]+_doclevelsentiments\.csv)", filename)[0],
+                'time': orig_file_row['date'],
+                'text': row['text'],
+                # 'mood': orig_file_row['post mood'],
+                'sentiments': {name: row[name] for name in self._sentiments_list}}
+            self._people_dict[row['username']]['posts'].append(to_add)
 
 
-    def _dump_to_file(self):
-        pass
+    def _calculate_centroids(self, person):
+        sentiments = [post['sentiments'] for post in self._people_dict[person]['posts']]
+        arr_sentiments = [[i for i in sentiment.values()] for sentiment in sentiments]
+        each_sentiment = np.array(arr_sentiments).T.tolist()
+
+        num_centroids, centroids = self._kmeans(each_sentiment)
+        self._people_dict[person]['num_centroids'] = num_centroids
+        self._people_dict[person]['centroids'] = centroids
+        print('finished calculating centroids for', person)
+
+
+    def _kmeans(self, data, threshold=1):
+        for k in range(1, 7):
+            if len(data[0]) < k:
+                return (k, data)
+            kmeans_obj = kmeans(data, k=k, display_dims=2)
+            finished, error = kmeans_obj.run(n=20, error=threshold)
+            if finished:
+                return (k, kmeans_obj.get_centers())
+        return (k, kmeans_obj.get_centers())
+
+
+    def _dump_to_file(self, filename):
+        with open(filename, 'w') as f:
+            json.dump(self._people_dict, f)
 
 def main():
-    PeopleStorer("../data/raw/sentiments/", "../data/processed/people.json")
+    PeopleStorer("../data/raw/posts/_finished/", "../data/processed/people.json")
 
 if __name__ == "__main__":
     sys.exit(main())

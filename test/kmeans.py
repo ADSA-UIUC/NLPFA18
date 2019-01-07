@@ -7,7 +7,7 @@ import pandas as pd
 
 class kmeans():
 
-    def __init__(self, data, k, display_dims=2):
+    def __init__(self, data, k, display_dims=0):
         """
         initializes the kmeans algorithm by specifying important information
         for algorithm to know
@@ -27,7 +27,10 @@ class kmeans():
 
         self.pca_dims = display_dims
 
-    def run(self, n=100, display_every=10):
+    def get_centers(self):
+        return self.centers
+
+    def run(self, error=0.5, n=100, display_every=10):
         """
         runs the kmeans algorithm based on parameters given to object
         :param n: number of iterations to run algorithm for
@@ -36,10 +39,12 @@ class kmeans():
         for i in range(n):
             self._iterations = i
             self._classify()
-            # if i % display_every == 0: self._visualize()
+            if i % display_every == 0 and self.pca_dims > 0: self._visualize()
             # if self._change_centers(1e-16): break
-            if self.error() < 0.5: break
-        # self._visualize()
+            _error = self.error()
+            if _error < error: return (True, _error)
+        if self.pca_dims > 0: self._visualize()
+        return (False, _error)
 
     def _classify(self):
         """
@@ -188,8 +193,7 @@ def main():
     kmin, kmax = 50, 55
     for k in range(kmin, kmax):
         a = kmeans(data, k=k, display_dims=2)
-        a.run(n=20, display_every=10)
-        error = a.error()
+        finished, error = a.run(n=20, display_every=10)
         errors.append(error)
         print("k: {}, error: {}".format(k, error))
     plt.plot(range(kmin, kmax), errors)
