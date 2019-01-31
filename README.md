@@ -37,6 +37,6 @@ post in order to cut down on computation requirements.
 
 ## Contributors
 + Areeba Ahmed (aahmed70)
-+ Danielle Curammeng (
++ Danielle Curammeng (dc18)
 + Shaw Kagawa (skagawa2)
 + Lanxin Liu (lanxinl2)
