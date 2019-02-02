@@ -21,7 +21,7 @@ def analyze_tones(text):
         return result
     except WatsonApiException as ex:
         error_msg = "Method failed with status code " + str(ex.code) + ": " + ex.message
-        throw Exception(error_msg)
+        raise Exception(error_msg)
 
 def to_tone_dict(tone_arr_json):
     """
@@ -76,7 +76,7 @@ def print_progress(current_index, total_len, every_n_percent=5, epsilon=0.1):
     prints the current progress (in percent) given the current index and the total
     """
     if ((current_index + 1) / total_len * 100) % every_n_percent < epsilon:
-        print('{.1}% done'.format(current_index / total_len * 100))
+        print('{0:.1}% done'.format(current_index / total_len * 100))
 
 
 def main():
@@ -90,7 +90,7 @@ def main():
         doclevel, sentencelevel = analyze_posts(path + filename)
         doclevel.to_csv('../data/raw/sentiments/' + filename[:-4] + '_doclevelsentiments.csv', index=False)
         sentencelevel.to_csv('../data/raw/sentiments/' + filename[:-4] + '_sentencelevelsentiments.csv', index=False)
-        os.system("mv {} ../data/raw/posts/_finished/".format(filename))
+        os.system("mv ../data/raw/posts/_toprocess/{} ../data/raw/posts/_finished/".format(filename))
         print('finished with ' + filename)
 
 if __name__ == "__main__":

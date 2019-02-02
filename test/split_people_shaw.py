@@ -86,18 +86,16 @@ class PeopleStorer:
         arr_sentiments = [[i for i in sentiment.values()] for sentiment in sentiments]
         each_sentiment = np.array(arr_sentiments).T.tolist()
 
-        num_centroids, centroids = self._kmeans(each_sentiment)
+        num_centroids, centroids = self._kmeans(each_sentiment, plot_title=person)
         self._people_dict[person]['num_centroids'] = num_centroids
         self._people_dict[person]['centroids'] = centroids
         print('finished calculating centroids for', person)
 
 
-    def _kmeans(self, data, threshold=1):
-        for k in range(1, 7):
-            if len(data[0]) < k:
-                return (k, data)
-            kmeans_obj = kmeans(data, k=k, display_dims=2)
-            finished, error = kmeans_obj.run(n=20, error=threshold)
+    def _kmeans(self, data, threshold=0.2, plot_title=""):
+        for k in range(1, 10):
+            kmeans_obj = kmeans(data, k=k, display_dims=2, plot_title=plot_title)
+            finished, error = kmeans_obj.run(n=20, error_threshold=threshold, display_every=5)
             if finished:
                 return (k, kmeans_obj.get_centers())
         return (k, kmeans_obj.get_centers())

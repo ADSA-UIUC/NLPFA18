@@ -1,0 +1,4 @@
+post #,username,text,Anger,Fear,Joy,Sadness,Analytical,Confident,Tentative
+0,person1,b'I\'m happy today',0,0,0.911326,0.0,0,0.0,0.0
+1,person2,b'Just went to my friend\'s birthday party!',0,0,0.785833,0.0,0,0.0,0.88939
+1,person3,b'I\'m feeling very down today... :(',0,0,0.0,0.915452,0,0.942582,0.0

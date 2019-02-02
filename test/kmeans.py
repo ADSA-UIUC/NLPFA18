@@ -7,7 +7,7 @@ import pandas as pd
 
 class kmeans():
 
-    def __init__(self, data, k, display_dims=0):
+    def __init__(self, data, k, plot_title="", display_dims=0):
         """
         initializes the kmeans algorithm by specifying important information
         for algorithm to know
@@ -17,6 +17,9 @@ class kmeans():
         """
 
         self.data = data
+
+        # to customize visualization graph
+        self.plot_title = plot_title
 
         # create k x-dimensional center coordinates randomly
         self.dimensions = len(self.data)
@@ -30,21 +33,26 @@ class kmeans():
     def get_centers(self):
         return self.centers
 
-    def run(self, error=0.5, n=100, display_every=10):
+    def run(self, error_threshold=0.5, n=100, display_every=10):
         """
         runs the kmeans algorithm based on parameters given to object
         :param n: number of iterations to run algorithm for
         """
 
         for i in range(n):
+            # to use in other parts of the class
             self._iterations = i
             self._classify()
             if i % display_every == 0 and self.pca_dims > 0: self._visualize()
-            # if self._change_centers(1e-16): break
-            _error = self.error()
-            if _error < error: return (True, _error)
+
+            # if the centers don't change, then quit out of loop
+            if self._change_centers(1e-5): break
+
+            error = self.error()
+            print("k: {}, iteration: {}, error: {}".format(len(self.centers), i + 1, error))
+            if error < error_threshold: return (True, error)
         if self.pca_dims > 0: self._visualize()
-        return (False, _error)
+        return (False, error)
 
     def _classify(self):
         """
@@ -75,7 +83,7 @@ class kmeans():
         # find the smallest distance between all centers
         return np.argmin(dists)
 
-    def _change_centers(self, threshold=1e-10):
+    def _change_centers(self, threshold=1e-5):
         """
         find new center points of the centroids by calculating the "mean"
         point for each current class (update step)
@@ -142,7 +150,7 @@ class kmeans():
         ax.set_position([box.x0, box.y0,
                          box.width * 0.8, box.height])
         plt.legend(bbox_to_anchor=(1.05, 1), borderaxespad=0.)
-        plt.title("k: {}, iterations: {}".format(len(self.centers), self._iterations))
+        plt.title("{}\nk: {}, iterations: {}".format(self.plot_title, len(self.centers), self._iterations + 1))
         plt.show()
 
     def _euclidean_distance(self, a, b):
