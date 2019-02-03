@@ -18,7 +18,6 @@ class PeopleFinder:
             centroids = person['centroids']
 
         
-        
 
 
 
