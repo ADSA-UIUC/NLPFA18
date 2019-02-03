@@ -37,6 +37,7 @@ import pandas as pd
 from pprint import pprint
 import numpy as np
 from kmeans import kmeans
+import matplotlib.pyplot as plt
 
 class PeopleStorer:
     def __init__(self, data_loc, output_file):
@@ -73,7 +74,7 @@ class PeopleStorer:
             if 'posts' not in self._people_dict[row['username']]:
                 self._people_dict[row['username']]['posts'] = []
             to_add = {
-                'forum_name': re.findall("(?<=/)[a-zA-Z0-9]+(?=[0-9]+_doclevelsentiments\.csv)", filename)[0],
+                'forum_name': re.findall("(?<=/)[a-zA-Z0-9]+?(?=[0-9]+_doclevelsentiments\.csv)", filename)[0],
                 'time': orig_file_row['date'],
                 'text': row['text'],
                 # 'mood': orig_file_row['post mood'],
@@ -92,18 +93,32 @@ class PeopleStorer:
         print('finished calculating centroids for', person)
 
 
-    def _kmeans(self, data, threshold=0.2, plot_title=""):
+    def _kmeans(self, data, plot_title=""):
+        errors = []
+        ks = []
         for k in range(1, 10):
-            kmeans_obj = kmeans(data, k=k, display_dims=2, plot_title=plot_title)
-            finished, error = kmeans_obj.run(n=20, error_threshold=threshold, display_every=5)
-            if finished:
-                return (k, kmeans_obj.get_centers())
+            kmeans_obj = kmeans(data, k=k, display_dims=0, plot_title=plot_title)
+            finished, error = kmeans_obj.run(n=20, error_threshold=0.4, display_every=5)
+            errors.append(error)
+            ks.append(k)
+            if finished: break
+
+        # K AGAINST ERROR PLOT TO FIND OPTIMAL K
+        # fig = plt.figure()
+        # ax = fig.add_subplot(111)
+        # ax.plot(ks, errors)
+        # plt.title("k against error for " + str(plot_title))
+        # plt.show()
+
         return (k, kmeans_obj.get_centers())
 
 
     def _dump_to_file(self, filename):
         with open(filename, 'w') as f:
             json.dump(self._people_dict, f)
+
+    def get_people_array(self):
+        return [self._people_dict[person] for person in self._people_dict]
 
 def main():
     PeopleStorer("../data/raw/posts/_finished/", "../data/processed/people.json")

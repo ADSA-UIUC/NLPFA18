@@ -16,6 +16,8 @@ class kmeans():
         classify into
         """
 
+        np.set_printoptions(precision=4)
+
         self.data = data
 
         # to customize visualization graph
@@ -33,12 +35,13 @@ class kmeans():
     def get_centers(self):
         return self.centers
 
-    def run(self, error_threshold=0.5, n=100, display_every=10):
+    def run(self, error_threshold, n, display_every):
         """
         runs the kmeans algorithm based on parameters given to object
         :param n: number of iterations to run algorithm for
         """
 
+        error = 2
         for i in range(n):
             # to use in other parts of the class
             self._iterations = i
@@ -46,13 +49,20 @@ class kmeans():
             if i % display_every == 0 and self.pca_dims > 0: self._visualize()
 
             # if the centers don't change, then quit out of loop
+            # print("current centers")
+            # print(np.array(self.centers))
             if self._change_centers(1e-5): break
 
+            error_diff = abs(error - self.error())
+            if error_diff < 1e-5: break
             error = self.error()
-            print("k: {}, iteration: {}, error: {}".format(len(self.centers), i + 1, error))
-            if error < error_threshold: return (True, error)
-        if self.pca_dims > 0: self._visualize()
-        return (False, error)
+            # print("k: {}, iteration: {}, error: {}".format(len(self.centers), i + 1, error))
+
+            if error < error_threshold: 
+                return (True, error)
+        if self.pca_dims == 2 or self.pca_dims == 3:
+            self._visualize()
+        return (False, self.error())
 
     def _classify(self):
         """
@@ -65,8 +75,9 @@ class kmeans():
         # classify the current coordinate, add to identified classes
         for xs in zip(*self.data):
             curr_class = self._classify_helper(xs)
-            for _ind, _class in enumerate(self.classes[curr_class]):
-                _class.append(xs[_ind])
+            for ind, _class in enumerate(self.classes[curr_class]):
+                # stick each coordinate of 7 dimensional point in the right arrays
+                _class.append(xs[ind])
 
     def _classify_helper(self, xs):
         """
@@ -77,7 +88,7 @@ class kmeans():
 
         # defined distance function between two points
         def distance(a, b):
-            return np.sum(np.power(np.array(a) - np.array(b), 2)) ** (0.5)
+            return np.sum((np.array(a) - np.array(b)) ** 2)
         dists = [distance(xs, center) for center in self.centers]
 
         # find the smallest distance between all centers
@@ -93,13 +104,29 @@ class kmeans():
 
         # find new centers
         new_centers = [[np.mean(dim) if len(dim) > 0 else 0 for dim in _class] for _class in self.classes]
+        centers_count = {tuple(center):new_centers.count(center) for center in new_centers}
+
+        for i in range(len(new_centers)):
+            if all([coord == 0 for coord in new_centers[i]]):
+                new_centers[i] = random.choice([*zip(*self.data)])
+            elif centers_count[tuple(new_centers[i])] > 1:
+                new_centers[i] = random.choice([*zip(*self.data)])
+        
         # figure out if difference is significant (all less than threshold)
         diffs = []
         for ind, center in enumerate(self.centers):
-            diffs.append(sum([(new_centers[ind][i]-center[i]) ** 2 for i in range(len(center))]) ** (0.5))
+            diffs.append(np.max([new_centers[ind][i]-center[i] for i in range(len(center))]))
+
+        # print("new centers")
+        # print(np.array(new_centers))
+        # print("diffs")
+        # print(np.array(diffs))
+
         if np.max(diffs) < threshold:
+            # print("returning True")
             return True
         else:
+            # print("returning False")
             self.centers = new_centers
             return False
 
