@@ -86,30 +86,38 @@ class PeopleStorer:
         sentiments = [post['sentiments'] for post in self._people_dict[person]['posts']]
         arr_sentiments = [[i for i in sentiment.values()] for sentiment in sentiments]
 
-        centroids = self._kmeans(arr_sentiments)
+        centroids, labels = self._kmeans(arr_sentiments, plot_title=person)
         self._people_dict[person]['num_centroids'] = len(centroids)
         self._people_dict[person]['centroids'] = centroids
+        self._people_dict[person]['centroid_labels'] = labels
         print('finished calculating centroids for', person)
 
 
-    def _kmeans(self, data, error_threshold=0.2):
+    def _kmeans(self, data, error_threshold=0.1, plot_title=""):
         errors = []
         ks = []
-        for k in range(1, 10):
+        k = 1
+
+        if (len(data) == 1):
+            return data, [0]
+
+        while True:
             kmeans = KMeans(n_clusters=k, random_state=0).fit(data)
             error = kmeans.inertia_
-            print(error / len(data))
-            if error < error_threshold:
+            errors.append(error)
+            ks.append(k)
+            if error / len(data) < error_threshold:
                 break
+            k += 1
 
         # K AGAINST ERROR PLOT TO FIND OPTIMAL K
         # fig = plt.figure()
         # ax = fig.add_subplot(111)
         # ax.plot(ks, errors)
-        # plt.title("k against error for " + str(plot_title))
+        # plt.title("k against error for " + plot_title)
         # plt.show()
 
-        return kmeans.cluster_centers_.tolist()
+        return (kmeans.cluster_centers_.tolist(), kmeans.labels_.tolist())
 
 
     def _dump_to_file(self, filename):
