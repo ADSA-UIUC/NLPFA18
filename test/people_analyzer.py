@@ -15,20 +15,41 @@ def main():
     # array for easy access
 
     ### RANDOM STATISTICS. FOLLOW FORMAT IF YOU NEED TO FIND OTHER STATS
+    
+    
     people_arr = [people_json[person] for person in people_json]
 
-    average = np.mean([len(person['posts']) for person in people_arr])
-    print("average num sentences: " + str(average) + "\n")
+    post_lens = [len(person['posts']) for person in people_arr]
+    print("average num sentences: " + str(np.mean(post_lens)) + "\n")
+    MINIMUM_POSTS = 36
+    filtered_post_lens = list(filter(lambda x: x > MINIMUM_POSTS, post_lens))
+    print("average num sentences for users > " + str(MINIMUM_POSTS) + " posts: " +
+         str(np.mean(filtered_post_lens)) + "\n")
+
+    graph_all_post_lens(filtered_post_lens)
 
     all_post_lengths = [len(person['posts']) for person in people_arr]
     print("number of posts made by each person, sorted")
     print(sorted(all_post_lengths))
 
     print("\nall usernames sorted by number of posts > 100")
-    sorted_people = sorted(people_json.items(), key=lambda item: len(item[1]['posts']), reverse=True)
+    sorted_people = sorted(people_json.items(), 
+        key=lambda item: len(item[1]['posts']), reverse=True)
     for person, obj in sorted_people:
         if len(obj['posts']) > 100:
             print(len(obj['posts']), person)
+
+    # printing out all forum names (could look at posts/_finished/ folder also)
+    # for easy access and to test other forums if necessary
+
+    print("\nlist of all forum names")
+    forum_names = set()
+    for person in people_arr:
+        unique_forums = np.unique([post['forum_name'] for post in person['posts']])
+        for forum_name in unique_forums:
+            forum_names.add(forum_name)
+    print(forum_names)
+
 
 
 
@@ -48,37 +69,33 @@ def main():
     ### VISUALIZING A SPECIFIC FORUM
 
     # visualizing posts in mamistruggling forum
-    pca_visualize_forums('mamistruggling', people_arr)
+    pca_visualize_forums('mamistruggling', people_json)
 
     # visualizing posts in pleasehelp forum
-    pca_visualize_forums('pleasehelp', people_arr)
-
-
-
-    # printing out all forum names (could look at posts/_finished/ folder also)
-    # for easy access and to test other forums if necessary
-
-    print("\nlist of all forum names")
-    forum_names = set()
-    for person in people_arr:
-        unique_forums = np.unique([post['forum_name'] for post in person['posts']])
-        for forum_name in unique_forums:
-            forum_names.add(forum_name)
-    print(forum_names)
+    pca_visualize_forums('pleasehelp', people_json)
 
 
 
 
 ### HELPER FUNCTIONS BELOW
 
-def pca_visualize_forums(forum_name, people_arr):
+def graph_all_post_lens(post_lens):
+    fig = plt.figure()
+    ax = fig.add_subplot(111)
+    ax.hist(post_lens)
+    plt.show()
+
+def pca_visualize_forums(forum_name, people_json):
     all_posts = []
+    all_people = []
     all_sentiments_in_forum = []
-    for person in people_arr:
-        for post in person['posts']:
+
+    for person in people_json:
+        for post in people_json[person]['posts']:
             if post['forum_name'] == forum_name:
                all_sentiments_in_forum.append(list(post['sentiments'].values()))
-               all_posts.append(post['text'])
+               all_posts.append(post)
+            all_people.append(person)
 
     k = 1
     while True:
@@ -99,11 +116,10 @@ def pca_visualize_forums(forum_name, people_arr):
 
     # account for centroids also being in the mix. different unique category for them
     labels.extend([-1] * len(cluster_centers))
-    all_posts.extend(["b'Centroid'"] * 3)
+    all_posts.extend(["b'Centroid'"] * len(cluster_centers))
 
 
     fig = plt.figure()
-
     ax = fig.add_subplot(111)
     x, y = [*values.T]
     ax.scatter(x, y, c=labels)
@@ -111,8 +127,13 @@ def pca_visualize_forums(forum_name, people_arr):
     plt.title("emotion values for " + forum_name)
 
     def onClick(sel):
-        text = all_posts[sel.target.index]
-        return sel.annotation.set_text(linewrap(text))
+        post_text = all_posts[sel.target.index]['text']
+        if post_text == 'Centroid':
+            return sel.annotation.set_text(linewrap(post_text))
+
+        person_name = all_people[sel.target.index]
+        text = "user: {0}\n{1}".format(person_name, linewrap(post_text))
+        return sel.annotation.set_text(text)
 
     mplcursors.cursor(ax).connect("add", lambda sel: onClick(sel))
 

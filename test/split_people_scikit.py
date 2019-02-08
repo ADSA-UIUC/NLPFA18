@@ -38,9 +38,10 @@ from pprint import pprint
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
+from datetime import datetime
 
 class PeopleStorer:
-    def __init__(self, data_loc, output_file):
+    def __init__(self, data_loc, output_file_json, output_file_csv):
         # defined constants
         self._sentiments_list = ['Anger', 'Fear', 'Joy', 'Sadness', 'Analytical', 'Confident', 'Tentative']
         self._variance_threshold = 0.5
@@ -51,13 +52,24 @@ class PeopleStorer:
         filenames = [data_loc.replace('posts/_finished', 'sentiments') + x.replace('.csv', '_doclevelsentiments.csv') for x in filenames]
 
         self._people_dict = {}
+        self._people_df = pd.DataFrame(columns=[
+            'username', 'text', 'time', 'forum_name', 
+            'sentiments.Anger', 
+            'sentiments.Fear',
+            'sentiments.Joy', 
+            'sentiments.Sadness', 
+            'sentiments.Analytical', 
+            'sentiments.Confident', 
+            'sentiments.Tentative'
+        ])
+
         for x in filenames:
             self._individual_file(x)
         
         for name in self._people_dict:
             self._calculate_centroids(name)
 
-        self._dump_to_file(output_file)
+        self._dump_to_file(output_file_json, output_file_csv)
 
     def _individual_file(self, filename):
         orig_filepath = filename.replace("sentiments", "posts/_finished", 1).replace("_doclevelsentiments", "")
@@ -81,6 +93,21 @@ class PeopleStorer:
                 'sentiments': {name: row[name] for name in self._sentiments_list}}
             self._people_dict[row['username']]['posts'].append(to_add)
 
+            self._people_df = self._people_df.append(
+                {
+                    "username": row['username'],
+                    "text": to_add['text'],
+                    "time": to_add['time'],
+                    "forum_name": to_add['forum_name'],
+                    'sentiments.Anger': to_add['sentiments']['Anger'], 
+                    'sentiments.Fear': to_add['sentiments']['Fear'],
+                    'sentiments.Joy': to_add['sentiments']['Joy'],
+                    'sentiments.Sadness': to_add['sentiments']['Sadness'],
+                    'sentiments.Analytical': to_add['sentiments']['Analytical'],
+                    'sentiments.Confident': to_add['sentiments']['Confident'], 
+                    'sentiments.Tentative': to_add['sentiments']['Tentative']
+                }, ignore_index=True
+            )
 
     def _calculate_centroids(self, person):
         sentiments = [post['sentiments'] for post in self._people_dict[person]['posts']]
@@ -90,7 +117,7 @@ class PeopleStorer:
         self._people_dict[person]['num_centroids'] = len(centroids)
         self._people_dict[person]['centroids'] = centroids
         self._people_dict[person]['centroid_labels'] = labels
-        print('finished calculating centroids for', person)
+        # print('finished calculating centroids for', person)
 
 
     def _kmeans(self, data, error_threshold=0.1, plot_title=""):
@@ -120,15 +147,20 @@ class PeopleStorer:
         return (kmeans.cluster_centers_.tolist(), kmeans.labels_.tolist())
 
 
-    def _dump_to_file(self, filename):
-        with open(filename, 'w') as f:
+    def _dump_to_file(self, filename_json, filename_csv):
+        with open(filename_json, 'w') as f:
             json.dump(self._people_dict, f)
+            f.write('\n') # append newline at end
+
+        self._people_df.to_csv(filename_csv, index=False)
 
     def get_people_array(self):
         return [self._people_dict[person] for person in self._people_dict]
 
 def main():
-    PeopleStorer("../data/raw/posts/_finished/", "../data/processed/people.json")
+    now = datetime.now()
+    PeopleStorer("../data/raw/posts/_finished/", "../data/processed/people.json", "../data/processed/people.csv")
+    print('finished creating people.csv, people.json; took: {}'.format(datetime.now() - now))
 
 if __name__ == "__main__":
     sys.exit(main())
