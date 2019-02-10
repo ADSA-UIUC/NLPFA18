@@ -21,7 +21,7 @@ def analyze_tones(text):
         return result
     except WatsonApiException as ex:
         error_msg = "Method failed with status code " + str(ex.code) + ": " + ex.message
-        throw Exception(error_msg)
+        raise Exception(error_msg)
 
 def to_tone_dict(tone_arr_json):
     """
@@ -42,9 +42,12 @@ def analyze_posts(input_filepath):
 
     csv = pd.read_csv(input_filepath)
     total_len = len(csv)
+
     for ind, row in enumerate(csv.iterrows()):
-        if ((ind + 1) / total_len * 100) % 5 < 0.1:
-            print('{.1}% done'.format(ind / total_len * 100))
+        
+
+        print_progress(ind, total_len)
+
         result = analyze_tones(row[1]['post content'])
 
         # document level tones 
@@ -67,10 +70,19 @@ def analyze_posts(input_filepath):
                     sentiments_sentencelevel[tone].append(sentencelevel_tones[tone])
     return pd.DataFrame(sentiments_doclevel), pd.DataFrame(sentiments_sentencelevel)
 
+
+def print_progress(current_index, total_len, every_n_percent=5, epsilon=0.1):
+    """
+    prints the current progress (in percent) given the current index and the total
+    """
+    if ((current_index + 1) / total_len * 100) % every_n_percent < epsilon:
+        print('{0:.3}% done'.format(current_index / total_len * 100))
+
+
 def main():
     # take output and put into raw data output folder
     path = "../data/raw/posts/_toprocess/"
-    input_files = os.listdir(path) 
+    input_files = os.listdir(path)
     for filename in input_files:
         if not re.match(".+[0-9]+\.csv", filename):
             continue
@@ -78,7 +90,7 @@ def main():
         doclevel, sentencelevel = analyze_posts(path + filename)
         doclevel.to_csv('../data/raw/sentiments/' + filename[:-4] + '_doclevelsentiments.csv', index=False)
         sentencelevel.to_csv('../data/raw/sentiments/' + filename[:-4] + '_sentencelevelsentiments.csv', index=False)
-        os.system("mv {} ../data/raw/posts/_finished/".format(filename))
+        os.system("mv ../data/raw/posts/_toprocess/{} ../data/raw/posts/_finished/".format(filename))
         print('finished with ' + filename)
 
 if __name__ == "__main__":

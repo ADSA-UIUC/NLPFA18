@@ -12,10 +12,11 @@ class PeopleFinder:
         threshold = 10
         people_cut = [people[person] for person in people if len(people[person]['posts']) > threshold]
         
-        # for name in people:
-        #     person = people[name]
-        #     posts = person['posts']
-        #     centroids = person['centroids']
+        for name in people:
+            person = people[name]
+            posts = person['posts']
+            centroids = person['centroids']
+
         
 
 
