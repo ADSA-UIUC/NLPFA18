@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Explore{% endblock %}
+{% block body %}
+<div class="header clearfix">
+  <nav>
+    <ul class="nav nav-tabs justify-content-end">
+      <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+      <li class="nav-item"><a class="nav-link" href="/analysis">Analysis</a></li>
+      <li class="nav-item"><a class="nav-link active" href="/explore">Explore</a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="jumbotron">
+  <h1>Test Our Algorithm</h1>
+  <p class="lead">
+      Generate a piece of text and click the sentiments you think match!
+      Once you submit, we'll show you how our algorithm analyzed the post.
+  </p>
+</div>
+
+<button type="button" class="btn btn-secondary btn-lg btn-block">
+    Click to Generate New Text
+</button>
+<div class="card">
+  <div class="card-body">
+    Generated Text
+  </div>
+</div>
+
+<button type="button" class="btn btn-success btn-lg btn-block" style="margin-top: 50px;">
+    Get Analysis
+</button>
+
+</div>
+{% endblock %}

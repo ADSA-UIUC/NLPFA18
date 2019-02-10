@@ -1,0 +1,21 @@
+<!-- https://scotch.io/tutorials/getting-started-with-flask-a-python-microframework -->
+
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block body %}
+<div class="header clearfix">
+  <nav>
+    <ul class="nav nav-tabs justify-content-end">
+      <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+      <li class="nav-item"><a class="nav-link" href="/analysis">Analysis</a></li>
+      <li class="nav-item"><a class="nav-link" href="/explore">Explore</a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="jumbotron">
+  <h1>Mental Health Forum Analysis</h1>
+  <p class="lead">Hello! [insert short project overview] </p>
+</div>
+{% endblock %}
