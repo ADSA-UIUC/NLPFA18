@@ -1,0 +1,20 @@
+{
+	"time": "2019-02-14T15:18:30",
+	"result": [
+		[
+			"hello",
+			"hi"
+		],
+		[
+			"sad"
+		],
+		[
+			"bored",
+			"test"
+		],
+		[
+			"happy",
+			"not happy"
+		]
+	]
+}
