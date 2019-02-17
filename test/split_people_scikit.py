@@ -65,7 +65,7 @@ class PeopleStorer:
 
         for x in filenames:
             self._individual_file(x)
-        
+
         for name in self._people_dict:
             self._calculate_centroids(name)
 
@@ -88,7 +88,7 @@ class PeopleStorer:
             to_add = {
                 'forum_name': re.findall("(?<=/)[a-zA-Z0-9]+?(?=[0-9]+_doclevelsentiments\.csv)", filename)[0],
                 'time': orig_file_row['date'],
-                'text': row['text'],
+                'text': row['text'][2:-1],
                 # 'mood': orig_file_row['post mood'],
                 'sentiments': {name: row[name] for name in self._sentiments_list}}
             self._people_dict[row['username']]['posts'].append(to_add)

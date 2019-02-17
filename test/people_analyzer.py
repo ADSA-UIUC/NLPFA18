@@ -5,18 +5,19 @@ from sklearn.decomposition import PCA
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn.cluster import KMeans
 import mplcursors
+from collections import defaultdict
 
 def main():
     with open('../data/processed/people.json', 'r') as f:
         people_json = json.load(f)
 
-    # could have formatted this better in the first place, but each person 
+    # could have formatted this better in the first place, but each person
     # is a different property in the json file for now. so turn back into
     # array for easy access
 
     ### RANDOM STATISTICS. FOLLOW FORMAT IF YOU NEED TO FIND OTHER STATS
-    
-    
+
+
     people_arr = [people_json[person] for person in people_json]
 
     post_lens = [len(person['posts']) for person in people_arr]
@@ -26,14 +27,24 @@ def main():
     print("average num sentences for users > " + str(MINIMUM_POSTS) + " posts: " +
          str(np.mean(filtered_post_lens)) + "\n")
 
-    graph_all_post_lens(filtered_post_lens)
+    # graph_all_post_lens(filtered_post_lens)
 
     all_post_lengths = [len(person['posts']) for person in people_arr]
     print("number of posts made by each person, sorted")
     print(sorted(all_post_lengths))
 
+    all_forum_post_lengths = defaultdict(int)
+    for person in people_arr:
+        for post in person['posts']:
+            all_forum_post_lengths[post['forum_name']] += 1
+
+    print("\nall forums posted by number of posts")
+    for forum_name in sorted(all_forum_post_lengths, key=lambda item:
+    all_forum_post_lengths[item], reverse=True):
+        print("{} {}".format(all_forum_post_lengths[forum_name], forum_name))
+
     print("\nall usernames sorted by number of posts > 100")
-    sorted_people = sorted(people_json.items(), 
+    sorted_people = sorted(people_json.items(),
         key=lambda item: len(item[1]['posts']), reverse=True)
     for person, obj in sorted_people:
         if len(obj['posts']) > 100:
@@ -56,24 +67,25 @@ def main():
     ### VISUALIZING POSTS
 
     # visualizing posts for ranger (only 5 sentences)
-    pca_visualize_posts('ranger', people_json)
+    # pca_visualize_posts('ranger', people_json)
 
     # visualizing posts for Helena1 (105 sentences)
-    pca_visualize_posts('Helena1', people_json)
+    # pca_visualize_posts('Helena1', people_json)
 
     # visualizing posts for madmark (1590 sentences)
-    pca_visualize_posts('madmark', people_json)
+    # pca_visualize_posts('madmark', people_json)
 
 
 
     ### VISUALIZING A SPECIFIC FORUM
 
     # visualizing posts in mamistruggling forum
-    pca_visualize_forums('mamistruggling', people_json)
+    # pca_visualize_forums('mamistruggling', people_json)
 
     # visualizing posts in pleasehelp forum
-    pca_visualize_forums('pleasehelp', people_json)
+    # pca_visualize_forums('pleasehelp', people_json)
 
+    pca_visualize_forums('solonely', people_json)
 
 
 
@@ -116,7 +128,7 @@ def pca_visualize_forums(forum_name, people_json):
 
     # account for centroids also being in the mix. different unique category for them
     labels.extend([-1] * len(cluster_centers))
-    all_posts.extend(["b'Centroid'"] * len(cluster_centers))
+    all_posts.extend([{'text': "b'Centroid'"}] * len(cluster_centers))
 
 
     fig = plt.figure()
@@ -128,7 +140,7 @@ def pca_visualize_forums(forum_name, people_json):
 
     def onClick(sel):
         post_text = all_posts[sel.target.index]['text']
-        if post_text == 'Centroid':
+        if post_text == "b'Centroid":
             return sel.annotation.set_text(linewrap(post_text))
 
         person_name = all_people[sel.target.index]
@@ -140,8 +152,6 @@ def pca_visualize_forums(forum_name, people_json):
     plt.title("Visualizing post emotions for forum: " + forum_name +
         "\nn: " + str(len(all_posts) - len(cluster_centers)))
     plt.show()
-
-
 
 def pca_visualize_posts(person_name, people_json):
     person = people_json[person_name]
@@ -161,7 +171,7 @@ def pca_visualize_posts(person_name, people_json):
     # extend labels to account for centroids (all part of the same class)
     labels.extend([-1] * len(centroids))
     post_objs.extend([{'text': "b'Centroid'"}] * len(centroids))
-    
+
     fig = plt.figure()
 
     ax = fig.add_subplot(111)
@@ -174,7 +184,7 @@ def pca_visualize_posts(person_name, people_json):
 
     mplcursors.cursor(ax).connect("add", lambda sel: onClick(sel))
 
-    plt.title("Visualizing post emotions for person: " + person_name + 
+    plt.title("Visualizing post emotions for person: " + person_name +
         "\nn: " + str(len(post_objs) - len(centroids)))
     plt.show()
 
