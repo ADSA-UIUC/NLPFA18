@@ -9,6 +9,7 @@ if __name__ == '__main__':
 
 # Commands to run (BASH):
 # export FLASK_APP=run.py
+# export FLASK_ENV=development
 # flask run
 
 # Extending a Shiny app with Python using Flask:

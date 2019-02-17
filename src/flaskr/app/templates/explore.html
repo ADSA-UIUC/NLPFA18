@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% block title %}Explore{% endblock %}
+
+<script type="text/javascript" src="explore.js"></script>
+
 {% block body %}
 <div class="header clearfix">
   <nav>
@@ -15,23 +18,49 @@
 <div class="jumbotron">
   <h1>Test Our Algorithm</h1>
   <p class="lead">
-      Generate a piece of text and click the sentiments you think match!
-      Once you submit, we'll show you how our algorithm analyzed the post.
+      Please categorize these statements by emotion (interpretation is up to
+      you). Similar statements should be in the same "bucket" and some "buckets"
+      can be empty.
   </p>
 </div>
 
-<button type="button" class="btn btn-secondary btn-lg btn-block">
-    Click to Generate New Text
-</button>
-<div class="card">
-  <div class="card-body">
-    Generated Text
-  </div>
+<!-- todo: use javascript(?) and flask to generate cards based on info from python -->
+<div class = "container">
+    <div class="row">
+        <div id="drag1" class="col-2" draggable="true" data-group="0">Text 1</div>
+        <div class="col-10">Sentence.</div>
+    </div>
+    <div class="row">
+        <div id="drag2" class="col-2" draggable="true" data-group="0">Text 2</div>
+        <div class="col-10">Sentence.</div>
+    </div>
 </div>
+
+<div id="group1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+
+<br> <br> <br>
+<!-- https://www.w3schools.com/html/tryit.asp?filename=tryhtml5_draganddrop -->
+
+<style>
+#div1 {
+  width: 350px;
+  height: 70px;
+  padding: 10px;
+  border: 1px solid #aaaaaa;
+}
+</style>
+
+<p>Drag the W3Schools image into the rectangle:</p>
+
+<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<br>
+<a id="drag1" draggable="true" ondragstart="drag(event)">Hello</a>
+
+<br> <br> <br>
+
 
 <button type="button" class="btn btn-success btn-lg btn-block" style="margin-top: 50px;">
     Get Analysis
 </button>
-
-</div>
 {% endblock %}
