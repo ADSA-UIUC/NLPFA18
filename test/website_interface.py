@@ -25,7 +25,7 @@ class WebsiteInterface:
         n_groups = len(groupings)
 
         forum_post_sentiments = [list(post['sentiments'].values()) for post in
-        self._by_forum[self._forum_name]]
+            self._by_forum[self._forum_name]]
 
         kmeans = KMeans(n_clusters=n_groups, random_state=0)
         kmeans.fit(forum_post_sentiments)
@@ -37,21 +37,25 @@ class WebsiteInterface:
         for group in groupings:
             for post in group:
                 user_posts.append(post)
-        computer_groupings = defaultdict(list)
         forum_post_texts = [post['text'] for post in
-        self._by_forum[self._forum_name]]
+            self._by_forum[self._forum_name]]
 
+        computer_groupings = defaultdict(list)
         for ix, post in enumerate(forum_post_texts):
             for user_post in user_posts:
                 if post == user_post:
-                    computer_groupings[labels[ix]].append(post)
+                    if post not in computer_groupings[labels[ix]]:
+                        computer_groupings[labels[ix]].append(post)
 
         return computer_groupings
 
 def main(people_file):
     interface = WebsiteInterface(people_file)
-    print("group the below posts into groups by copy pasting each exact text (without the quotes) on each new line. separate each group by a blank line")
-    for ix, random_post in enumerate(interface.get_n_random_forum_posts('solonely', 6)):
+    print("group the below posts into groups by copy pasting each exact " +\
+        "text (without the quotes) on each new line. separate each group " +\
+        "by a blank line")
+    for ix, random_post in enumerate(\
+            interface.get_n_random_forum_posts('solonely', 6)):
         print("{} {}".format(ix, random_post))
 
     human_groupings = [[]]
@@ -65,7 +69,8 @@ def main(people_file):
             computer_groupings = interface.get_actual_groupings(human_groupings)
             print("These are the computer's groupings")
             for ix, group in enumerate(computer_groupings):
-                print("{} {}".format(ix, computer_groupings[group]))
+                for text in computer_groupings[group]:
+                    print("group: {} {}".format(ix, text))
             break
         else:
             human_groupings[i].append(input_str)
