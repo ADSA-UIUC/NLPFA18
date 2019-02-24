@@ -38,15 +38,13 @@ class TimeScraper:
                 print(link)
                 driver.get(link)
 
-                print("checkpoint")
-
-                title = [x.text for x in driver.find_elements_by_tag_name('h1') if 'headline' in x.get_attribute('class')][0]
+                title = driver.find_element_by_tag_name('h1').text
                 timestamp = driver.find_element_by_class_name('published-date').text
                 # TODO: add control to change date when posted day of (for consistency)
                 print(title, timestamp)
 
                 # stop scraping when post is too old (after small test sets, change 20 to 2019)
-                if 'AM' not in timestamp and 'PM' not in timestamp and ' 20' not in timestamp:
+                if 'AM' not in timestamp and 'PM' not in timestamp and '21,' not in timestamp: # not in timestamp and '20,' not in timestamp and '19,' not in timestamp:
                     keep_scraping = False
                     print('early exit')
                     break
@@ -61,8 +59,13 @@ class TimeScraper:
 
             # go to next page
             driver.get(return_link)
-            next = [x.getAttribute('href') for x in driver.find_elements_by_class_name('paginator-link') if x.get_attribute('tag') == 'a'][0]
-            driver.get(next)
+            next = driver.find_element_by_class_name('paginator-next')
+            next = next if next else driver.find_element_by_class_name('pagination-next')
+            if next:
+                driver.get(next.get_attribute('href'))
+            else:
+                print('end of pages')
+                keep_scraping = False
 
         ## end while
 
@@ -70,10 +73,12 @@ class TimeScraper:
 
 
     def scrape(self, topics=['health','sports','tech']):
-        # for topic in topics:
-        #     _getPosts(topic)
-        data = self._getPosts(topics[0])
-        data.extend(topics[0])
+        data = []
+        for topic in topics:
+            new_data = self._getPosts(topic)
+            for row in data:
+                row.append(topic)
+            data.extend(new_data)
         return pd.DataFrame(data, columns=['timestamp', 'title', 'text', 'topic'])
 
 

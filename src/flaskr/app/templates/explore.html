@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Explore{% endblock %}
 
-<script type="text/javascript" src="explore.js"></script>
-
 {% block body %}
 <div class="header clearfix">
   <nav>
@@ -24,41 +22,83 @@
   </p>
 </div>
 
+<script>
+
+    let dragged;
+
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+
+    function drag(ev) {
+      let target = ev.target;
+      dragged = target;
+      ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop(ev) {
+      //ev.preventDefault();
+      var data = ev.dataTransfer.getData("text");
+      //ev.currentTarget.data-group = ev.target.data-group;
+      //console.log("new: " + ev.currentTarget.data-group)
+      ev.target.appendChild(document.getElementById(data));
+    }
+
+    function returnDrop(ev) {
+        var data = ev.dataTransfer.getData("text");
+        var home = document.getElementById("holder"+ev.target.id);
+        home.appendChild(ev.target);
+    }
+
+    var texts = document.querySelector('.text-selections');
+    texts.addEventListener('drag', ondragstart);
+    var dropZone = document.querySelector('.drop-zone');
+    dropZone.addEventListener('drop', ondrop);
+    dropZone.addEventListener('allowDrop', ondragover);
+    var textHolders = document.querySelector('.title-holder');
+    textHolders.addEventListener('allowDrop', ondragover);
+    textHolders.addEventListener('drop', ondrop);
+
+</script>
+
+
 <!-- todo: use javascript(?) and flask to generate cards based on info from python -->
-<div class = "container">
-    <div class="row">
-        <div id="drag1" class="col-2" draggable="true" data-group="0">Text 1</div>
-        <div class="col-10">Sentence.</div>
+<div class="card-group text-selections">
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-body">
+        <div id="holderA" class="title-holder">Text A
+            <p id="A" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+                Text A
+            </p>
+        </div>
+        <p class="card-text">I feel great.</p>
+      </div>
     </div>
-    <div class="row">
-        <div id="drag2" class="col-2" draggable="true" data-group="0">Text 2</div>
-        <div class="col-10">Sentence.</div>
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Text B</h5>
+        <p class="card-text">Scared about going out.</p>
+        <p id="B" class="btn btn-primary" draggable="true" ondragstart="drag(event)">
+            Text A
+        </p>
+      </div>
+    </div>
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Text C</h5>
+        <p class="card-text">Annoyed at my inability...</p>
+        <p id="C" class="btn btn-primary" draggable="true" ondragstart="drag(event)">
+            Group Me!
+        </p>
+      </div>
     </div>
 </div>
 
-<div id="group1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-
-
-<br> <br> <br>
-<!-- https://www.w3schools.com/html/tryit.asp?filename=tryhtml5_draganddrop -->
-
-<style>
-#div1 {
-  width: 350px;
-  height: 70px;
-  padding: 10px;
-  border: 1px solid #aaaaaa;
-}
-</style>
-
-<p>Drag the W3Schools image into the rectangle:</p>
-
-<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 <br>
-<a id="drag1" draggable="true" ondragstart="drag(event)">Hello</a>
 
-<br> <br> <br>
+<div class ="drop-zone" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="0" style="border: 1px solid #aaaaaa; height: 50px"></div>
 
+<!-- TO STACK: make container: drag into container -->
 
 <button type="button" class="btn btn-success btn-lg btn-block" style="margin-top: 50px;">
     Get Analysis

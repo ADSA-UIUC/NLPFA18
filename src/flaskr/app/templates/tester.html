@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+
+<body>
+
+<style>
+    .box {
+        height: 100px;
+        width: 100px;
+        background-color: aliceblue;
+        color: black;
+        position: relative;
+        top: 5px;
+        left: 5px;
+        cursor: pointer;
+    }
+
+    .held {
+        border: solid 10px black;
+        background-color: black;
+    }
+
+    .holder {
+        height: 50px;
+        width: 80px;
+        border: 1px solid #aaaaaa;
+        padding-bottom: 5px;
+        padding-top: 5px;
+        justify-content: center;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .hovered {
+        border: dotted 5px black;
+    }
+
+    .invisible {
+        display: none;
+    }
+
+    #container {
+        margin: auto;
+        top: 100px;
+        width: 400px;
+        position: relative;
+    }
+</style>
+
+<script>
+    $( document ).ready(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/test',
+            success: (data) => {
+                var i;
+                for (i = 0; i < data.length; i++) {
+                    id = "txt" + i.toString();
+                    document.getElementById(id).innerHTML = data[i];
+                }
+            },
+            error: () => {
+                alert("error");
+            }
+        });
+    });
+
+    function generateCompGroups(ev) {
+        var groupings = {'1' : 'Hello'};
+        var test = "test";
+        // populate values in dictionary for groupings
+        $.ajax({
+            type: 'POST',
+            url: '/testcomplete',
+            data: groupings,
+            success: (data) => {
+                document.getElementById("results").innerHTML = data.placeholder;
+                alert("success");
+            },
+            error: () => {
+                alert("error");
+            }
+        });
+    }
+
+    function allowDrop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        var node = document.getElementById(data);
+        if (ev.target.getAttribute("draggable") == "true")
+            ev.dataTransfer.dropEffect = "none"; // dropping is not allowed
+        else if (ev.target.className == "holder"
+                 && ev.target.getAttribute("data-t") != node.id)
+            ev.dataTransfer.dropEffect = "none"; // dropping is not allowed  <<<<<< NOT WORKING
+        else
+            ev.dataTransfer.dropEffect = "all";
+    }
+
+    function dragenter(ev) {
+        ev.preventDefault();
+    }
+
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        var node = document.getElementById(data);
+        var srcParent = node.parentNode;
+        node.setAttribute("data-group", ev.target.getAttribute("data-group"));
+        if (srcParent.classList.contains("holder"))
+            srcParent.innerHTML = node.innerHTML;
+        if (ev.target.classList.contains("holder"))
+            ev.target.innerHTML = "";
+        if (ev.target.classList.contains("holder"))
+            ev.target.innerHTML = "";
+        ev.target.appendChild(node);
+    }
+</script>
+
+
+<div class="card-group text-selections">
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-body">
+        <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="0">
+            <p id="label0" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+                Text 1
+            </p>
+        </div>
+        <br>
+        <br>
+        <p id="txt0" class="card-text"></p>
+      </div>
+    </div>
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-body">
+        <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="1">
+            <p id="label1" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+                Text 2
+            </p>
+        </div>
+        <br>
+        <br>
+        <p id="txt1" class="card-text"></p>
+      </div>
+    </div>
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-body">
+        <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="2">
+            <p id="label2" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+                Text 3
+            </p>
+        </div>
+        <br>
+        <br>
+        <p id="txt2" class="card-text"></p>
+      </div>
+    </div>
+</div>
+
+<br>
+
+<div class="drop-zone" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="1" style="border: 1px solid #aaaaaa; height: 50px"></div>
+<div class="drop-zone" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="2" style="border: 1px solid #aaaaaa; height: 50px"></div>
+
+<br>
+
+<button class="btn btn-success btn-lg btn-block" onclick="generateCompGroups(event)">Generate Computer Groupings</button>
+
+<br>
+
+<div id="results"></div>
+
+</body>
+</html>
