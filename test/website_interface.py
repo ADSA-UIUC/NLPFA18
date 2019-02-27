@@ -47,7 +47,7 @@ class WebsiteInterface:
                     if post not in computer_groupings[labels[ix]]:
                         computer_groupings[labels[ix]].append(post)
 
-        return computer_groupings
+        return list([value for key, value in computer_groupings.items()])
 
 def main(people_file):
     interface = WebsiteInterface(people_file)
@@ -68,9 +68,11 @@ def main(people_file):
         elif input_str == "quit":
             computer_groupings = interface.get_actual_groupings(human_groupings)
             print("These are the computer's groupings")
-            for ix, group in enumerate(computer_groupings):
-                for text in computer_groupings[group]:
+            ix = 0
+            for group in computer_groupings:
+                for text in computer_groupings:
                     print("group: {} {}".format(ix, text))
+                ix += 1
             break
         else:
             human_groupings[i].append(input_str)
