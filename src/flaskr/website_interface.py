@@ -34,14 +34,11 @@ class WebsiteInterface:
         labels = kmeans.labels_.tolist()
 
         user_posts = []
-        print('act', groupings)
         for group in groupings:
-            print(group)
             for post in group:
                 user_posts.append(post)
         forum_post_texts = [post['text'] for post in
             self._by_forum[self._forum_name]]
-        print('user', user_posts)
 
         computer_groupings = defaultdict(list)
         for ix, post in enumerate(forum_post_texts):
@@ -49,9 +46,7 @@ class WebsiteInterface:
                 if post == user_post:
                     if post not in computer_groupings[labels[ix]]:
                         computer_groupings[labels[ix]].append(post)
-                        print('hello', post)
 
-        print('method results: ', list([value for key, value in computer_groupings.items()]))
         return list([value for key, value in computer_groupings.items()])
 
 def main(people_file):

@@ -31,7 +31,6 @@ def testinit():
 def test():
     if request.method == 'POST':
         posts = Explorer.before()
-        print(posts)
         return jsonify(posts)
 
 @app.route('/testcomplete', methods=['GET', 'POST'])
@@ -39,9 +38,7 @@ def testcomplete():
     if request.method == 'POST':
         json_groups = request.form['groupings']
         groupings = json.loads(json_groups)
-        print('groupings: ', groupings)
         results = Explorer.after(groupings)
-        print('results: ', results)
         response_data = {
             'placeholder' : 'group data',
             'results' : results
@@ -55,10 +52,9 @@ class Explorer():
         pass
 
     def before():
-        return Explorer.interface.get_n_random_forum_posts(n=3)
+        return Explorer.interface.get_n_random_forum_posts()
 
     def after(groupings):
-        print('groupings type: ', type(groupings))
         return Explorer.interface.get_actual_groupings(groupings)
 
 #

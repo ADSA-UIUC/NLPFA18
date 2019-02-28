@@ -9,22 +9,6 @@
 <body>
 
 <style>
-    .box {
-        height: 100px;
-        width: 100px;
-        background-color: aliceblue;
-        color: black;
-        position: relative;
-        top: 5px;
-        left: 5px;
-        cursor: pointer;
-    }
-
-    .held {
-        border: solid 10px black;
-        background-color: black;
-    }
-
     .holder {
         height: 50px;
         width: 80px;
@@ -33,22 +17,21 @@
         padding-top: 5px;
         justify-content: center;
         display: inline-block;
+        vertical-align: middle;
         text-align: center;
     }
 
-    .hovered {
-        border: dotted 5px black;
+    .drop-zone {
+        border: 1px solid #aaaaaa;
+        height: 50px;
+        padding-top: 5px;
     }
 
-    .invisible {
-        display: none;
-    }
-
-    #container {
-        margin: auto;
-        top: 100px;
-        width: 400px;
-        position: relative;
+    .group-title {
+        border: 1px solid #aaaaaa;
+        height: 50px;
+        text-align: center;
+        padding-top: 12px;
     }
 </style>
 
@@ -102,7 +85,15 @@
                 groupings : JSON.stringify(groupingsList)
             },
             success: (data) => {
-                document.getElementById("results").innerHTML = JSON.stringify(data.results);
+                document.getElementById("res-title").innerHTML = "Here's what the computer thought:";
+                var res = data.results;
+                var res_node = document.getElementById("results");
+                for (var i = 1; i <= res.length; i++) {
+                    res_node.innerHTML += "<h5>Group " + i.toString() + ":</h5>";
+                    for (var j = 0; j < res[i-1].length; j++) {
+                        res_node.innerHTML += "<p>" + (res[i-1][j]).toString() + "</p>";
+                    }
+                }
                 alert("success");
             },
             error: () => {
@@ -113,13 +104,8 @@
 
     function allowDrop(ev) {
         ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        var node = document.getElementById(data);
         if (ev.target.getAttribute("draggable") == "true")
             ev.dataTransfer.dropEffect = "none"; // dropping is not allowed
-        else if (ev.target.className == "holder"
-                 && ev.target.getAttribute("data-t") != node.id)
-            ev.dataTransfer.dropEffect = "none"; // dropping is not allowed  <<<<<< NOT WORKING
         else
             ev.dataTransfer.dropEffect = "all";
     }
@@ -130,6 +116,7 @@
 
     function drag(ev) {
         ev.dataTransfer.setData("text", ev.target.id);
+        console.log(ev.target.id)
     }
 
     function drop(ev) {
@@ -138,6 +125,10 @@
         var node = document.getElementById(data);
         var srcParent = node.parentNode;
         node.setAttribute("data-group", ev.target.getAttribute("data-group"));
+        if (ev.target.className == "holder" && "label"+ev.target.getAttribute("data-t") != node.id) {
+            ev.dataTransfer.dropEffect = "none";
+            return;
+        }
         if (srcParent.classList.contains("holder"))
             srcParent.innerHTML = node.innerHTML;
         if (ev.target.classList.contains("holder"))
@@ -148,6 +139,18 @@
     }
 </script>
 
+<br>
+<br>
+
+<div class="container">
+    <h4>
+        Please categorize these statements by emotion (interpretation is up to you).
+        Similar statements should be in the same “bucket” and some “buckets” can be empty.
+    </h4>
+</div>
+
+<br>
+<br>
 
 <div class="card-group text-selections">
     <div class="card text-center" style="width: 18rem;">
@@ -187,12 +190,71 @@
       </div>
     </div>
 </div>
+<div class="card-group text-selections">
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-body">
+        <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="3">
+            <p id="label3" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+                Text 4
+            </p>
+        </div>
+        <br>
+        <br>
+        <p id="txt3" class="card-text"></p>
+      </div>
+    </div>
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-body">
+        <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="4">
+            <p id="label4" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+                Text 5
+            </p>
+        </div>
+        <br>
+        <br>
+        <p id="txt4" class="card-text"></p>
+      </div>
+    </div>
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-body">
+        <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="5">
+            <p id="label5" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+                Text 6
+            </p>
+        </div>
+        <br>
+        <br>
+        <p id="txt5" class="card-text"></p>
+      </div>
+    </div>
+</div>
 
 <br>
 
-<div class="drop-zone" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="1" style="border: 1px solid #aaaaaa; height: 50px"></div>
-<div class="drop-zone" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="2" style="border: 1px solid #aaaaaa; height: 50px"></div>
-<div class="drop-zone" id="div3" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="3" style="border: 1px solid #aaaaaa; height: 50px"></div>
+<div class="row">
+    <div class="col-2 group-title"> Group 1 </div>
+    <div class="drop-zone col-10" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="1"> </div>
+</div>
+<div class="row">
+    <div class="col-2 group-title"> Group 2 </div>
+    <div class="drop-zone col-10" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="2"> </div>
+</div>
+<div class="row">
+    <div class="col-2 group-title"> Group 3 </div>
+    <div class="drop-zone col-10" id="div3" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="3"> </div>
+</div>
+<div class="row">
+    <div class="col-2 group-title"> Group 4 </div>
+    <div class="drop-zone col-10" id="div4" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="4"> </div>
+</div>
+<div class="row">
+    <div class="col-2 group-title"> Group 5 </div>
+    <div class="drop-zone col-10" id="div5" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="5"> </div>
+</div>
+<div class="row">
+    <div class="col-2 group-title"> Group 6 </div>
+    <div class="drop-zone col-10" id="div6" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="6"> </div>
+</div>
 
 <br>
 
@@ -200,7 +262,10 @@
 
 <br>
 
-<div id="results"></div>
+<div class="container">
+    <h4 id="res-title"> </h4>
+    <div id="results"> </div>
+</div>
 
 </body>
 </html>
