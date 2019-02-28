@@ -53,13 +53,15 @@
 </style>
 
 <script>
+    var numTexts;
+
     $( document ).ready(function () {
         $.ajax({
             type: 'POST',
             url: '/test',
             success: (data) => {
-                var i;
-                for (i = 0; i < data.length; i++) {
+                numTexts = data.length;
+                for (var i = 0; i < numTexts; i++) {
                     id = "txt" + i.toString();
                     document.getElementById(id).innerHTML = data[i];
                 }
@@ -71,15 +73,36 @@
     });
 
     function generateCompGroups(ev) {
-        var groupings = {'1' : 'Hello'};
-        var test = "test";
-        // populate values in dictionary for groupings
+        var groupings = {};
+        for (var i = 0; i < numTexts; i++) {
+            var labelnode = document.getElementById("label" + i.toString());
+            var textnode = document.getElementById("txt" + i.toString());
+            text = textnode.innerHTML;
+            group = labelnode.getAttribute("data-group");
+            if (group == "0") {
+                alert("Please put all the texts into a group");
+                return;
+            }
+            if (group in groupings) {
+                groupings[group].push(text);
+            } else {
+                groupings[group] = [text];
+            }
+        }
+        var groupingsList = [];
+        for (var key in groupings) {
+            groupingsList.push(groupings[key]);
+        }
+
         $.ajax({
             type: 'POST',
             url: '/testcomplete',
-            data: groupings,
+            dataType: 'json',
+            data: {
+                groupings : JSON.stringify(groupingsList)
+            },
             success: (data) => {
-                document.getElementById("results").innerHTML = data.placeholder;
+                document.getElementById("results").innerHTML = JSON.stringify(data.results);
                 alert("success");
             },
             error: () => {
@@ -169,6 +192,7 @@
 
 <div class="drop-zone" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="1" style="border: 1px solid #aaaaaa; height: 50px"></div>
 <div class="drop-zone" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="2" style="border: 1px solid #aaaaaa; height: 50px"></div>
+<div class="drop-zone" id="div3" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="3" style="border: 1px solid #aaaaaa; height: 50px"></div>
 
 <br>
 

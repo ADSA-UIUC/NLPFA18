@@ -14,7 +14,7 @@ class WebsiteInterface:
             for post in self._all_people[person]['posts']:
                 self._by_forum[post['forum_name']].append(post)
 
-    def get_n_random_forum_posts(self, forum_name="solonely", n=3):
+    def get_n_random_forum_posts(self, forum_name="solonely", n=6):
         self._forum_name = forum_name
         forum_posts = self._by_forum[forum_name]
         post_texts = [post['text'] for post in forum_posts]
@@ -34,11 +34,14 @@ class WebsiteInterface:
         labels = kmeans.labels_.tolist()
 
         user_posts = []
+        print('act', groupings)
         for group in groupings:
+            print(group)
             for post in group:
                 user_posts.append(post)
         forum_post_texts = [post['text'] for post in
             self._by_forum[self._forum_name]]
+        print('user', user_posts)
 
         computer_groupings = defaultdict(list)
         for ix, post in enumerate(forum_post_texts):
@@ -46,8 +49,10 @@ class WebsiteInterface:
                 if post == user_post:
                     if post not in computer_groupings[labels[ix]]:
                         computer_groupings[labels[ix]].append(post)
+                        print('hello', post)
 
-        return computer_groupings
+        print('method results: ', list([value for key, value in computer_groupings.items()]))
+        return list([value for key, value in computer_groupings.items()])
 
 def main(people_file):
     interface = WebsiteInterface(people_file)
@@ -68,12 +73,14 @@ def main(people_file):
         elif input_str == "quit":
             computer_groupings = interface.get_actual_groupings(human_groupings)
             print("These are the computer's groupings")
-            for ix, group in enumerate(computer_groupings):
-                for text in computer_groupings[group]:
+            ix = 0
+            for group in computer_groupings:
+                for text in computer_groupings:
                     print("group: {} {}".format(ix, text))
+                ix += 1
             break
         else:
             human_groupings[i].append(input_str)
 
 if __name__ == "__main__":
-    main('people.json')
+    main('../data/processed/people.json')

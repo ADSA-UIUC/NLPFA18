@@ -4,6 +4,7 @@
 from flask import render_template, request, jsonify, session
 from app import app
 from website_interface import WebsiteInterface
+import json
 
 
 @app.route('/')
@@ -29,24 +30,36 @@ def testinit():
 @app.route('/test', methods=['GET', 'POST'])
 def test():
     if request.method == 'POST':
-        interface = WebsiteInterface('people.json')
-        posts = interface.get_n_random_forum_posts()
+        posts = Explorer.before()
         print(posts)
         return jsonify(posts)
 
 @app.route('/testcomplete', methods=['GET', 'POST'])
 def testcomplete():
     if request.method == 'POST':
-        print("in testcomplete")
-        groupings = request.get_json() # form['groupings']
+        json_groups = request.form['groupings']
+        groupings = json.loads(json_groups)
         print('groupings: ', groupings)
-        interface = WebsiteInterface('people.json')
-        results = {} #interface.get_actual_groupings(data)
+        results = Explorer.after(groupings)
+        print('results: ', results)
         response_data = {
             'placeholder' : 'group data',
             'results' : results
         }
         return jsonify(response_data)
+
+class Explorer():
+    interface = WebsiteInterface('people.json')
+
+    def __init__(self):
+        pass
+
+    def before():
+        return Explorer.interface.get_n_random_forum_posts(n=3)
+
+    def after(groupings):
+        print('groupings type: ', type(groupings))
+        return Explorer.interface.get_actual_groupings(groupings)
 
 #
 # from flask import request
