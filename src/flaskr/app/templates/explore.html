@@ -17,90 +17,254 @@
   <h1>Test Our Algorithm</h1>
   <p class="lead">
       Please categorize these statements by emotion (interpretation is up to
-      you). Similar statements should be in the same "bucket" and some "buckets"
-      can be empty.
+      you). Similar statements should be in the same group and some groups
+      can be empty. When you're finished, pressed the green button to compare
+      your results with the computer's!
   </p>
 </div>
 
-<script>
+<style>
+    .holder {
+        height: 50px;
+        width: 80px;
+        border: 1px solid #aaaaaa;
+        padding-bottom: 5px;
+        padding-top: 5px;
+        justify-content: center;
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+    }
 
-    let dragged;
+    .drop-zone {
+        border: 1px solid #aaaaaa;
+        height: 50px;
+        padding-top: 5px;
+    }
+
+    .group-title {
+        border: 1px solid #aaaaaa;
+        height: 50px;
+        text-align: center;
+        padding-top: 12px;
+    }
+</style>
+
+<script>
+    var numTexts;
+
+    $( document ).ready(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/test',
+            success: (data) => {
+                numTexts = data.length;
+                for (var i = 0; i < numTexts; i++) {
+                    id = "txt" + i.toString();
+                    document.getElementById(id).innerHTML = data[i];
+                }
+            },
+            error: () => {
+                alert("error");
+            }
+        });
+    });
+
+    function generateCompGroups(ev) {
+        var groupings = {};
+        for (var i = 0; i < numTexts; i++) {
+            var labelnode = document.getElementById("label" + i.toString());
+            var textnode = document.getElementById("txt" + i.toString());
+            text = textnode.innerHTML;
+            group = labelnode.getAttribute("data-group");
+            if (group == "0") {
+                alert("Please put all the texts into a group");
+                return;
+            }
+            if (group in groupings) {
+                groupings[group].push(text);
+            } else {
+                groupings[group] = [text];
+            }
+        }
+        var groupingsList = [];
+        for (var key in groupings) {
+            groupingsList.push(groupings[key]);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/testcomplete',
+            dataType: 'json',
+            data: {
+                groupings : JSON.stringify(groupingsList)
+            },
+            success: (data) => {
+                document.getElementById("res-title").innerHTML = "Here's what the computer thought:";
+                var res = data.results;
+                var res_node = document.getElementById("results");
+                for (var i = 1; i <= res.length; i++) {
+                    res_node.innerHTML += "<h5>Group " + i.toString() + ":</h5>";
+                    for (var j = 0; j < res[i-1].length; j++) {
+                        res_node.innerHTML += "<p>" + (res[i-1][j]).toString() + "</p>";
+                    }
+                }
+            },
+            error: () => {
+                alert("error");
+            }
+        });
+    }
 
     function allowDrop(ev) {
-      ev.preventDefault();
+        ev.preventDefault();
+        if (ev.target.getAttribute("draggable") == "true")
+            ev.dataTransfer.dropEffect = "none"; // dropping is not allowed
+        else
+            ev.dataTransfer.dropEffect = "all";
+    }
+
+    function dragenter(ev) {
+        ev.preventDefault();
     }
 
     function drag(ev) {
-      let target = ev.target;
-      dragged = target;
-      ev.dataTransfer.setData("text", ev.target.id);
+        ev.dataTransfer.setData("text", ev.target.id);
+        console.log(ev.target.id)
     }
 
     function drop(ev) {
-      //ev.preventDefault();
-      var data = ev.dataTransfer.getData("text");
-      //ev.currentTarget.data-group = ev.target.data-group;
-      //console.log("new: " + ev.currentTarget.data-group)
-      ev.target.appendChild(document.getElementById(data));
-    }
-
-    function returnDrop(ev) {
+        ev.preventDefault();
         var data = ev.dataTransfer.getData("text");
-        var home = document.getElementById("holder"+ev.target.id);
-        home.appendChild(ev.target);
+        var node = document.getElementById(data);
+        var srcParent = node.parentNode;
+        node.setAttribute("data-group", ev.target.getAttribute("data-group"));
+        if (ev.target.className == "holder" && "label"+ev.target.getAttribute("data-t") != node.id) {
+            ev.dataTransfer.dropEffect = "none";
+            return;
+        }
+        if (srcParent.classList.contains("holder"))
+            srcParent.innerHTML = node.innerHTML;
+        if (ev.target.classList.contains("holder"))
+            ev.target.innerHTML = "";
+        if (ev.target.classList.contains("holder"))
+            ev.target.innerHTML = "";
+        ev.target.appendChild(node);
     }
-
-    var texts = document.querySelector('.text-selections');
-    texts.addEventListener('drag', ondragstart);
-    var dropZone = document.querySelector('.drop-zone');
-    dropZone.addEventListener('drop', ondrop);
-    dropZone.addEventListener('allowDrop', ondragover);
-    var textHolders = document.querySelector('.title-holder');
-    textHolders.addEventListener('allowDrop', ondragover);
-    textHolders.addEventListener('drop', ondrop);
-
 </script>
 
-
-<!-- todo: use javascript(?) and flask to generate cards based on info from python -->
 <div class="card-group text-selections">
     <div class="card text-center" style="width: 18rem;">
       <div class="card-body">
-        <div id="holderA" class="title-holder">Text A
-            <p id="A" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
-                Text A
+        <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="0">
+            <p id="label0" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+                Text 1
             </p>
         </div>
-        <p class="card-text">I feel great.</p>
+        <br>
+        <br>
+        <p id="txt0" class="card-text"></p>
       </div>
     </div>
     <div class="card text-center" style="width: 18rem;">
       <div class="card-body">
-        <h5 class="card-title">Text B</h5>
-        <p class="card-text">Scared about going out.</p>
-        <p id="B" class="btn btn-primary" draggable="true" ondragstart="drag(event)">
-            Text A
-        </p>
+        <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="1">
+            <p id="label1" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+                Text 2
+            </p>
+        </div>
+        <br>
+        <br>
+        <p id="txt1" class="card-text"></p>
       </div>
     </div>
     <div class="card text-center" style="width: 18rem;">
       <div class="card-body">
-        <h5 class="card-title">Text C</h5>
-        <p class="card-text">Annoyed at my inability...</p>
-        <p id="C" class="btn btn-primary" draggable="true" ondragstart="drag(event)">
-            Group Me!
-        </p>
+        <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="2">
+            <p id="label2" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+                Text 3
+            </p>
+        </div>
+        <br>
+        <br>
+        <p id="txt2" class="card-text"></p>
+      </div>
+    </div>
+</div>
+<div class="card-group text-selections">
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-body">
+        <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="3">
+            <p id="label3" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+                Text 4
+            </p>
+        </div>
+        <br>
+        <br>
+        <p id="txt3" class="card-text"></p>
+      </div>
+    </div>
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-body">
+        <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="4">
+            <p id="label4" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+                Text 5
+            </p>
+        </div>
+        <br>
+        <br>
+        <p id="txt4" class="card-text"></p>
+      </div>
+    </div>
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-body">
+        <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="5">
+            <p id="label5" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+                Text 6
+            </p>
+        </div>
+        <br>
+        <br>
+        <p id="txt5" class="card-text"></p>
       </div>
     </div>
 </div>
 
 <br>
 
-<div class ="drop-zone" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="0" style="border: 1px solid #aaaaaa; height: 50px"></div>
+<div class="row">
+    <div class="col-2 group-title"> Group 1 </div>
+    <div class="drop-zone col-10" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="1"> </div>
+</div>
+<div class="row">
+    <div class="col-2 group-title"> Group 2 </div>
+    <div class="drop-zone col-10" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="2"> </div>
+</div>
+<div class="row">
+    <div class="col-2 group-title"> Group 3 </div>
+    <div class="drop-zone col-10" id="div3" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="3"> </div>
+</div>
+<div class="row">
+    <div class="col-2 group-title"> Group 4 </div>
+    <div class="drop-zone col-10" id="div4" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="4"> </div>
+</div>
+<div class="row">
+    <div class="col-2 group-title"> Group 5 </div>
+    <div class="drop-zone col-10" id="div5" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="5"> </div>
+</div>
+<div class="row">
+    <div class="col-2 group-title"> Group 6 </div>
+    <div class="drop-zone col-10" id="div6" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="6"> </div>
+</div>
 
-<!-- TO STACK: make container: drag into container -->
+<br>
 
-<button type="button" class="btn btn-success btn-lg btn-block" style="margin-top: 50px;">
-    Get Analysis
-</button>
+<button class="btn btn-success btn-lg btn-block" onclick="generateCompGroups(event)">Generate Computer Groupings</button>
+
+<br>
+
+<div class="container">
+    <h4 id="res-title"> </h4>
+    <div id="results"> </div>
+</div>
 {% endblock %}
