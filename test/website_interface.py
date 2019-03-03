@@ -27,7 +27,7 @@ class WebsiteInterface:
         forum_post_sentiments = [list(post['sentiments'].values()) for post in
             self._by_forum[self._forum_name]]
 
-        kmeans = KMeans(n_clusters=n_groups, random_state=0)
+        kmeans = KMeans(n_clusters=n_groups, random_state=0, tol=0.95)
         kmeans.fit(forum_post_sentiments)
 
         cluster_centers = kmeans.cluster_centers_.tolist()

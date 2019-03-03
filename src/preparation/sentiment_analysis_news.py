@@ -37,10 +37,10 @@ def to_tone_dict(tone_arr_json):
 #read in data from data folder
 def analyze_posts(input_filepath):
     # analyze data in folder, return analysis into csv
-    sentiments_doclevel = {'post #': [], 'username': [], 'text': [], 'Anger': [], 'Fear': [], 'Joy': [], 'Sadness': [], 'Analytical': [], 'Confident': [], 'Tentative': []}
-    sentiments_sentencelevel = {'post #': [], 'username': [], 'text': [], 'Anger': [], 'Fear': [], 'Joy': [], 'Sadness': [], 'Analytical': [], 'Confident': [], 'Tentative': []}
+    sentiments_doclevel = {'username': [], 'text': [], 'Anger': [], 'Fear': [], 'Joy': [], 'Sadness': [], 'Analytical': [], 'Confident': [], 'Tentative': []}
+    sentiments_sentencelevel = {'username': [], 'text': [], 'Anger': [], 'Fear': [], 'Joy': [], 'Sadness': [], 'Analytical': [], 'Confident': [], 'Tentative': []}
 
-    csv = pd.read_csv(input_filepath, engine='python')
+    csv = pd.read_csv(input_filepath, engine='c')
     total_len = len(csv)
 
     for ind, row in enumerate(csv.iterrows()):
@@ -49,7 +49,6 @@ def analyze_posts(input_filepath):
         result = analyze_tones(row[1]['title'])
 
         # document level tones
-        sentiments_doclevel['post #'].append(row[1][0])
         sentiments_doclevel['username'].append(row[1]['source'])
         sentiments_doclevel['text'].append(row[1]['title'])
         doclevel_tones = to_tone_dict(result['document_tone']['tones'])
@@ -60,7 +59,6 @@ def analyze_posts(input_filepath):
         if 'sentences_tone' in result:
             # sentence level tones
             for sentence in result['sentences_tone']:
-                sentiments_sentencelevel['post #'].append(row[1][0])
                 sentiments_sentencelevel['username'].append(row[1]['source'])
                 sentiments_sentencelevel['text'].append(sentence['text'])
                 sentencelevel_tones = to_tone_dict(sentence['tones'])
@@ -80,12 +78,23 @@ def print_progress(current_index, total_len, every_n_percent=5, epsilon=0.1):
 def main():
     # take output and put into raw data output folder
     path = "sentiments/"
-    input_files = os.listdir(path)
+    input_files = os.listdir(path + "_todo/")
     for filename in input_files:
+        if filename.startswith("."): continue
+
         print('starting with ' + filename)
-        doclevel, sentencelevel = analyze_posts(path + filename)
-        doclevel.to_csv('sentiments/' + filename + '_doclevelsentiments.csv', index=False)
-        sentencelevel.to_csv("sentiments/" + filename + '_sentencelevelsentiments.csv', index=False)
+        doclevel, _ = analyze_posts(path + "_todo/" + filename)
+        if filename[:-4] + '_doclevelsentiments.csv' in os.listdir(path):
+            with open(path + filename[:-4] + '_doclevelsentiments.csv', 'a') as f:
+                writer = csv.writer(f)
+                for row in doclevel.values:
+                    writer.writerow(row[1:])
+            print('appended to {}'.format(path + filename[:-4] + '_doclevelsentiments.csv'))
+        else:
+            doclevel.to_csv(path + filename[:-4] + '_doclevelsentiments.csv', index=False,
+            index_label=False)
+        os.system("mv {} {}".format(path + "_todo/" + filename, path + "_finished/" + filename[:-4] +
+                str(int(len(os.listdir(path + "_finished/")) / 7)) + ".csv"))
         print('finished with ' + filename)
 
 if __name__ == "__main__":

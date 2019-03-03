@@ -21,10 +21,9 @@ unique_people_df <- unique_people %>%
 #centers <- kmeans_obj$centers
 people.pca <- unique_people_df %>% 
         select(`sentiments.Anger`:`sentiments.Tentative`) %>%
-        prcomp(center=TRUE)
+        prcomp(center=TRUE, tol=0.7)
 
-autoplotly(people.pca, 
-         loadings = TRUE, loadings.label = TRUE,
-         colour = as.numeric(as.factor(unique_people_df %>% pull(username))),
-         data=unique_people_df)
-
+autoplotly(people.pca,
+           loadings = TRUE, loadings.label = TRUE,
+           colour = as.numeric(as.factor(unique_people_df %>% pull(username))),
+           data=unique_people_df)
