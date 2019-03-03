@@ -1,4 +1,4 @@
-from apikey import api
+from apikey import keys
 from watson_developer_cloud import ToneAnalyzerV3, WatsonApiException
 import csv, os, sys, re
 import pandas as pd
@@ -7,9 +7,9 @@ import pandas as pd
 # 2016 version returns between 0 and 1, 2017 returns between 0.5 and 1
 tone_analyzer = ToneAnalyzerV3(
     version='2017-09-21',
-    username=api['ToneAnalyzer']['username'],
-    password=api['ToneAnalyzer']['password'],
-    url=api['ToneAnalyzer']['URL']
+    username=keys['ToneAnalyzer']['username'],
+    password=keys['ToneAnalyzer']['password'],
+    url=keys['ToneAnalyzer']['URL']
 )
 
 def analyze_tones(text):
@@ -40,20 +40,18 @@ def analyze_posts(input_filepath):
     sentiments_doclevel = {'post #': [], 'username': [], 'text': [], 'Anger': [], 'Fear': [], 'Joy': [], 'Sadness': [], 'Analytical': [], 'Confident': [], 'Tentative': []}
     sentiments_sentencelevel = {'post #': [], 'username': [], 'text': [], 'Anger': [], 'Fear': [], 'Joy': [], 'Sadness': [], 'Analytical': [], 'Confident': [], 'Tentative': []}
 
-    csv = pd.read_csv(input_filepath)
+    csv = pd.read_csv(input_filepath, engine='python')
     total_len = len(csv)
 
     for ind, row in enumerate(csv.iterrows()):
-
-
         print_progress(ind, total_len)
 
-        result = analyze_tones(row[1]['post content'])
+        result = analyze_tones(row[1]['title'])
 
         # document level tones
         sentiments_doclevel['post #'].append(row[1][0])
-        sentiments_doclevel['username'].append(row[1]['username'])
-        sentiments_doclevel['text'].append(row[1]['post content'])
+        sentiments_doclevel['username'].append(row[1]['source'])
+        sentiments_doclevel['text'].append(row[1]['title'])
         doclevel_tones = to_tone_dict(result['document_tone']['tones'])
         for tone in doclevel_tones.keys():
             sentiments_doclevel[tone].append(doclevel_tones[tone])
@@ -63,7 +61,7 @@ def analyze_posts(input_filepath):
             # sentence level tones
             for sentence in result['sentences_tone']:
                 sentiments_sentencelevel['post #'].append(row[1][0])
-                sentiments_sentencelevel['username'].append(row[1]['username'])
+                sentiments_sentencelevel['username'].append(row[1]['source'])
                 sentiments_sentencelevel['text'].append(sentence['text'])
                 sentencelevel_tones = to_tone_dict(sentence['tones'])
                 for tone in sentencelevel_tones.keys():
@@ -81,16 +79,13 @@ def print_progress(current_index, total_len, every_n_percent=5, epsilon=0.1):
 
 def main():
     # take output and put into raw data output folder
-    path = "../data/raw/posts/_toprocess/"
+    path = "sentiments/"
     input_files = os.listdir(path)
     for filename in input_files:
-        if not re.match(".+[0-9]+\.csv", filename):
-            continue
         print('starting with ' + filename)
         doclevel, sentencelevel = analyze_posts(path + filename)
-        doclevel.to_csv('../data/raw/sentiments/' + filename[:-4] + '_doclevelsentiments.csv', index=False)
-        sentencelevel.to_csv('../data/raw/sentiments/' + filename[:-4] + '_sentencelevelsentiments.csv', index=False)
-        os.system("mv ../data/raw/posts/_toprocess/{} ../data/raw/posts/_finished/".format(filename))
+        doclevel.to_csv('sentiments/' + filename + '_doclevelsentiments.csv', index=False)
+        sentencelevel.to_csv("sentiments/" + filename + '_sentencelevelsentiments.csv', index=False)
         print('finished with ' + filename)
 
 if __name__ == "__main__":
