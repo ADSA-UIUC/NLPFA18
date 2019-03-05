@@ -1,141 +1,71 @@
-username,text,Anger,Fear,Joy,Sadness,Analytical,Confident,Tentative
-The Washington Post,American Airlines apologizes for booting a mother and baby with a dry skin condition - Washington Post,0,0,0,0,0,0,0
-Crypto Coins News,Are Teslas Death Traps? Failing Brakes and Violent Fires Spark Major Fears - CCN,0,0.830633,0,0,0.77494,0,0
-Seekingalpha.com,Canopy Growth's Big Brand Development Strategy - Seeking Alpha,0,0,0.525583,0,0,0,0
-CNN,What Old Navy's spinoff says about America's cheap clothing addiction - CNN,0,0,0,0.534075,0,0,0
-Cointelegraph.com,"Scammers, Satoshi and Tesla Miners: Elon Musk‰Ûªs Complex Relationship With Crypto - Cointelegraph",0,0,0,0,0.842108,0,0
-Bitcoinist.com,Major US Retailer Ditches Visa - Now Considering Bitcoin's Lightning Network - Bitcoinist,0,0,0,0,0.653099,0,0
-The Wall Street Journal,Why Chinese Shares Rebounded: News That‰Ûªs Less Bad Than Expected - The Wall Street Journal,0,0,0,0.508003,0.560098,0,0
-The New York Times,"Bigger, Saltier, Heavier: Fast Food Since 1986 in 3 Simple Charts - The New York Times",0,0,0.554121,0,0,0,0
-The Wall Street Journal,AT&T Plans to Revamp CNN‰Ûªs Digital Arm - The Wall Street Journal,0,0,0,0,0,0,0
-Business Insider,Harley-Davidson's electric motorcycle has a sleek new rival that has a 200-mile range and can track everything about your rides online - Business Insider,0,0,0.525307,0,0,0,0
-Thedrive.com,Subaru Will Recall 2.3 Million Cars Over Brake Light Switch-Induced Ignition Issue - The Drive,0,0,0,0,0.882284,0,0
-Npr.org,"Even In 2019, A Faithful Few Still Heat Their Homes With Coal - NPR",0,0,0,0,0,0,0
-Reuters,French tax on internet giants could yield 500 million euros per year: Le Maire - Reuters,0,0,0,0,0.532616,0,0.647986
-Wane.com,"Autoworker upheaval: Families split, children left behind - WANE",0,0,0,0,0,0,0
-Motor1.com,"Ford Taurus, Chevrolet Cruze Officially End Production - Motor1.com",0,0,0,0,0.724236,0,0
-Fool.com,3 Awful Reasons to Take Social Security Benefits at 62 - The Motley Fool,0,0,0,0,0.589295,0,0
-Azcentral.com,10 years after stocks hit bottom: What we learned and what we still don't get - AZCentral,0,0,0,0,0.506763,0,0
-Wfla.com,Firm behind Miami bridge that collapsed announces bankruptcy - WFLA,0,0,0,0,0,0.874372,0
-CNN,The 10-year anniversary of the bull market is coming - CNN,0,0,0,0,0,0,0
-Reuters,Porsche says it is dealing with tax investigation issues - Reuters,0,0,0,0,0,0,0
-Digitaltrends.com,Amazon said to be planning an all-new grocery chain separate from Whole Foods - Digital Trends,0,0,0,0,0,0,0
-Seekingalpha.com,Weighing The Week Ahead: What Is Baked Into Current Market Prices? - Seeking Alpha,0,0,0,0,0,0,0
-Business Insider,Carpocalypse now: Lyft's founders are right ‰ÛÓ we're in the endgame for cars - Business Insider,0,0,0,0,0,0,0
-Al.com,Alabama Power customers to pay $740 million after coal plant closes - AL.com,0,0,0,0,0,0,0
-Oilprice.com,Rebound Rally In Oil Is Still Gaining Momentum | OilPrice.com - OilPrice.com,0,0,0,0,0,0,0
-Masslive.com,Powerball numbers: Did you win Saturday's $348 million lottery jackpot? - MassLive.com,0,0,0.667287,0,0,0,0
-Bemidjipioneer.com,Enbridge announces year delay on Line 3 completion - Bemidji Pioneer,0,0,0,0.555351,0.522484,0,0
-Thetimes.co.uk,Uncertainty over China's Huawei 'could delay 5G' | Business - The Times,0,0,0,0.649566,0,0,0.928936
-Seekingalpha.com,"Trump swipes Powell, says dollar too strong - Seeking Alpha",0,0,0,0,0,0,0
-Fox2now.com,St. Louis program offers vacant single-family homes for $1 - KTVI Fox 2 St. Louis,0,0,0,0,0,0,0
-Nbcmontana.com,Squabble over sale of Montana mansion owned by Wyoming firm - NBC Montana,0,0,0,0,0,0.80026,0
-Kutv.com,Train-tanker collision spills diesel fuel on Nevada highway - KUTV 2News,0,0,0,0,0,0,0
-Fox17.com,Parked plane bound for Nashville grazed by another at Newark airport - WZTV,0,0,0,0,0.620279,0,0
-Fool.com,Why Old Navy Is Going Solo - Motley Fool,0,0,0,0,0,0,0
-Nbc-2.com,NTSB sending investigators to fatal Tesla-semitrailer crash in Miami - NBC2 News,0,0,0,0.745588,0,0,0
-Kolotv.com,Elko mayor opposes Barrick-Newmont mining merger - KOLO,0,0,0,0,0.801827,0,0
-Wwlp.com,"2 unclaimed $100,000 lottery prizes about to expire - WWLP.com",0,0,0,0,0,0,0
-Kstp.com,University of Minnesota cuts ties with tech giant Huawei - KSTP,0,0,0,0,0,0,0
-Youtube.com,8 injured in emergency at London's Stansted Airport - ABC News,0,0,0,0.655218,0,0,0
-Licpost.com,90 Community Groups Write Joint Letter Critical of Cuomo's Plea to Lure Amazon Back - Long Island City Post,0,0,0,0,0,0,0
-CNN,A noose was found at a Boeing plant in South Carolina - CNN,0,0,0,0,0.672469,0,0
-The Wall Street Journal,"EBay Settles, More or Less - The Wall Street Journal",0,0,0,0,0,0,0.856622
-Fool.ca,Whet Your Appetite for Dividends With These 3 Generous-Yielding Food Stocks - The Motley Fool Canada,0,0,0,0,0,0,0
-The Hill,Amazon reportedly pulls anti-vaccine documentaries | TheHill - The Hill,0,0,0,0,0,0,0
-Dailyitem.com,Catlin takes new position at Walmart - Sunbury Daily Item,0,0,0,0,0,0,0
-Business Insider,Andreessen Horowitz Partner Frank Chen on AI: Presentation - Business Insider,0,0,0,0,0,0,0
-Yahoo.com,Amazon to open non-Whole Foods grocery chain - Yahoo News,0,0,0,0,0,0,0
-Heraldnet.com,"So far, airport earns Everett no respect - The Daily Herald",0,0,0,0,0.842108,0,0
-Theregister.co.uk,"Sniff the love: Subaru's SUVs overwhelmed by scent of hair shampoo, recalls 2.2 million cars - The Register",0,0,0.657604,0,0,0,0
-Seekingalpha.com,Home Depot Nails Down A 32% Dividend Increase And Strong Growth - Seeking Alpha,0,0,0.788562,0,0,0,0
-Staradvertiser.com,Las Vegas Sands said in 'good hands' as CEO battles cancer - Honolulu Star-Advertiser,0,0,0,0,0,0,0
-Japantimes.co.jp,"Japan Tobacco, British American Tobacco and Philip Morris lose appeal in $13 billion Quebec lawsuits - The Japan Times",0,0,0,0.584593,0,0,0
-Cleantechnica.com,"Hyundai Will Introduce New Battery-Only Chassis In 2020, Working With Aurora On Autonomous Cars - CleanTechnica",0,0,0,0,0,0,0
-Kutv.com,"Consumers may benefit from Smith's cutting ties with Visa credit, economist says - KUTV 2News",0,0,0,0,0,0,0.681699
-Barrons.com,"Vanguard, SoFi Lead the Latest Charge to Cut Fund Fees - Barron's",0,0,0,0,0.731735,0,0
-Barrons.com,L Brands Stock Is Still Not a Buy Despite Promises of Change - Barron's,0,0,0,0,0.589295,0,0
-Wgntv.com,Retailers suffer during Illinois Lottery system upgrade - WGN TV Chicago,0,0,0,0.662647,0,0,0
-Electrek.co,Tesla launches new live service status update through mobile app - Electrek,0,0,0,0,0.703409,0,0
-Ktnv.com,"Local News City of Las Vegas leaving NV Energy? Bryan Callahan 5:31 PM, Mar 01 - KTNV Las Vegas",0,0,0,0.50102,0,0,0
-Kfoxtv.com,Entire staffs at 3 Sonic locations quit after wages cut to '$4/hour plus tips' - KFOX El Paso,0,0,0,0,0,0,0
-Thewrap.com,Hollywood Worries: Will HBO Still Be the Home of Prestige Television After Richard Plepler‰Ûªs Departure? - TheWrap,0,0,0,0,0,0,0
-Foxbusiness.com,Amazon has a '50-50' chance of returning to New York City: Rep. Meeks - Fox Business,0,0,0,0,0,0,0.647986
-Mauinow.com,Southwest to Challenge Hawaiian's Interisland Service - Maui Now,0,0,0,0,0,0,0
-CBS News,Wells Fargo reaches $240 million settlement for phony accounts - CBS News,0,0,0,0,0,0,0
-CBS News,"Southwest Airlines sues mechanics, claims frivolous ""safety"" write-ups are grounding dozens of planes - CBS News",0,0,0,0,0.532616,0,0
-Abc7.com,Los Angeles City Council approves ordinance to ban restaurants from automatically providing plastic straws - KABC-TV,0,0,0,0,0.532616,0,0
-Crypto Coins News,Donald Trump Just Set the Stage for a Meteoric Dow Recovery - CCN,0,0,0,0,0,0,0.75152
-Schaeffersresearch.com,Big Money Volatility Trader Targets Bristol-Myers Squibb Stock - Schaeffers Research,0,0,0,0,0,0,0
-Ajc.com,Federal flight deck officer leaves gun in Delta cockpit - Atlanta Journal Constitution,0,0,0,0.569538,0,0,0
-Capitolfax.com,Your Illinois News Radar åÈ Amtrak malfunction causes another Metra meltdown - The Capitol Fax Blog,0,0,0,0,0.560098,0,0
-CNBC,Elon Musk just sent this memo to employees about the cheaper Model 3 and store closures - CNBC,0,0,0,0,0,0,0.775166
-CNN,HBO chief Richard Plepler leaves network he spent decades building in post-AT&T shakeup - CNN,0,0,0,0.7486,0.587989,0,0
-The New York Times,Gap Plans to Spin Off Old Navy After a Dismal Year - The New York Times,0,0,0,0,0,0,0
-Gizmodo.com,"Plagued by Predators, YouTube Is Disabling Comments on Most Videos Featuring Children - Gizmodo",0,0,0,0,0,0,0
-Ars Technica,"Amazon‰Ûªs latest program to curb emissions? One delivery day per house, per week - Ars Technica",0,0,0,0,0.720783,0,0
-Politico,Lawyer: Adelson's health 'dire' - POLITICO,0,0,0.554464,0,0,0,0
-Chicagotribune.com,Stranded at Union Station? Uber and Lyft rides to the suburbs are going to cost you. - Chicago Tribune,0,0,0,0,0,0,0
-The Verge,"Open letter from CEOs, politicians, and labor leaders asks Amazon to return to NYC - The Verge",0,0,0,0,0.506763,0,0
-The New York Times,Uber and Lyft Said to Offer Drivers a Chance to Participate in I.P.O.s - The New York Times,0,0,0,0,0,0,0
-10tv.com,JC Penney closing more stores after a weak holiday season - 10TV,0,0,0,0,0,0,0
-Wtae.com,Health officials say Pittsburgh plants must halt pollution - WTAE Pittsburgh,0,0,0,0,0.687768,0.618451,0
-Yahoo.com,63% of millennial homeowners regret buying home: survey - Yahoo Finance,0,0,0,0.731792,0,0,0
-Kwwl.com,Victoria's Secret plans to close dozens of stores - kwwl.com,0,0,0,0,0,0,0
-Washingtonexaminer.com,North Korea and China fallout: Trump needs to learn the art of managing expectations - Washington Examiner,0,0,0,0,0.926173,0,0
-Sfgate.com,"An 'emotional support' pit bull mauled a 5-year-old girl at Portland airport, lawsuit says - SFGate",0,0,0,0.73156,0,0,0
-Huffpost.com,Man Accused Of Dipping Testicles In Salsa As Revenge For Low Tip - HuffPost,0.683313,0,0,0,0,0,0
-Dailywire.com,"Oprah's Weight Watchers Stock Plummets, Loses $58 Million - The Daily Wire",0,0,0,0,0,0,0
-Statnews.com,"Suddenly, the Bristol-Celgene deal is looking shaky. What's next? - STAT",0,0.622611,0,0,0,0,0.902459
-Business Insider,"Inside the 40-year business partnership of Warren Buffett and Charlie Munger, who both started out working in the same grocery store and reportedly haven't had a fight in 60 years - Business Insider",0,0,0,0,0,0,0
-Marketrealist.com,Spotify Faces Several Challenges in India - Market Realist,0,0,0,0,0.762356,0,0
-Recode,"Amazon wants to sell ""every genuine product in the world."" That's a mistake. - Recode",0,0,0,0.671136,0.931994,0.98198,0
-Ars Technica,"After delays, OneWeb launches its first six low-Earth broadband satellites - Ars Technica",0,0,0,0.68285,0.620279,0,0
-Yahoo.com,"Kraft Heinz lawsuit targets 3G stock transfer, writedown, SEC probe - Yahoo Finance",0,0,0,0,0,0,0
-Cyprus-mail.com,5-8 trillion cubic feet gas find 'encouraging' says energy giant - Cyprus Mail,0,0,0,0,0.702145,0,0
-Fool.com,Why Booking Holdings Is Losing Altitude Today - Motley Fool,0,0,0,0.729578,0,0,0
-Oilprice.com,Saudi Arabia Oil Exports To US Nosedive | OilPrice.com - OilPrice.com,0,0,0,0,0,0,0
-Reuters,"Kia, Hyundai expand U.S. engine fire recalls by 534,000 vehicles - Reuters",0,0,0,0,0,0,0
-Ganjapreneur.com,Study Reveals Broad Therapeutic Impact of THC - Ganjapreneur,0,0,0,0,0.506763,0,0
-Ajc.com,"DOT fines Delta $750,000 for long tarmac delays - Atlanta Journal Constitution",0,0,0,0.559884,0,0,0
-Ajc.com,"Students reportedly drinking rum, bourbon extract to get drunk - Atlanta Journal Constitution",0,0,0,0,0,0,0
-CNBC,"Trump got a strong economy in 2018, but first quarter of this year looks weak - CNBC",0,0,0,0,0,0,0
-Biospace.com,Novavax RSV Vaccine Fails to Hit Primary Endpoint in Phase III Trial - BioSpace,0,0,0,0,0,0,0
-CNBC,"Target goes preppy, again, in teaming up with Vineyard Vines - CNBC",0,0,0,0,0,0,0
-Theaircurrent.com,Rolls-Royce withdrawal may signal fast-approaching Boeing 797 engine pick - The Air Current,0,0,0,0,0.762356,0,0.75152
-Thisisinsider.com,Anheuser-Busch rolls out more alcohol-free beers - INSIDER,0,0,0,0,0,0,0
-Freep.com,"Little Caesars free pizza coupon is fake, possibly a virus - Detroit Free Press",0,0,0,0.551199,0,0,0.716301
-Adage.com,Martha Stewart is cooking up cannabis products | CMO Strategy - AdAge.com,0,0,0,0,0.653099,0,0
-Foxbusiness.com,Southwest Airlines approved by FAA for flights to Hawaii - Fox Business,0,0,0,0,0,0,0
-Barrons.com,Disney Wants to Buy AT&T's Stake in Hulu - Barron's,0,0,0,0,0,0,0
-Yahoo.com,"PG&E Corporation (PCG) Q4 Earnings Beat, Revenues Decline - Yahoo Finance",0,0,0,0,0,0,0
-Gizmodo.com,"Four Hospitalized After 'Sweet, Burning' Odor Fills Alaska Airlines Flight - Gizmodo",0,0,0.610225,0,0,0,0
-CNBC,Coyote fur is in big demand thanks to popular parkas - CNBC,0,0,0,0,0,0,0
-Marketwatch.com,Mortgage rates stay subdued as housing reform issues grab the spotlight - MarketWatch,0,0,0,0,0.620279,0,0
-Bmwblog.com,BMW and Daimler Announce Agreement for Autonomous Driving R&D - BMWBLOG,0,0,0,0,0,0,0
-Axios,"Login - February 28, 2019 - Axios",0,0,0,0.587248,0,0,0
-Simpleflying.com,When Will British Airways Retire Its Last 747 Now The Boeing 777X Is On Order? - Simple Flying,0,0,0,0,0,0,0
-Fox17.com,You can get paid $14 an hour to taste test chocolate - WZTV,0,0,0,0,0,0,0
-Foxbusiness.com,Carlos Ghosn's new legal team has applied for bail - Fox Business,0,0,0,0,0,0,0
-Businessreport.com,Praxair to build hydrogen plant in Louisiana - Greater Baton Rouge Business Report,0,0,0.615177,0,0,0.543112,0
-Cbs8.com,Californians lose millions of dollars in recycling deposits - CBS 8 San Diego,0,0,0,0.654893,0,0,0
-Associated Press,Farm loan delinquencies highest in 9 years as prices slump - The Associated Press,0,0,0,0,0,0,0
-CNN,"The slowdown in China's economy just cost 1,400 Illinois auto workers their jobs - CNN",0,0,0,0,0,0,0.647986
-USA Today,"Many disabled Walmart greeters are being replaced by 'customer hosts,' causing backlash - USA TODAY",0,0,0,0.686701,0.560098,0,0
-Wkrn.com,Maryville man accused of dipping testicles in customer's salsa - WKRN News 2,0.602097,0,0,0,0,0,0
-USA Today,Southwest Airlines wing scrapes runway during aborted landing in Hartford - USA TODAY,0,0,0,0,0,0,0
-Kuow.org,Remember Amazon's head tax 'threat'? Now it's pulling out of the Rainier Square tower anyway - KUOW News and Information,0,0,0,0.544941,0.870325,0,0
-Cleantechnica.com,The Polestar 2 Set To Bring Luxury & Performance In 2020 - CleanTechnica,0,0,0.519254,0,0,0,0
-Investors.com,Palo Alto Stages Breakaway Gap To Lead Top Stocks At New Highs - Investor's Business Daily,0,0,0.667671,0,0.587989,0,0
-CNBC,Fed Chair Powell says balance sheet decision market is waiting for is 'close' to happening - CNBC,0,0,0,0.511638,0.506763,0,0
-Newsok.com,"Chesapeake Energy reports 2018 fourth quarter, full year results - NewsOK.com",0,0,0,0,0.653099,0,0
-CNN,Best Buy's hot streak continues - CNN,0,0,0.604487,0,0,0,0
-Barrons.com,Lowe‰Ûªs Stock Rises Because Earnings Show It‰Ûªs Catching Up With Home Depot - Barron's,0,0,0,0,0.589295,0,0
-Fortune,Trump Softens Stance on China as Huawei Poses for Win - Fortune,0,0,0.74618,0,0,0,0
-Business Insider,Elon Musk's erratic Twitter behavior escalated Wednesday when he changed his name to 'Elon Tusk' - Business Insider,0,0,0,0,0,0,0
-The Verge,FedEx unveils autonomous delivery robot - The Verge,0,0,0,0,0,0,0
-CNN,China lost 161 billionaires because its stock markets tanked - CNN,0,0,0,0.514707,0.687768,0,0
-CNN,Wynn Resorts hit with record fine for ignoring Steve Wynn misconduct allegations - CNN,0,0,0,0.611776,0,0,0
-CNN,Stranded Amtrak train heads north to Seattle. The trip's almost over for all the passengers - CNN,0,0,0,0,0,0,0
-Wlos.com,Oprah-backed Weight Watchers tumbles on profit warning - WLOS,0,0,0,0,0,0,0
-Wbng.com,US appeals court blesses AT&T's $81B merger with Time Warner - WBNG-TV,0,0,0.735527,0,0,0,0
+source,text,Anger,Fear,Joy,Sadness,Analytical,Confident,Tentative
+Electrek.co,Pininfarinaâ€™s Battista is a 1900-horsepower all-electric hypercar - Electrek,0,0.0,0.0,0.0,0.0,0,0.0
+Ars Technica,"T-Mobile has spent $195,000 at Trump hotel while lobbying for Sprint merger - Ars Technica",0,0.0,0.0,0.0,0.0,0,0.0
+Abc7ny.com,"'Sudden, extreme' gust of wind sends Norwegian cruise ship passengers 'flying' - WABC-TV",0,0.0,0.0,0.0,0.0,0,0.0
+Marketwatch.com,"Tesla stock slides another 4% as analysts question recent decisions, fret about cash burn - MarketWatch",0,0.0,0.0,0.0,0.95817,0,0.0
+Associated Press,"After years of promise, battery cars about to go mainstream - Associated Press",0,0.0,0.0,0.0,0.0,0,0.0
+Yahoo.com,Papa John's founder Schnatter to exit board in settlement - Yahoo Finance,0,0.0,0.0,0.0,0.653099,0,0.0
+Business Insider,Amazon took over the $176 billion market for cloud computing. Now it's using the same playbook in logistics. - Business Insider,0,0.0,0.0,0.0,0.596122,0,0.0
+Fox News,Boy eating McDonaldâ€™s finds razor blade in Happy Meal box - Fox News,0,0.0,0.660157,0.0,0.506763,0,0.0
+Fox2now.com,Birth control recalled over incorrect packaging - KTVI Fox 2 St. Louis,0,0.0,0.0,0.0,0.541591,0,0.0
+CBS News,Bugatti sells most expensive car ever made for $12.5 million - CBS News,0,0.0,0.0,0.0,0.0,0,0.0
+Foxbusiness.com,The world's youngest billionaires under 30 - Fox Business,0,0.0,0.613866,0.0,0.0,0,0.0
+Marketwatch.com,"4 good reasons this small-cap, dividend-paying stock sector could reward contrarian investors - MarketWatch",0,0.0,0.561031,0.0,0.589295,0,0.716301
+CNBC,Tesla shares fall 4 percent despite China approval of Model 3 imports - CNBC,0,0.0,0.0,0.628706,0.642915,0,0.0
+Fox News,Harley-Davidson will start selling electric motorcycles for 3-year-olds - Fox News,0,0.0,0.0,0.0,0.0,0,0.0
+CNBC,"Southwest's maintenance problems are costing it millions a week, CEO says - CNBC",0,0.0,0.0,0.537746,0.620279,0,0.0
+Axios,AT&T shakes up WarnerMedia amid merger drama - Axios,0,0.544411,0.0,0.0,0.0,0,0.0
+Daytondailynews.com,Thousands of stores planned to close in 2019: Hereâ€™s the list - Dayton Daily News,0,0.0,0.0,0.0,0.0,0,0.0
+Marketrealist.com,Cronos Group Got a 'Market Perform' Rating from Cowen - Market Realist,0,0.0,0.0,0.0,0.862286,0,0.0
+CNN,"JetBlue wants you to delete your Instagram photos for free flights, and we have questions - CNN",0,0.0,0.0,0.0,0.762356,0,0.0
+CNBC,New home sales rise to 7-month high in December - CNBC,0,0.0,0.564537,0.0,0.0,0,0.0
+CNN,Why Tesla's decision to close hundreds of stores is risky - CNN,0,0.0,0.0,0.0,0.653099,0,0.0
+The Verge,Aston Martin Lagonda All-Terrain Concept at the Geneva Motor Show 2019 - The Verge,0,0.0,0.0,0.0,0.0,0,0.0
+Thisisinsider.com,"An explosive exposÃ© on a $9 billion Russian money laundering operation entangles Citigroup, Raiffeisen, and Deutsche Bank - INSIDER",0,0.0,0.0,0.0,0.0,0,0.0
+Ars Technica,Mercedes-Benz debuts EQV electric van at the Geneva auto show - Ars Technica,0,0.0,0.0,0.0,0.0,0,0.0
+Npr.org,Tokyo Court Grants Bail To Former Nissan CEO Carlos Ghosn - NPR,0,0.0,0.0,0.0,0.0,0,0.0
+Cheatsheet.com,Is Ariana Grande Debuting Her Own Starbucks Drink? - The Cheat Sheet,0,0.0,0.0,0.0,0.0,0,0.0
+Newser.com,Google: We Underpaid Thousands of Men - Newser,0,0.0,0.0,0.0,0.0,0,0.0
+CNN,Target had its best year since 2005 - CNN,0,0.0,0.0,0.0,0.0,0,0.0
+Fox News,"Ocasio-Cortez not ruling out Amazon's return to New York, says communities must be consulted - Fox News",0,0.0,0.0,0.0,0.0,0,0.0
+Seekingalpha.com,Timing The Market Is Possible: Here Are Some Lessons Learned - Seeking Alpha,0,0.0,0.588116,0.0,0.842108,0,0.946222
+Kitco.com,"Gold, Silver Bulls Work To Stabilize Prices - Kitco News",0,0.0,0.0,0.0,0.0,0,0.0
+Newser.com,Major Airline Drops Mandatory Makeup Rule - Newser,0,0.0,0.0,0.0,0.560098,0,0.0
+Seekingalpha.com,Sentiment Speaks: Bonds Setting Up To Skyrocket - Seeking Alpha,0,0.0,0.0,0.0,0.724236,0,0.0
+The Wall Street Journal,"L Brands Faces Pressure to Separate Victoriaâ€™s Secret, Bath & Body Works - The Wall Street Journal",0,0.0,0.0,0.0,0.0,0,0.0
+CNN,Spotify just added a million new users in under a week - CNN,0,0.0,0.582004,0.0,0.0,0,0.75152
+Fox News,"Amazon, long seen as a threat to malls, is now a hot tenant - Fox News",0,0.630125,0.0,0.0,0.0,0,0.0
+The Wall Street Journal,"Chevron, Exxon Mobil Tighten Their Grip on Fracking - The Wall Street Journal",0,0.0,0.0,0.0,0.620279,0,0.0
+The Wall Street Journal,"Surfing, Schools and Jets: WeWorkâ€™s Bets Follow CEO Adam Neumannâ€™s Passions - The Wall Street Journal",0,0.0,0.593585,0.0,0.0,0,0.647986
+Seekingalpha.com,Tesla Unsecured Debt: Recovery Tops Out At ~30c (If You're Lucky) - Seeking Alpha,0,0.0,0.734787,0.0,0.0,0,0.716301
+Fool.com,97% of Seniors Miss Out on This Key Opportunity to Boost Their Social Security Benefits - The Motley Fool,0,0.0,0.0,0.0,0.0,0,0.0
+10tv.com,Ohio man and ex-wife sentenced for defrauding homeowner associations - 10TV,0,0.0,0.0,0.0,0.0,0,0.0
+Abc7chicago.com,Celebrating Mardi Gras the traditionally Polish way - WLS-TV,0,0.0,0.576515,0.0,0.0,0,0.0
+Marketwatch.com,Donâ€™t expect the U.S. stock market to keep rising at the current pace - MarketWatch,0,0.0,0.0,0.0,0.0,0,0.0
+Kitv.com,Some travelers excited about $29 one-way Southwest Airlines ticket to neighbor islands - KITV Honolulu,0,0.0,0.584186,0.0,0.0,0,0.845297
+CNN,These concept tires could help cars fly - CNN,0,0.0,0.0,0.0,0.0,0,0.798791
+Daily Mail,"Over 30,000 pounds of ground beef recalled over plastic and metal contamination fears - Daily Mail",0,0.820705,0.0,0.0,0.506763,0,0.0
+Wcpo.com,GM restructuring: Production ending at Ohio plant earlier than expected - WCPO,0,0.0,0.0,0.0,0.939116,0,0.0
+Local12.com,Pharmaceutical company moves to offer generic of insulin at reduced price - WKRC TV Cincinnati,0,0.0,0.0,0.0,0.0,0,0.0
+The New York Times,"As Trump Moves to End Trade War With China, Business Asks: Was It Worth It? - The New York Times",0,0.0,0.547316,0.0,0.0,0,0.0
+Engadget,Instant Pot's creator is merging with the company behind Pyrex - Engadget,0,0.0,0.0,0.0,0.0,0,0.0
+Npr.org,Ted Baker CEO Resigns After 'Forced Hugging' Complaints - NPR,0,0.0,0.0,0.0,0.724236,0,0.0
+The New York Times,F.D.A. Criticizes Walgreens and Other Retailers for Selling Tobacco Products to Minors - The New York Times,0,0.0,0.0,0.0,0.0,0,0.0
+Bgr.com,"You could win a year of free flights from JetBlue, but thereâ€™s a wild catch - BGR",0,0.0,0.72551,0.0,0.0,0,0.615352
+CNBC,OPEC can declare mission accomplished on price-boosting oil output cuts by April: Goldman Sachs - CNBC,0,0.0,0.567793,0.0,0.781949,0,0.0
+Wkyt.com,Winner claims $1.5 billion Mega Millions jackpot in South Carolina - WKYT,0,0.0,0.0,0.0,0.0,0,0.0
+Stereogum.com,Young Dolph Has $500K Of Jewelry & Cash Stolen While Eating At Cracker Barrel - Stereogum,0,0.0,0.0,0.0,0.0,0,0.0
+Business Insider,Stocks sink after economic data disappoints - Business Insider,0,0.0,0.0,0.67524,0.0,0,0.0
+USA Today,Volkswagen debuts electric Buggy concept ATV at Geneva auto show - USA TODAY,0,0.0,0.0,0.0,0.0,0,0.0
+Thestreet.com,Sizing Up a Salesforce Earnings Reaction Trade - TheStreet.com,0,0.0,0.0,0.0,0.0,0,0.0
+Kitco.com,Barrick's Bristow Rejects Newmont's Joint-Venture Proposal - Kitco News,0,0.0,0.0,0.595401,0.920855,0,0.0
+Youtube.com,Tesla will unveil the Model Y crossover on March 14th - Engadget,0,0.0,0.0,0.0,0.0,0,0.0
+Komonews.com,'Historic moment for Snohomish County': Everett's Paine Field opens for commercial flights - KOMO News,0,0.0,0.0,0.0,0.0,0,0.0
+Marketrealist.com,Kraft Heinz: Rare Upgrade from Morgan Stanley - Market Realist,0,0.0,0.0,0.0,0.724236,0,0.0
+Newsweek,George Conway Says Donald Trump Faces 'Grounds for Impeachment' If He Ordered Block on AT&T-Time Warner Deal - Newsweek,0,0.0,0.0,0.0,0.705784,0,0.0
+Barrons.com,Nightstar Stock Is Latest Winner From Gene-Therapy Gold Rush - Barron's,0,0.0,0.0,0.0,0.0,0,0.0
+Thedrive.com,All New Volvo Cars Will be Limited to Just 112 MPH by Next Year - The Drive,0,0.0,0.503118,0.0,0.0,0,0.0
+Triblive.com,Peduto issues executive order on testing self-driving cars in Pittsburgh - Tarentum Valley News Dispatch,0,0.0,0.0,0.0,0.0,0,0.0
+TechCrunch,Office Depot partners with Alibaba to focus on small to medium-sized businessesâ€™ needs - TechCrunch,0,0.0,0.552668,0.0,0.560098,0,0.0
+Autonews.com,Fiat Chrysler finance chief Palmer to join board with executive role - Automotive News Europe,0,0.0,0.0,0.0,0.560098,0,0.0
+Wkrn.com,"Autoworker upheaval: Families split, children left behind - WKRN News 2",0,0.0,0.0,0.507318,0.0,0,0.0
