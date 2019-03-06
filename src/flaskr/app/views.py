@@ -37,10 +37,12 @@ def test():
 def testcomplete():
     if request.method == 'POST':
         json_groups = request.form['groupings']
+        json_labels = request.form['labeldict']
         groupings = json.loads(json_groups)
+        labeldict = json.loads(json_labels)
         results = Explorer.after(groupings)
         response_data = {
-            'placeholder' : 'group data',
+            'labels' : labeldict,
             'results' : results
         }
         return jsonify(response_data)

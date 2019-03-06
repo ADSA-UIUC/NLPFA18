@@ -72,6 +72,7 @@
 
     function generateCompGroups(ev) {
         var groupings = {};
+        var labeldict = {};
         for (var i = 0; i < numTexts; i++) {
             var labelnode = document.getElementById("label" + i.toString());
             var textnode = document.getElementById("txt" + i.toString());
@@ -81,11 +82,14 @@
                 alert("Please put all the texts into a group");
                 return;
             }
+            // update groupings
             if (group in groupings) {
                 groupings[group].push(text);
             } else {
                 groupings[group] = [text];
             }
+            // update labeldict
+            labeldict[text] = 'label' + i.toString();
         }
         var groupingsList = [];
         for (var key in groupings) {
@@ -97,16 +101,22 @@
             url: '/testcomplete',
             dataType: 'json',
             data: {
-                groupings : JSON.stringify(groupingsList)
+                groupings : JSON.stringify(groupingsList),
+                labeldict : JSON.stringify(labeldict)
             },
             success: (data) => {
-                document.getElementById("res-title").innerHTML = "Here's what the computer thought:";
-                var res = data.results;
                 var res_node = document.getElementById("results");
-                for (var i = 1; i <= res.length; i++) {
-                    res_node.innerHTML += "<h5>Group " + i.toString() + ":</h5>";
-                    for (var j = 0; j < res[i-1].length; j++) {
-                        res_node.innerHTML += "<p>" + (res[i-1][j]).toString() + "</p>";
+                if (res_node.innerHTML == "") {
+                    document.getElementById("res-title").innerHTML = "Here's what the computer thought:";
+                    var labels = data.labels;
+                    var res = data.results;
+                    for (var i = 1; i <= res.length; i++) {
+                        res_node.innerHTML += "<h5>Group " + i.toString() + ":</h5>";
+                        for (var j = 0; j < res[i-1].length; j++) {
+                            text = (res[i-1][j]).toString();
+                            textnum = document.getElementById(labels[text]).innerHTML;
+                            res_node.innerHTML += "<p>" + textnum + ": " + text + "</p>";
+                        }
                     }
                 }
             },
@@ -157,7 +167,7 @@
     <div class="card text-center" style="width: 18rem;">
       <div class="card-body">
         <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="0">
-            <p id="label0" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+            <p id="label0" class="btn btn-dark" draggable="true" ondragstart="drag(event)" data-group="0">
                 Text 1
             </p>
         </div>
@@ -169,7 +179,7 @@
     <div class="card text-center" style="width: 18rem;">
       <div class="card-body">
         <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="1">
-            <p id="label1" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+            <p id="label1" class="btn btn-dark" draggable="true" ondragstart="drag(event)" data-group="0">
                 Text 2
             </p>
         </div>
@@ -181,7 +191,7 @@
     <div class="card text-center" style="width: 18rem;">
       <div class="card-body">
         <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="2">
-            <p id="label2" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+            <p id="label2" class="btn btn-dark" draggable="true" ondragstart="drag(event)" data-group="0">
                 Text 3
             </p>
         </div>
@@ -195,7 +205,7 @@
     <div class="card text-center" style="width: 18rem;">
       <div class="card-body">
         <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="3">
-            <p id="label3" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+            <p id="label3" class="btn btn-dark" draggable="true" ondragstart="drag(event)" data-group="0">
                 Text 4
             </p>
         </div>
@@ -207,7 +217,7 @@
     <div class="card text-center" style="width: 18rem;">
       <div class="card-body">
         <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="4">
-            <p id="label4" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+            <p id="label4" class="btn btn-dark" draggable="true" ondragstart="drag(event)" data-group="0">
                 Text 5
             </p>
         </div>
@@ -219,7 +229,7 @@
     <div class="card text-center" style="width: 18rem;">
       <div class="card-body">
         <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="5">
-            <p id="label5" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
+            <p id="label5" class="btn btn-dark" draggable="true" ondragstart="drag(event)" data-group="0">
                 Text 6
             </p>
         </div>
@@ -230,7 +240,7 @@
     </div>
 </div>
 
-<br>
+<br>    <!-- TODO: GET COLORS STRAIGHTENED OUT -->
 
 <div class="row">
     <div class="col-2 group-title"> Group 1 </div>
@@ -264,7 +274,7 @@
 <br>
 
 <div class="container">
-    <h4 id="res-title"> </h4>
-    <div id="results"> </div>
+    <h4 id="res-title"></h4>
+    <div id="results"></div>
 </div>
 {% endblock %}
