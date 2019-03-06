@@ -40,17 +40,25 @@ class WebsiteInterface:
         forum_post_texts = [post['text'] for post in
             self._by_forum[self._forum_name]]
 
+        sentiment_order = ['Anger', 'Fear', 'Joy', 'Sadness', 'Analytical', 'Confident', 'Tentative']
         computer_groupings = defaultdict(list)
         for ix, post in enumerate(forum_post_texts):
             for user_post in user_posts:
-                if post == user_post:
-                    if post not in computer_groupings[labels[ix]]:
-                        computer_groupings[labels[ix]].append(post)
-
+                if post == user_post and post not in computer_groupings[labels[ix]]:
+                    sentiments = forum_post_sentiments[ix]
+                    max_sentiment_value = max(sentiments)
+                    max_sentiment = sentiment_order[sentiments.index(max_sentiment_value)]
+                    to_add = {
+                        'text': post,
+                        'sentiments': sentiments,
+                        'primary_sentiment': max_sentiment,
+                        'primary_sentiment_value': max_sentiment_value
+                    }
+                    computer_groupings[labels[ix]].append(to_add)
         return list([value for key, value in computer_groupings.items()])
 
 def main(people_file, topic):
-    interface = WebsiteInterface(people_file, topic)
+    interface = WebsiteInterface(people_file)
     print("group the below posts into groups by copy pasting each exact " +\
         "text (without the quotes) on each new line. separate each group " +\
         "by a blank line")
@@ -78,4 +86,4 @@ def main(people_file, topic):
             human_groupings[i].append(input_str)
 
 if __name__ == "__main__":
-    main('../preparation/news.json')#'../data/processed/people.json')
+    main('../preparation/news.json', 'entertainment')#'../data/processed/people.json')

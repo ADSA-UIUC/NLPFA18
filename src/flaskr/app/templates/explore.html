@@ -160,12 +160,18 @@
             },
             success: (data) => {
                 document.getElementById("res-title").innerHTML = "Here's what the computer thought:";
-                var res = data.results;
+		console.log(data);
+		var res = data.results;
                 var res_node = document.getElementById("results");
                 for (var i = 1; i <= res.length; i++) {
                     res_node.innerHTML += "<h5>Group " + i.toString() + ":</h5>";
                     for (var j = 0; j < res[i-1].length; j++) {
-                        res_node.innerHTML += "<p>" + (res[i-1][j]).toString() + "</p>";
+			var sentiment_value = res[i-1][j].primary_sentiment_value;
+			var sentiment_percent = (sentiment_value * 100).toFixed(2);
+                        res_node.innerHTML += "<p>" + (res[i-1][j].text).toString() + "<br />" +
+				    "with primary sentiment " + 
+				    (res[i-1][j].primary_sentiment).toString() + ": " + 
+				    sentiment_percent.toString() + "% confidence</p>";
                     }
                 }
                 alert("success");
