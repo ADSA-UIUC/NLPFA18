@@ -15,6 +15,99 @@
 
 <div class="jumbotron">
   <h1>About Our Project</h1>
-  <p class="lead">Learn more about our process and overall goals.</p>
 </div>
+
+<h1>Overview</h1>
+<p>
+We started off with <a href="https://mentalhealthforum.net">this site</a> to find forum posts 
+to figure out what kind of people exist on this forum and post here. Using Natural Language 
+Processing (or more specifcally just Sentiment Analysis), our pgorject was just to figure out,
+given one person's input text or a given username, to find people who have posted similar 
+things to the target person so that the target person would have someone to talk to.
+</p>
+
+<a title="The home page of mentalhealthforum.net">
+	<img src="{{ url_for('static', filename='mainSiteImage.png') }}" style="width:100%">
+</a>
+<p></p>
+
+<h1>Goal</h1>
+<p>
+To create a piece of code that could:
+<p>
+<code>input:</code> username of someone already on the forum (in which case we find the text 
+that they typed so far) OR some sample text that someone would have typed   
+</p>
+<p>
+<code>output:</code> a person (username) or a group of people that have already contributed on 
+this forum that have typed similar things (sentiment-wise) to the input.
+</p>
+
+<h1>Process</h1>
+<p>
+Our main project was split into two portions: <b>Webscraping</b> and <b>Data Analysis</b>, 
+headed by different people in the project.
+</p>
+<h2>Webscraping</h2>
+<p>
+The main goal of the webscraping group is to simply scrape the forum and retrieve the data in 
+a usable format for the analysis group. This consisted of using <code>Python</code>'s 
+<code>BeautifulSoup</code> package and the <code>Selenium</code> package, as well as 
+<code>pandas</code> to format the data.
+</p>
+
+<h3>Scraping the website</h3>
+<p>
+Each forum has a lot of posts, but each one has a pretty similar format, so scraping it 
+was a matter of figuring out which elements belonged to each piece of data that we wanted, 
+and compiling that into a <code>.csv</code> file that could be read later. The following 
+picture shows how each of the elements were extracted, and using <code>BeautifulSoup</code> 
+made searching for and extracting certain elements easy. Although the analysis group was not 
+able to end up using every piece of data that could be extracted from every post, there were 
+many challenges in the "edge cases" that could mess up our data.
+</p>
+
+<a title="Mapping the website contents to a .csv file">
+	<img src="{{ url_for('static', filename='mapToCsv.png') }}" style="width:100%">
+</a>
+
+<p>
+As shown, we can extract the date and time that the post was made, the user that originally 
+posted, a user that the original user quoted (if there was one), the post text, and which post 
+number it was (in this picture the numbering is 1 off because of 0-indexing (so post #1 would 
+be counted as row 0 in the output file)).
+</p>
+
+<h2>Data Analysis</h2>
+<p>
+The primary goal of the data analysis group was to use the data that was collected and try to 
+make sense of it. Some methods we ended up using include: <b>sentiment analysis</b> using 
+the <a href="https://www.ibm.com/watson/services/tone-analyzer/">Watson Tone Analyzer</a> 
+service offered by IBM, <b>dimensionality reduction</b> using the 
+<a href="https://scikit-learn.org/stable/"><code>scikit-learn</code></a> package, and 
+the <b><a href="https://en.wikipedia.org/wiki/K-means_clustering">K-means clustering algorithm</a></b> 
+using the same <code>scikit-learn</code> package (<i>*note: originally, we had written our 
+	own k-means algorithm, however, this was too slow to use, and 
+	<code>scikit-learn</code> was much more optimized</i>).
+</p>
+<h3>Sentiment Analysis</h3>
+<p>
+Sentiment analysis, or having a computer figure out what a sentence "feels like," is a 
+ongoing topic of research in natural language processing. Think about it this way: how do 
+you think we can discern whether a sentence is <font color="red">angry</font> or 
+<font color="blue">sad</font>, or maybe even <font color="purple">tentative</font>? There are 
+numerous algorithms that people much smarter than us thought of, and here we use the one by 
+IBM, called the <a href="https://www.ibm.com/watson/services/tone-analyzer/">Watson Tone Analyzer</a>.
+
+</p>
+
+<h3>Finding Similar People</h3>
+<p>
+
+</p>
+
+<h1>From Here</h1>
+<p>
+
+</p>
 {% endblock %}

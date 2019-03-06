@@ -18,7 +18,16 @@ ui <- fluidPage(
       
       # Show a plot of the generated distribution
       mainPanel(
-         plotOutput("distPlot")
+         plotOutput("distPlot"),
+         
+         sliderInput("obs", "Number of observations:",
+                     min = 0, max = 1000, value = 500
+         ),
+         sliderInput("date_range", 
+                     "Choose Date Range:", 
+                     min = as.Date("2016-02-01"), max = Sys.Date(), 
+                     value = c(as.Date("2016-02-25"), Sys.Date())
+         )
       )
    )
 )
