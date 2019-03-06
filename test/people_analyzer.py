@@ -111,7 +111,7 @@ def pca_visualize_forums(forum_name, people_json):
 
     k = 1
     while True:
-        kmeans = KMeans(n_clusters=k, random_state=0)
+        kmeans = KMeans(n_clusters=k, random_state=0, tol=0.95)
         kmeans.fit(all_sentiments_in_forum)
         error = kmeans.inertia_
         if error / len(all_sentiments_in_forum) < 0.2:

@@ -48,13 +48,13 @@ def testcomplete():
         return jsonify(response_data)
 
 class Explorer():
-    interface = WebsiteInterface('people.json')
+    interface = WebsiteInterface('../preparation/news.json')#'people.json')
 
     def __init__(self):
         pass
 
     def before():
-        return Explorer.interface.get_n_random_forum_posts()
+        return Explorer.interface.get_n_random_forum_posts('health')
 
     def after(groupings):
         return Explorer.interface.get_actual_groupings(groupings)

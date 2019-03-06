@@ -14,10 +14,11 @@ class WebsiteInterface:
             for post in self._all_people[person]['posts']:
                 self._by_forum[post['forum_name']].append(post)
 
-    def get_n_random_forum_posts(self, forum_name="solonely", n=6):
+    def get_n_random_forum_posts(self, forum_name="technology", n=6):
         self._forum_name = forum_name
         forum_posts = self._by_forum[forum_name]
         post_texts = [post['text'] for post in forum_posts]
+        print(len(post_texts))
         random_posts = random.sample(post_texts, n)
         return random_posts
 
@@ -55,7 +56,7 @@ def main(people_file):
         "text (without the quotes) on each new line. separate each group " +\
         "by a blank line")
     for ix, random_post in enumerate(\
-            interface.get_n_random_forum_posts('solonely', 6)):
+            interface.get_n_random_forum_posts('general', 6)):
         print("{} {}".format(ix, random_post))
 
     human_groupings = [[]]
@@ -78,4 +79,4 @@ def main(people_file):
             human_groupings[i].append(input_str)
 
 if __name__ == "__main__":
-    main('../data/processed/people.json')
+    main('news.json')

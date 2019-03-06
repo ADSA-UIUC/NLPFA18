@@ -37,10 +37,10 @@ def to_tone_dict(tone_arr_json):
 #read in data from data folder
 def analyze_posts(input_filepath):
     # analyze data in folder, return analysis into csv
-    sentiments_doclevel = {'post #': [], 'username': [], 'text': [], 'Anger': [], 'Fear': [], 'Joy': [], 'Sadness': [], 'Analytical': [], 'Confident': [], 'Tentative': []}
-    sentiments_sentencelevel = {'post #': [], 'username': [], 'text': [], 'Anger': [], 'Fear': [], 'Joy': [], 'Sadness': [], 'Analytical': [], 'Confident': [], 'Tentative': []}
+    sentiments_doclevel = {'source': [], 'text': [], 'Anger': [], 'Fear': [], 'Joy': [], 'Sadness': [], 'Analytical': [], 'Confident': [], 'Tentative': []}
+    sentiments_sentencelevel = {'source': [], 'text': [], 'Anger': [], 'Fear': [], 'Joy': [], 'Sadness': [], 'Analytical': [], 'Confident': [], 'Tentative': []}
 
-    csv = pd.read_csv(input_filepath, engine='python')
+    csv = pd.read_csv(input_filepath, engine='c')
     total_len = len(csv)
 
     for ind, row in enumerate(csv.iterrows()):
@@ -49,8 +49,7 @@ def analyze_posts(input_filepath):
         result = analyze_tones(row[1]['title'])
 
         # document level tones
-        sentiments_doclevel['post #'].append(row[1][0])
-        sentiments_doclevel['username'].append(row[1]['source'])
+        sentiments_doclevel['source'].append(row[1]['source'])
         sentiments_doclevel['text'].append(row[1]['title'])
         doclevel_tones = to_tone_dict(result['document_tone']['tones'])
         for tone in doclevel_tones.keys():
@@ -60,8 +59,7 @@ def analyze_posts(input_filepath):
         if 'sentences_tone' in result:
             # sentence level tones
             for sentence in result['sentences_tone']:
-                sentiments_sentencelevel['post #'].append(row[1][0])
-                sentiments_sentencelevel['username'].append(row[1]['source'])
+                sentiments_sentencelevel['source'].append(row[1]['source'])
                 sentiments_sentencelevel['text'].append(sentence['text'])
                 sentencelevel_tones = to_tone_dict(sentence['tones'])
                 for tone in sentencelevel_tones.keys():
@@ -80,12 +78,34 @@ def print_progress(current_index, total_len, every_n_percent=5, epsilon=0.1):
 def main():
     # take output and put into raw data output folder
     path = "sentiments/"
-    input_files = os.listdir(path)
+    input_files = os.listdir(path + "_todo/")
     for filename in input_files:
-        print('starting with ' + filename)
-        doclevel, sentencelevel = analyze_posts(path + filename)
-        doclevel.to_csv('sentiments/' + filename + '_doclevelsentiments.csv', index=False)
-        sentencelevel.to_csv("sentiments/" + filename + '_sentencelevelsentiments.csv', index=False)
+        if filename.startswith("."): continue
+
+        doclevel, _ = analyze_posts(path + "_todo/" + filename)
+        if filename[:-4] + '_doclevelsentiments.csv' in os.listdir(path):
+            with open(path + filename[:-4] + '_doclevelsentiments.csv', 'a') as f:
+                # make sure to append newline before adding in dict stuff
+                f.write("\n")
+                writer = csv.writer(f)
+                for row in doclevel.values:
+                    writer.writerow(row[1:])
+            print('appended to {}'.format(path + filename[:-4] + '_doclevelsentiments.csv'))
+        else:
+            doclevel.to_csv(path + filename[:-4] + '_doclevelsentiments.csv', index=False,
+            index_label=False)
+        # os.system("mv {} {}".format(path + "_todo/" + filename, path + "_finished/" + filename[:-4] +
+        #         str(int(len(os.listdir(path + "_finished/")) / 7)) + ".csv"))
+        if filename in os.listdir("sentiments/_finished/"):
+            with open("sentiments/_todo/" + filename, 'r') as f:
+                next(f, None)
+                with open("sentiments/_finished/" + filename, 'a') as f2:
+                    f2.write("\n")
+                    for line in f.readlines():
+                        f2.write(line)
+        else:
+            os.system("mv sentiments/_todo/{0} sentiments/_finished/{0}".format(filename))
+        os.system("rm {}".format(filename))
         print('finished with ' + filename)
 
 if __name__ == "__main__":

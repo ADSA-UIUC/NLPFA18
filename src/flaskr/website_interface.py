@@ -49,13 +49,13 @@ class WebsiteInterface:
 
         return list([value for key, value in computer_groupings.items()])
 
-def main(people_file):
-    interface = WebsiteInterface(people_file)
+def main(people_file, topic):
+    interface = WebsiteInterface(people_file, topic)
     print("group the below posts into groups by copy pasting each exact " +\
         "text (without the quotes) on each new line. separate each group " +\
         "by a blank line")
     for ix, random_post in enumerate(\
-            interface.get_n_random_forum_posts('solonely', 6)):
+            interface.get_n_random_forum_posts(topic, 6)):
         print("{} {}".format(ix, random_post))
 
     human_groupings = [[]]
@@ -78,4 +78,4 @@ def main(people_file):
             human_groupings[i].append(input_str)
 
 if __name__ == "__main__":
-    main('../data/processed/people.json')
+    main('../preparation/news.json')#'../data/processed/people.json')
