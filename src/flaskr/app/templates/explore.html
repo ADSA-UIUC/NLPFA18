@@ -54,13 +54,13 @@
 <script>
     var numTexts;
     var sentiment_colors = {
-        'anger'      : 'red',
-        'fear'       : 'gray',
-        'joy'        : 'yellow',
-        'sadness'    : 'blue',
-        'analytical' : 'green',
-        'confident'  : 'orange',
-        'tentative'  : 'purple'
+        'Anger'      : 'Crimson',
+        'Fear'       : 'Green',
+        'Joy'        : 'Orange',
+        'Sadness'    : 'RoyalBlue',
+        'Analytical' : 'Teal',
+        'Confident'  : 'Purple',
+        'Tentative'  : 'MediumVioletRed'
     }
     var group_colors = {
         '1' : 'info',
@@ -140,7 +140,7 @@
                 var res = data.results;
                 for (var i = 1; i <= res.length; i++) {
                     var group_color = group_colors[i.toString()];
-                    res_node.innerHTML += "<h5 class=\"btn btn-" + group_color + "\">Group " + i.toString() + "</h5>";
+                    res_node.innerHTML += "<h5 class=\"btn btn-" + group_color + "\">Group " + i.toString() + ": </h5>";
                     for (var j = 0; j < res[i-1].length; j++) {
                         var text = (res[i-1][j]).text.toString();
                         var textnum = document.getElementById(labels[text]).innerHTML;
@@ -152,19 +152,14 @@
                             var sentiment = sentiment_order[k];
                             var perc = ((res[i-1][j].sentiments[k]) * 100).toFixed(2).toString();
                             if (res[i-1][j].sentiments[k] && sentiment != primary_sentiment) {
-                                var new_string = "<br />" + sentiment + " with " + perc + "% confidence";
-                                other_sentiments += new_string;
+                                other_sentiments +="<br />- " + sentiment + " with " + perc + "% confidence";
                             }
-                        }
-                        if (other_sentiments != "") {
-                            other_sentiments = "Other sentiments: " + other_sentiments;
                         }
 
                         if (!res_node.innerHTML.includes(textnum)) {
-                            res_node.innerHTML += "<p><b>" + textnum + ": " + text + "<br />" +
-            				    "Primary sentiment: " + primary_sentiment +
-                                " with " + sentiment_percent + "% confidence</b><br />" +
-                                other_sentiments + "</p>";
+                            res_node.innerHTML += "<p><b>" + textnum + ": " + text + "</b><br />"
+                                + "- " + primary_sentiment + " with " + sentiment_percent + "% confidence"
+                                + other_sentiments + "</p>";
                         }
 
                         draggable = document.getElementById("label"+(parseInt(textnum[5])-1).toString());
