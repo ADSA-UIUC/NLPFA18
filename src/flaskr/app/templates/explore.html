@@ -89,7 +89,7 @@
                 numTexts = data.length;
                 for (var i = 0; i < numTexts; i++) {
                     id = "txt" + i.toString();
-                    document.getElementById(id).innerHTML = data[i];
+                    document.getElementById(id).innerHTML = data[i].replace(/[^\x00-\x7F]/g, "");
                 }
             },
             error: () => {

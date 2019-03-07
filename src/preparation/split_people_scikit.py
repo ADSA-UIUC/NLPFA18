@@ -87,7 +87,7 @@ class PeopleStorer:
                 self._people_dict[row['source']]['posts'] = []
             to_add = {
                 'time': orig_file_row['date'],
-                'text': row['text'],
+                'text': row['text'].encode('ascii', 'ignore').decode(),
                 # 'mood': orig_file_row['post mood'],
                 'sentiments': {name: row[name] for name in self._sentiments_list},
                 'forum_name': filename[11:-23] # extract only the subject name from entire filename
@@ -96,7 +96,8 @@ class PeopleStorer:
 
             self._people_df = self._people_df.append(
                 {
-                    "username": row['source'],
+                    "group": to_add['forum_name'],
+                    "source": row['source'],
                     "text": to_add['text'],
                     "time": to_add['time'],
                     'Anger': to_add['sentiments']['Anger'],
