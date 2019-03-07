@@ -45,12 +45,13 @@ class WebsiteInterface:
         computer_groupings = defaultdict(list)
         for ix, post in enumerate(forum_post_texts):
             for user_post in user_posts:
-                if post == user_post and post not in computer_groupings[labels[ix]]:
+                if post == user_post and\
+                        post not in [objs['text'] for objs in computer_groupings[labels[ix]]]:
                     sentiments = forum_post_sentiments[ix]
                     max_sentiment_value = max(sentiments)
                     max_sentiment = sentiment_order[sentiments.index(max_sentiment_value)]
                     to_add = {
-                        'text': post,
+                        'text': user_post,
                         'sentiments': sentiments,
                         'primary_sentiment': max_sentiment,
                         'primary_sentiment_value': max_sentiment_value
