@@ -37,16 +37,18 @@ def test():
 def testcomplete():
     if request.method == 'POST':
         json_groups = request.form['groupings']
+        json_labels = request.form['labeldict']
         groupings = json.loads(json_groups)
+        labeldict = json.loads(json_labels)
         results = Explorer.after(groupings)
         response_data = {
-            'placeholder' : 'group data',
-            'results' : results
+            'labels' : labeldict,
+            'results' : results,
         }
         return jsonify(response_data)
 
 class Explorer():
-    interface = WebsiteInterface('../preparation/news.json')#'people.json')
+    interface = WebsiteInterface('../preparation/filtered_news.json')#'people.json')
 
     def __init__(self):
         pass
