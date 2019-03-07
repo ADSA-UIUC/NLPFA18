@@ -41,16 +41,14 @@ def testcomplete():
         groupings = json.loads(json_groups)
         labeldict = json.loads(json_labels)
         results = Explorer.after(groupings)
-        sentiment = 'anger, 90%'
         response_data = {
             'labels' : labeldict,
             'results' : results,
-            'sentiment' : sentiment
         }
         return jsonify(response_data)
 
 class Explorer():
-    interface = WebsiteInterface('../preparation/news.json')#'people.json')
+    interface = WebsiteInterface('../preparation/filtered_news.json')#'people.json')
 
     def __init__(self):
         pass

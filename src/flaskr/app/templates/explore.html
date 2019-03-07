@@ -23,64 +23,6 @@
   </p>
 </div>
 
-<!DOCTYPE HTML>
-<html>
-<head>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-</head>
-
-
-<body>
-
-<style>
-    .holder {
-        height: 50px;
-        width: 80px;
-        border: 1px solid #aaaaaa;
-        padding-bottom: 5px;
-        padding-top: 5px;
-        justify-content: center;
-        display: inline-block;
-        vertical-align: middle;
-        text-align: center;
-    }
-
-    .drop-zone {
-        border: 1px solid #aaaaaa;
-        height: 50px;
-        padding-top: 5px;
-    }
-
-    .group-title {
-        border: 1px solid #aaaaaa;
-        height: 50px;
-        text-align: center;
-        padding-top: 12px;
-    }
-</style>
-
-<script>
-    var numTexts;
-
-    $( document ).ready(function () {
-        $.ajax({
-            type: 'POST',
-            url: '/test',
-            success: (data) => {
-                numTexts = data.length;
-                for (var i = 0; i < numTexts; i++) {
-                    id = "txt" + i.toString();
-                    document.getElementById(id).innerHTML = data[i];
-                }
-<html>
-<head>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-</head>
-
-
-<body>
 
 <style>
     .holder {
@@ -188,7 +130,7 @@
                             var primary_sentiment = (res[i-1][j].primary_sentiment).toString()
                             res_node.innerHTML += "<p>" + textnum + ": " + text + "<br />" +
             				    "Primary sentiment: " + primary_sentiment +
-                                "with " + sentiment_percent + "% confidence</p>";
+                                " with " + sentiment_percent + "% confidence</p>";
                         }
                     }
                 }
@@ -236,7 +178,7 @@
     }
 </script>
 
-<br>
+
 <br>
 
 <div class="container">
