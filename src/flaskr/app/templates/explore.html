@@ -70,6 +70,16 @@
         '5' : 'success',
         '6' : 'secondary'
     }
+    sentiment_order = ['Anger', 'Fear', 'Joy', 'Sadness', 'Analytical', 'Confident', 'Tentative']
+    var sentiment_order = {
+        0 : 'Anger',
+        1 : 'Fear',
+        2 : 'Joy',
+        3 : 'Sadness',
+        4 : 'Analytical',
+        5 : 'Confident',
+        6 : 'Tentative'
+    }
 
     $( document ).ready(function () {
         $.ajax({
@@ -124,26 +134,41 @@
             },
             success: (data) => {
                 var res_node = document.getElementById("results");
-                if (res_node.innerHTML == "") {
-                    document.getElementById("res-title").innerHTML = "Here's what the computer thought:";
-                    var labels = data.labels;
-                    var res = data.results;
-                    for (var i = 1; i <= res.length; i++) {
-                        var group_color = group_colors[i.toString()];
-                        res_node.innerHTML += "<h5 class=\"btn btn-" + group_color + "\">Group " + i.toString() + "</h5>";
-                        for (var j = 0; j < res[i-1].length; j++) {
-                            var text = (res[i-1][j]).text.toString();
-                            var textnum = document.getElementById(labels[text]).innerHTML;
-                            var sentiment_value = res[i-1][j].primary_sentiment_value;
-                            var sentiment_percent = ((sentiment_value * 100).toFixed(2)).toString();
-                            var primary_sentiment = (res[i-1][j].primary_sentiment).toString()
-                            res_node.innerHTML += "<p>" + textnum + ": " + text + "<br />" +
-            				    "Primary sentiment: " + primary_sentiment +
-                                " with " + sentiment_percent + "% confidence</p>";
-                            alert("label"+(parseInt(textnum[5])-1).toString());
-                            draggable = document.getElementById("label"+(parseInt(textnum[5])-1).toString());
-                            draggable.className = "btn btn-" + group_color;
+                res_node.innerHTML = "";
+                document.getElementById("res-title").innerHTML = "Here's what the computer thought:";
+                var labels = data.labels;
+                var res = data.results;
+                for (var i = 1; i <= res.length; i++) {
+                    var group_color = group_colors[i.toString()];
+                    res_node.innerHTML += "<h5 class=\"btn btn-" + group_color + "\">Group " + i.toString() + "</h5>";
+                    for (var j = 0; j < res[i-1].length; j++) {
+                        var text = (res[i-1][j]).text.toString();
+                        var textnum = document.getElementById(labels[text]).innerHTML;
+                        var sentiment_value = res[i-1][j].primary_sentiment_value;
+                        var sentiment_percent = ((sentiment_value * 100).toFixed(2)).toString();
+                        var primary_sentiment = (res[i-1][j].primary_sentiment).toString();
+                        var other_sentiments = "";
+                        for (var k = 0; k < res[i-1][j].sentiments.length; k++) {
+                            var sentiment = sentiment_order[k];
+                            var perc = ((res[i-1][j].sentiments[k]) * 100).toFixed(2).toString();
+                            if (res[i-1][j].sentiments[k] && sentiment != primary_sentiment) {
+                                var new_string = "<br />" + sentiment + " with " + perc + "% confidence";
+                                other_sentiments += new_string;
+                            }
                         }
+                        if (other_sentiments != "") {
+                            other_sentiments = "Other sentiments: " + other_sentiments;
+                        }
+
+                        if (!res_node.innerHTML.includes(textnum)) {
+                            res_node.innerHTML += "<p><b>" + textnum + ": " + text + "<br />" +
+            				    "Primary sentiment: " + primary_sentiment +
+                                " with " + sentiment_percent + "% confidence</b><br />" +
+                                other_sentiments + "</p>";
+                        }
+
+                        draggable = document.getElementById("label"+(parseInt(textnum[5])-1).toString());
+                        draggable.className = "btn btn-" + group_color;
                     }
                 }
             },
@@ -259,31 +284,44 @@
 <br>    <!-- TODO: GET COLORS STRAIGHTENED OUT -->
 
 <div class="row">
-    <div class="col-2 group-title"> Bucket 1 </div>
-    <div class="drop-zone col-10" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="1"> </div>
-</div>
-<div class="row">
-    <div class="col-2 group-title"> Bucket 2 </div>
-    <div class="drop-zone col-10" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="2"> </div>
-</div>
-<div class="row">
-    <div class="col-2 group-title"> Bucket 3 </div>
-    <div class="drop-zone col-10" id="div3" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="3"> </div>
-</div>
-<div class="row">
-    <div class="col-2 group-title"> Bucket 4 </div>
-    <div class="drop-zone col-10" id="div4" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="4"> </div>
-</div>
-<div class="row">
-    <div class="col-2 group-title"> Bucket 5 </div>
-    <div class="drop-zone col-10" id="div5" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="5"> </div>
-</div>
-<div class="row">
-    <div class="col-2 group-title"> Bucket 6 </div>
-    <div class="drop-zone col-10" id="div6" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="6"> </div>
+    <div class="col-6">
+        <div class="row">
+            <div class="col-2 group-title"> Group 1: </div>
+            <div class="drop-zone col-10" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="1"> </div>
+        </div>
+        <div class="row">
+            <div class="col-2 group-title"> Group 2: </div>
+            <div class="drop-zone col-10" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="2"> </div>
+        </div>
+        <div class="row">
+            <div class="col-2 group-title"> Group 3: </div>
+            <div class="drop-zone col-10" id="div3" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="3"> </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="row">
+            <div class="col-2 group-title"> Group 4: </div>
+            <div class="drop-zone col-10" id="div4" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="4"> </div>
+        </div>
+        <div class="row">
+            <div class="col-2 group-title"> Group 5: </div>
+            <div class="drop-zone col-10" id="div5" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="5"> </div>
+        </div>
+        <div class="row">
+            <div class="col-2 group-title"> Group 6: </div>
+            <div class="drop-zone col-10" id="div6" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="6"> </div>
+        </div>
+    </div>
 </div>
 
 <br>
+
+<h5>
+    <i>Note that the computer's groupings are slightly dependent on yours! It
+    will try to group the texts using the same number of groups that you use
+    (however, this does <b>not</b> mean the computer's results will contain
+    the same number of groups), so keep that in mind when looking at the results.</i>
+</h5>
 
 <br>
 
@@ -298,6 +336,8 @@
 
 </br>
 </br>
+
+<p style="float: right;">Powered by IBM Watson Tone Analyzer</p>
 
 </body>
 </html>
