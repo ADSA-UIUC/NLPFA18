@@ -62,6 +62,14 @@
         'confident'  : 'orange',
         'tentative'  : 'purple'
     }
+    var group_colors = {
+        '1' : 'info',
+        '2' : 'warning',
+        '3' : 'danger',
+        '4' : 'primary',
+        '5' : 'success',
+        '6' : 'secondary'
+    }
 
     $( document ).ready(function () {
         $.ajax({
@@ -121,7 +129,8 @@
                     var labels = data.labels;
                     var res = data.results;
                     for (var i = 1; i <= res.length; i++) {
-                        res_node.innerHTML += "<h5>Group " + i.toString() + ":</h5>";
+                        var group_color = group_colors[i.toString()];
+                        res_node.innerHTML += "<h5 class=\"btn btn-" + group_color + "\">Group " + i.toString() + "</h5>";
                         for (var j = 0; j < res[i-1].length; j++) {
                             var text = (res[i-1][j]).text.toString();
                             var textnum = document.getElementById(labels[text]).innerHTML;
@@ -131,6 +140,9 @@
                             res_node.innerHTML += "<p>" + textnum + ": " + text + "<br />" +
             				    "Primary sentiment: " + primary_sentiment +
                                 " with " + sentiment_percent + "% confidence</p>";
+                            alert("label"+(parseInt(textnum[5])-1).toString());
+                            draggable = document.getElementById("label"+(parseInt(textnum[5])-1).toString());
+                            draggable.className = "btn btn-" + group_color;
                         }
                     }
                 }
@@ -179,25 +191,11 @@
 </script>
 
 
-<br>
-
-<div class="container">
-    <h4>
-        Please categorize these statements by emotion (interpretation is up to you).
-        Similar statements should be in the same “bucket” and some “buckets” can be empty.
-    </h4>
-</div>
-
-<br>
-<br>
-
 <div class="card-group text-selections">
     <div class="card text-center" style="width: 18rem;">
       <div class="card-body">
         <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="0">
-            <p id="label0" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
-                Text 1
-            </p>
+            <p id="label0" class="btn btn-secondary" draggable="true" ondragstart="drag(event)" data-group="0">Text 1</p>
         </div>
         <br>
         <br>
@@ -207,9 +205,7 @@
     <div class="card text-center" style="width: 18rem;">
       <div class="card-body">
         <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="1">
-            <p id="label1" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
-                Text 2
-            </p>
+            <p id="label1" class="btn btn-secondary" draggable="true" ondragstart="drag(event)" data-group="0">Text 2</p>
         </div>
         <br>
         <br>
@@ -219,9 +215,7 @@
     <div class="card text-center" style="width: 18rem;">
       <div class="card-body">
         <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="2">
-            <p id="label2" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
-                Text 3
-            </p>
+            <p id="label2" class="btn btn-secondary" draggable="true" ondragstart="drag(event)" data-group="0">Text 3</p>
         </div>
         <br>
         <br>
@@ -233,9 +227,7 @@
     <div class="card text-center" style="width: 18rem;">
       <div class="card-body">
         <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="3">
-            <p id="label3" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
-                Text 4
-            </p>
+            <p id="label3" class="btn btn-secondary" draggable="true" ondragstart="drag(event)" data-group="0">Text 4</p>
         </div>
         <br>
         <br>
@@ -245,9 +237,7 @@
     <div class="card text-center" style="width: 18rem;">
       <div class="card-body">
         <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="4">
-            <p id="label4" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
-                Text 5
-            </p>
+            <p id="label4" class="btn btn-secondary" draggable="true" ondragstart="drag(event)" data-group="0">Text 5</p>
         </div>
         <br>
         <br>
@@ -257,9 +247,7 @@
     <div class="card text-center" style="width: 18rem;">
       <div class="card-body">
         <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="5">
-            <p id="label5" class="btn btn-primary" draggable="true" ondragstart="drag(event)" data-group="0">
-                Text 6
-            </p>
+            <p id="label5" class="btn btn-secondary" draggable="true" ondragstart="drag(event)" data-group="0">Text 6</p>
         </div>
         <br>
         <br>
@@ -271,27 +259,27 @@
 <br>    <!-- TODO: GET COLORS STRAIGHTENED OUT -->
 
 <div class="row">
-    <div class="col-2 group-title"> Group 1 </div>
+    <div class="col-2 group-title"> Bucket 1 </div>
     <div class="drop-zone col-10" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="1"> </div>
 </div>
 <div class="row">
-    <div class="col-2 group-title"> Group 2 </div>
+    <div class="col-2 group-title"> Bucket 2 </div>
     <div class="drop-zone col-10" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="2"> </div>
 </div>
 <div class="row">
-    <div class="col-2 group-title"> Group 3 </div>
+    <div class="col-2 group-title"> Bucket 3 </div>
     <div class="drop-zone col-10" id="div3" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="3"> </div>
 </div>
 <div class="row">
-    <div class="col-2 group-title"> Group 4 </div>
+    <div class="col-2 group-title"> Bucket 4 </div>
     <div class="drop-zone col-10" id="div4" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="4"> </div>
 </div>
 <div class="row">
-    <div class="col-2 group-title"> Group 5 </div>
+    <div class="col-2 group-title"> Bucket 5 </div>
     <div class="drop-zone col-10" id="div5" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="5"> </div>
 </div>
 <div class="row">
-    <div class="col-2 group-title"> Group 6 </div>
+    <div class="col-2 group-title"> Bucket 6 </div>
     <div class="drop-zone col-10" id="div6" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="6"> </div>
 </div>
 
@@ -307,6 +295,9 @@
     <h4 id="res-title"></h4>
     <div id="results"></div>
 </div>
+
+</br>
+</br>
 
 </body>
 </html>
