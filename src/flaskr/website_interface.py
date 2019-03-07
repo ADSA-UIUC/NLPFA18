@@ -17,9 +17,15 @@ class WebsiteInterface:
     def get_n_random_forum_posts(self, forum_name="technology", n=6):
         self._forum_name = forum_name
         forum_posts = self._by_forum[forum_name]
-        post_texts = [post['text'] for post in forum_posts]
-        print(len(post_texts))
-        random_posts = random.sample(post_texts, n)
+        random_posts = []
+        if len(forum_posts) < n:
+            print("less available than requested")
+        else:
+            while len(random_posts) < n:
+                random_post = random.sample(forum_posts, 1)
+                sum_emotions = sum([value for value in random_post[0]['sentiments'].values()])
+                if sum_emotions > 0:
+                    random_posts.append(random_post[0]['text'])
         return random_posts
 
     def get_actual_groupings(self, groupings):
@@ -80,8 +86,7 @@ def main(people_file, topic):
             print("These are the computer's groupings")
             ix = 0
             for group in computer_groupings:
-                for text in computer_groupings:
-                    print("group: {} {}".format(ix, text))
+                print("group: {} {}".format(ix, group))
                 ix += 1
             break
         else:
