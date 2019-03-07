@@ -14,10 +14,11 @@ class WebsiteInterface:
             for post in self._all_people[person]['posts']:
                 self._by_forum[post['forum_name']].append(post)
 
-    def get_n_random_forum_posts(self, forum_name="solonely", n=6):
+    def get_n_random_forum_posts(self, forum_name="technology", n=6):
         self._forum_name = forum_name
         forum_posts = self._by_forum[forum_name]
         post_texts = [post['text'] for post in forum_posts]
+        print(len(post_texts))
         random_posts = random.sample(post_texts, n)
         return random_posts
 
@@ -27,7 +28,7 @@ class WebsiteInterface:
         forum_post_sentiments = [list(post['sentiments'].values()) for post in
             self._by_forum[self._forum_name]]
 
-        kmeans = KMeans(n_clusters=n_groups, random_state=0)
+        kmeans = KMeans(n_clusters=n_groups, random_state=0, tol=0.95)
         kmeans.fit(forum_post_sentiments)
 
         cluster_centers = kmeans.cluster_centers_.tolist()
@@ -49,13 +50,13 @@ class WebsiteInterface:
 
         return list([value for key, value in computer_groupings.items()])
 
-def main(people_file, topic):
-    interface = WebsiteInterface(people_file, topic)
+def main(people_file):
+    interface = WebsiteInterface(people_file)
     print("group the below posts into groups by copy pasting each exact " +\
         "text (without the quotes) on each new line. separate each group " +\
         "by a blank line")
     for ix, random_post in enumerate(\
-            interface.get_n_random_forum_posts(topic, 6)):
+            interface.get_n_random_forum_posts('general', 6)):
         print("{} {}".format(ix, random_post))
 
     human_groupings = [[]]
@@ -78,4 +79,4 @@ def main(people_file, topic):
             human_groupings[i].append(input_str)
 
 if __name__ == "__main__":
-    main('../preparation/news.json')#'../data/processed/people.json')
+    main('news.json')

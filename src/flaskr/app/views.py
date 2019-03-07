@@ -41,9 +41,11 @@ def testcomplete():
         groupings = json.loads(json_groups)
         labeldict = json.loads(json_labels)
         results = Explorer.after(groupings)
+        sentiment = 'anger, 90%'
         response_data = {
             'labels' : labeldict,
-            'results' : results
+            'results' : results,
+            'sentiment' : sentiment
         }
         return jsonify(response_data)
 
