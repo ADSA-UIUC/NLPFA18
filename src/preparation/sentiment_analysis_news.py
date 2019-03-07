@@ -89,7 +89,7 @@ def main():
                 f.write("\n")
                 writer = csv.writer(f)
                 for row in doclevel.values:
-                    writer.writerow(row[1:])
+                    writer.writerow(row)
             print('appended to {}'.format(path + filename[:-4] + '_doclevelsentiments.csv'))
         else:
             doclevel.to_csv(path + filename[:-4] + '_doclevelsentiments.csv', index=False,
@@ -105,7 +105,7 @@ def main():
                         f2.write(line)
         else:
             os.system("mv sentiments/_todo/{0} sentiments/_finished/{0}".format(filename))
-        os.system("rm {}".format(filename))
+        os.system("rm sentiments/_todo/{}".format(filename))
         print('finished with ' + filename)
 
 if __name__ == "__main__":

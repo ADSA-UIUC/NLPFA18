@@ -181,9 +181,14 @@
                     for (var i = 1; i <= res.length; i++) {
                         res_node.innerHTML += "<h5>Group " + i.toString() + ":</h5>";
                         for (var j = 0; j < res[i-1].length; j++) {
-                            text = (res[i-1][j]).toString();
-                            textnum = document.getElementById(labels[text]).innerHTML;
-                            res_node.innerHTML += "<p>" + textnum + ": " + text + "</p>";
+                            var text = (res[i-1][j]).text.toString();
+                            var textnum = document.getElementById(labels[text]).innerHTML;
+                            var sentiment_value = res[i-1][j].primary_sentiment_value;
+                            var sentiment_percent = ((sentiment_value * 100).toFixed(2)).toString();
+                            var primary_sentiment = (res[i-1][j].primary_sentiment).toString()
+                            res_node.innerHTML += "<p>" + textnum + ": " + text + "<br />" +
+            				    "Primary sentiment: " + primary_sentiment +
+                                "with " + sentiment_percent + "% confidence</p>";
                         }
                     }
                 }

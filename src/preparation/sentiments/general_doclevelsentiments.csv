@@ -1,37 +1,73 @@
 source,text,Anger,Fear,Joy,Sadness,Analytical,Confident,Tentative
-Cnet.com,Captain Marvel review: A soaring tale of self-discovery with a '90s riff - CNET,0,0.0,0.0,0.0,0.0,0.0,0.0
-Npr.org,HIV Eliminated By Bone Marrow Transplant In Cancer Patient : Shots - Health News - NPR,0,0.0,0.0,0.532817,0.0,0.0,0.0
-Yahoo.com,Papa John's founder Schnatter to exit board in settlement - Yahoo Finance,0,0.0,0.0,0.0,0.653099,0.0,0.0
-USA Today,Teen who vaccinated himself says anti-vaxx Mom gets misinformation from Facebook - USA TODAY,0,0.0,0.0,0.61661,0.0,0.0,0.0
-Fox News,Moderate Dems fume over Ocasio-Cortez 'list' threat - Fox News,0,0.606239,0.0,0.0,0.0,0.0,0.0
-Youtube.com,GAME OF THRONES Season 8 Official Trailer #2 (2019) HBO Series HD - JoBlo Movie Trailers,0,0.0,0.0,0.0,0.0,0.0,0.0
-CNN,Corey Feldman defends Michael Jackson - CNN,0,0.0,0.0,0.0,0.0,0.0,0.0
-CNBC,Tesla shares fall 4 percent despite China approval of Model 3 imports - CNBC,0,0.0,0.0,0.628706,0.642915,0.0,0.0
-Vox.com,White House responds to House oversight with statement demonizing Democrats - Vox.com,0,0.0,0.0,0.0,0.672469,0.0,0.0
-USA Today,Storm-battered Alabama could see more severe weather ‚Äì and possible tornadoes ‚Äì this weekend - USA TODAY,0,0.0,0.0,0.0,0.0,0.0,0.91961
-NBC News,Packages with IEDs found near two London airports and rail hub - NBC News,0,0.0,0.0,0.518604,0.589295,0.0,0.0
-Engadget,August's new battery-powered smart doorbell has a 1440p camera - Engadget,0,0.0,0.0,0.0,0.0,0.0,0.0
-Npr.org,Tokyo Court Grants Bail To Former Nissan CEO Carlos Ghosn - NPR,0,0.0,0.0,0.0,0.0,0.0,0.0
-Cheatsheet.com,Is Ariana Grande Debuting Her Own Starbucks Drink? - The Cheat Sheet,0,0.0,0.0,0.0,0.0,0.0,0.0
-Phys.org,"Astronomers detect deep, long asymmetric occultation in a newly found low-mass star - Phys.org",0,0.0,0.0,0.0,0.762356,0.0,0.0
-Bleacher Report,2019 NFL Mock Draft: Matt Miller's Post-Combine Predictions - Bleacher Report,0,0.0,0.0,0.0,0.0,0.618451,0.0
-The Verge,You can now control your Roku with an Amazon Echo - The Verge,0,0.0,0.0,0.0,0.0,0.0,0.0
-Youtube.com,Samsung Galaxy S10 Plus review: Almost apex - Android Authority,0,0.0,0.0,0.0,0.0,0.0,0.856622
-Cbssports.com,"2019 NFL Mock Draft: Cardinals trade Josh Rosen to Redskins and take Kyler Murray, Giants grab falling QB - CBS Sports",0,0.0,0.0,0.0,0.0,0.0,0.0
-Fortune,Understanding the Scandal That's Tarnished Justin Trudeau's Glowing Image - Fortune,0,0.0,0.0,0.0,0.687768,0.0,0.0
-CNN,"A father, a charismatic leader, an entrepreneur. These are the Americans killed in the Kenya helicopter crash - CNN",0,0.0,0.0,0.579243,0.643758,0.0,0.0
-Fudzilla.com,Microsoft is making a Chrome OS-like version of Windows - Fudzilla,0,0.0,0.0,0.0,0.687768,0.0,0.0
-ABC News,UK minister says Brexit talks yield 'positive' signals - ABC News,0,0.0,0.0,0.0,0.687768,0.866996,0.0
-Npr.org,Arizona Considers Expanding Exemptions For School Vaccines : Shots - Health News - NPR,0,0.0,0.0,0.0,0.653099,0.0,0.0
-Fox News,Alabama man charged with capital murder after 11-year-old‚Äôs body discovered - Fox News,0,0.0,0.0,0.0,0.829347,0.0,0.0
-Yahoo.com,Colton Underwood disappears from 'The Bachelor' [Video] - Yahoo Entertainment,0,0.0,0.0,0.0,0.0,0.0,0.0
-The New York Times,"As Tornadoes Roared Across Alabama, ‚ÄòThere Wasn‚Äôt Even Time to Be Afraid‚Äô - The New York Times",0,0.802804,0.0,0.0,0.0,0.0,0.615352
-Thespacereview.com,Commercial crew's time approaches - The Space Review,0,0.0,0.0,0.0,0.0,0.0,0.0
-Awfulannouncing.com,"The idea of making NFL Network a ""33rd team"" for the combine is interesting - Awful Announcing",0,0.0,0.0,0.0,0.762356,0.0,0.0
-NBC News,Tornado victims in Alabama include the 'sweetest little boy' and a 'perfect' daughter - NBC News,0,0.0,0.732328,0.0,0.0,0.727798,0.0
-Cosmosmagazine.com,One more time with feeling: no link found between measles vax - Cosmos,0,0.0,0.0,0.0,0.842108,0.0,0.0
-Washingtonexaminer.com,The professional wrestling Congress - Washington Examiner,0,0.0,0.0,0.0,0.920855,0.0,0.0
-Washingtonexaminer.com,The solution for Trump's impending Senate showdown: End the national emergency - Washington Examiner,0,0.0,0.0,0.0,0.908301,0.0,0.0
-Nbcsports.com,"Raiders make most sense for Antonio Brown, Peter King says - NBCSports.com",0,0.0,0.510515,0.0,0.0,0.0,0.0
-Investors.com,"SpaceX Launch Succesful, Crew Dragon Capsule Docks With Space Station - Investor's Business Daily",0,0.0,0.0,0.0,0.589295,0.0,0.0
-Sputniknews.com,"ISS Astronauts Meet SpaceX Ship Crew After Historic Docking (PHOTO, VIDEO) - Sputnik International",0,0.0,0.590401,0.0,0.0,0.0,0.0
+Cnet.com,Captain Marvel review: A soaring tale of self-discovery with a '90s riff - CNET,0,0,0,0,0,0,0
+Npr.org,HIV Eliminated By Bone Marrow Transplant In Cancer Patient : Shots - Health News - NPR,0,0,0,0.532817,0,0,0
+Yahoo.com,Papa John's founder Schnatter to exit board in settlement - Yahoo Finance,0,0,0,0,0.653099,0,0
+USA Today,Teen who vaccinated himself says anti-vaxx Mom gets misinformation from Facebook - USA TODAY,0,0,0,0.61661,0,0,0
+Fox News,Moderate Dems fume over Ocasio-Cortez 'list' threat - Fox News,0,0.606239,0,0,0,0,0
+Youtube.com,GAME OF THRONES Season 8 Official Trailer #2 (2019) HBO Series HD - JoBlo Movie Trailers,0,0,0,0,0,0,0
+CNN,Corey Feldman defends Michael Jackson - CNN,0,0,0,0,0,0,0
+CNBC,Tesla shares fall 4 percent despite China approval of Model 3 imports - CNBC,0,0,0,0.628706,0.642915,0,0
+Vox.com,White House responds to House oversight with statement demonizing Democrats - Vox.com,0,0,0,0,0.672469,0,0
+USA Today,Storm-battered Alabama could see more severe weather â€“ and possible tornadoes â€“ this weekend - USA TODAY,0,0,0,0,0,0,0.91961
+NBC News,Packages with IEDs found near two London airports and rail hub - NBC News,0,0,0,0.518604,0.589295,0,0
+Engadget,August's new battery-powered smart doorbell has a 1440p camera - Engadget,0,0,0,0,0,0,0
+Npr.org,Tokyo Court Grants Bail To Former Nissan CEO Carlos Ghosn - NPR,0,0,0,0,0,0,0
+Cheatsheet.com,Is Ariana Grande Debuting Her Own Starbucks Drink? - The Cheat Sheet,0,0,0,0,0,0,0
+Phys.org,"Astronomers detect deep, long asymmetric occultation in a newly found low-mass star - Phys.org",0,0,0,0,0.762356,0,0
+Bleacher Report,2019 NFL Mock Draft: Matt Miller's Post-Combine Predictions - Bleacher Report,0,0,0,0,0,0.618451,0
+The Verge,You can now control your Roku with an Amazon Echo - The Verge,0,0,0,0,0,0,0
+Youtube.com,Samsung Galaxy S10 Plus review: Almost apex - Android Authority,0,0,0,0,0,0,0.856622
+Cbssports.com,"2019 NFL Mock Draft: Cardinals trade Josh Rosen to Redskins and take Kyler Murray, Giants grab falling QB - CBS Sports",0,0,0,0,0,0,0
+Fortune,Understanding the Scandal That's Tarnished Justin Trudeau's Glowing Image - Fortune,0,0,0,0,0.687768,0,0
+CNN,"A father, a charismatic leader, an entrepreneur. These are the Americans killed in the Kenya helicopter crash - CNN",0,0,0,0.579243,0.643758,0,0
+Fudzilla.com,Microsoft is making a Chrome OS-like version of Windows - Fudzilla,0,0,0,0,0.687768,0,0
+ABC News,UK minister says Brexit talks yield 'positive' signals - ABC News,0,0,0,0,0.687768,0.866996,0
+Npr.org,Arizona Considers Expanding Exemptions For School Vaccines : Shots - Health News - NPR,0,0,0,0,0.653099,0,0
+Fox News,Alabama man charged with capital murder after 11-year-oldâ€™s body discovered - Fox News,0,0,0,0,0.829347,0,0
+Yahoo.com,Colton Underwood disappears from 'The Bachelor' [Video] - Yahoo Entertainment,0,0,0,0,0,0,0
+The New York Times,"As Tornadoes Roared Across Alabama, â€˜There Wasnâ€™t Even Time to Be Afraidâ€™ - The New York Times",0,0.802804,0,0,0,0,0.615352
+Thespacereview.com,Commercial crew's time approaches - The Space Review,0,0,0,0,0,0,0
+Awfulannouncing.com,"The idea of making NFL Network a ""33rd team"" for the combine is interesting - Awful Announcing",0,0,0,0,0.762356,0,0
+NBC News,Tornado victims in Alabama include the 'sweetest little boy' and a 'perfect' daughter - NBC News,0,0,0.732328,0,0,0.727798,0
+Cosmosmagazine.com,One more time with feeling: no link found between measles vax - Cosmos,0,0,0,0,0.842108,0,0
+Washingtonexaminer.com,The professional wrestling Congress - Washington Examiner,0,0,0,0,0.920855,0,0
+Washingtonexaminer.com,The solution for Trump's impending Senate showdown: End the national emergency - Washington Examiner,0,0,0,0,0.908301,0,0
+Nbcsports.com,"Raiders make most sense for Antonio Brown, Peter King says - NBCSports.com",0,0,0.510515,0,0,0,0
+Investors.com,"SpaceX Launch Succesful, Crew Dragon Capsule Docks With Space Station - Investor's Business Daily",0,0,0,0,0.589295,0,0
+Sputniknews.com,"ISS Astronauts Meet SpaceX Ship Crew After Historic Docking (PHOTO, VIDEO) - Sputnik International",0,0,0.590401,0,0,0,0
+Komonews.com,"Infection while pregnant increases child's risk for autism, depression, UW study says - KOMO News",0,0,0,0.797192,0,0,0
+Tmz.com,Luke Perry's Son Jack Breaks His Silence After Dad's Death - TMZ,0,0,0,0.730818,0,0,0
+Fox News,Arizona GOP Sen. Martha McSally says she was raped in Air Force by a superior officer - Fox News,0,0,0,0,0,0,0
+Washingtonexaminer.com,House Democrats anti-Semitism resolution is a sham - Washington Examiner,0,0,0,0,0.93534,0,0
+Thurrott.com,Google Assistant's Duplex Feature Expands to More States in the US - Thurrott.com,0,0,0,0,0,0,0
+Al Jazeera English,Germany extends Saudi Arabia arms sales ban - Aljazeera.com,0,0,0,0,0.724236,0,0
+Deadline.com,Oprah Winfrey Praises Gayle King For R. Kelly Interview; Twitter Blasts Kelly - Deadline,0,0,0.719774,0,0,0,0
+Cnet.com,Grab a 1st-gen Amazon Echo Show for $100 - CNET,0,0,0,0,0,0,0
+Youtube.com,Samsung is already planning more foldable phones - Engadget,0,0,0,0,0,0,0
+ABC News,"Homeless veteran, woman behind GoFundMe scandal plead guilty in federal court - ABC News",0,0,0,0,0,0,0
+Npr.org,DNC Bars Fox News From Hosting 2020 Primary Debates - NPR,0,0,0,0,0,0,0
+TechCrunch,Zuckerberg wants messages to auto-expire to make Facebook a â€œliving roomâ€ù - TechCrunch,0,0,0,0,0,0,0
+Komonews.com,Clark County health officials investigate three new suspected measles cases - KOMO News,0,0,0,0,0.620279,0,0.75152
+CNBC,Elon Musk on SpaceX: 'I always thought we would fail' - CNBC,0,0,0,0.587087,0.653099,0.579436,0
+Fox News,American journalist based in Caracas detained by government officials amid Venezuela unrest - Fox News,0,0,0,0,0,0,0
+Milehighreport.com,Denver Broncos need to go after Josh Rosen to solve quarterback woes - Mile High Report,0,0,0,0,0.532616,0,0
+Koat.com,"Family Dollar to close nearly 400 stores, rebrand 200 other locations - KOAT Albuquerque",0,0,0,0,0,0,0.716301
+The Verge,"Even in a warmer Europe, wind and solar could still keep the lights on - The Verge",0,0,0,0,0,0,0.88939
+Bleedingcool.com,"'Captain Marvel' is Imperfect, Sardonic, and Every Bit the Success it Needed to Be [Review, Spoiler Free] - Bleeding Cool News",0,0,0.715141,0,0,0,0
+Ars Technica,Democrats' net neutrality bill would fully restore Obama-era FCC rules - Ars Technica,0,0,0,0,0,0,0
+Fool.com,Stock Market News: Fitbit Fights Back; GE Keeps Falling - Motley Fool,0,0,0,0.545571,0,0,0
+Newser.com,Sisters Mary-Beth Tomaselli and Linda Roberts Charged in Murder of Father Anthony Tomaselli in Florida - Newser,0,0,0,0,0,0,0
+Bbc.com,Ex-senior aide Gerald Butts defends Trudeau amid political crisis - BBC News,0,0,0,0,0,0,0
+The Washington Post,"Dog-walking can be hazardous for seniors, study suggests - Washington Post",0,0,0,0,0,0,0
+Reuters,"Venezuela expels German ambassador for 'meddling,' arrests U.S.... - Reuters",0.645669,0,0,0,0,0,0
+Nba.com,Blogtable: How might Bogut help Warriors? - NBA.com,0,0,0,0,0,0,0.987926
+Fox News,NASA has a problem â€“ its Mars InSight lander has stopped digging - Fox News,0,0,0,0,0.90256,0,0
+Noozhawk.com,Evacuations Lifted for Southern Santa Barbara Communities After Overnight Storm - Noozhawk,0,0,0,0,0,0,0
+985thesportshub.com,Mazz: Celtics Performance Should Inspire Hope - and Some Anger - 98.5 The Sports Hub,0,0,0.873248,0,0,0,0.91961
+Aol.com,Meghan Markle makes a surprise appearance during Prince Harry's speech - AOL,0,0,0.626957,0,0,0,0
+Washingtonexaminer.com,Can Democrats love the voters Hillary hated? - Washington Examiner,0.707647,0,0,0,0.901894,0,0
+Benzinga.com,"10 Stocks To Watch For March 6, 2019 - Benzinga",0,0,0,0,0,0,0
+Triblive.com,GM's job cuts in Ohio show hot economy leaves parts of America behind - Tribune-Review,0,0,0,0,0,0,0
+10news.com,Teen who got vaccinated despite parents' wishes speaks before Congress - 10News,0,0,0,0.717451,0,0,0
+Lowyinterpreter.org,Breaking Russia's space stranglehold | The Interpreter - The Interpreter,0,0,0,0.638934,0.920855,0,0
+Abc7.com,LeBron's first season in Los Angeles has become a disaster - KABC-TV,0,0,0,0,0,0,0
