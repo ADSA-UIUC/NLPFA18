@@ -32,6 +32,7 @@ def test():
     if request.method == 'POST':
         posts = Explorer.before()
         return jsonify(posts)
+    return 'NOT A POST REQUEST'
 
 @app.route('/testcomplete', methods=['GET', 'POST'])
 def testcomplete():
@@ -46,6 +47,7 @@ def testcomplete():
             'results' : results,
         }
         return jsonify(response_data)
+    return 'NOT A POST REQUEST'
 
 class Explorer():
     interface = WebsiteInterface('../preparation/filtered_news.json')#'people.json')
@@ -54,7 +56,7 @@ class Explorer():
         pass
 
     def before():
-        return Explorer.interface.get_n_random_forum_posts('health')
+        return Explorer.interface.get_n_random_forum_posts('general')
 
     def after(groupings):
         return Explorer.interface.get_actual_groupings(groupings)
