@@ -1,0 +1,200 @@
+
+<!-- https://scotch.io/tutorials/getting-started-with-flask-a-python-microframework -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>About</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- moved navbar code inside each page to choose active -->
+      
+<div class="header clearfix">
+  <nav>
+    <ul class="nav nav-tabs justify-content-end">
+      <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+      <li class="nav-item"><a class="nav-link active" href="/about">About</a></li>
+      <li class="nav-item"><a class="nav-link" href="/analysis">Analysis</a></li>
+      <li class="nav-item"><a class="nav-link" href="/explore">Explore</a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="jumbotron">
+  <h1>About Our Project</h1>
+</div>
+
+<h1>Overview</h1>
+<p>
+We started off with <a href="https://mentalhealthforum.net">this site</a> to find forum posts 
+to figure out what kind of people exist on this forum and post here. Using Natural Language 
+Processing (or more specifcally just Sentiment Analysis), our pgorject was just to figure out,
+given one person's input text or a given username, to find people who have posted similar 
+things to the target person so that the target person would have someone to talk to.
+</p>
+
+<a title="The home page of mentalhealthforum.net">
+	<img src="/static/mainSiteImage.png" style="width:100%">
+</a>
+<p></p>
+
+<h1>Goal</h1>
+<p>
+To create a piece of code that could:
+<p>
+<code>input:</code> username of someone already on the forum (in which case we find the text 
+that they typed so far) OR some sample text that someone would have typed   
+</p>
+<p>
+<code>output:</code> a person (username) or a group of people that have already contributed on 
+this forum that have typed similar things (sentiment-wise) to the input.
+</p>
+
+<h1>Process</h1>
+<p>
+Our main project was split into two portions: <b>Webscraping</b> and <b>Data Analysis</b>, 
+headed by different people in the project.
+</p>
+<h2>Webscraping</h2>
+<p>
+The main goal of the webscraping group is to simply scrape the forum and retrieve the data in 
+a usable format for the analysis group. This consisted of using <code>Python</code>'s 
+<code>BeautifulSoup</code> package and the <code>Selenium</code> package, as well as 
+<code>pandas</code> to format the data.
+</p>
+
+<h3>Scraping the website</h3>
+<p>
+Each forum has a lot of posts, but each one has a pretty similar format, so scraping it 
+was a matter of figuring out which elements belonged to each piece of data that we wanted, 
+and compiling that into a <code>.csv</code> file that could be read later. The following 
+picture shows how each of the elements were extracted, and using <code>BeautifulSoup</code> 
+made searching for and extracting certain elements easy. Although the analysis group was not 
+able to end up using every piece of data that could be extracted from every post, there were 
+many challenges in the "edge cases" that could mess up our data.
+</p>
+
+<a title="Mapping the website contents to a .csv file">
+	<img src="/static/mapToCsv.png" style="width:100%">
+</a>
+
+<p>
+As shown, we can extract the date and time that the post was made, the user that originally 
+posted, a user that the original user quoted (if there was one), the post text, and which post 
+number it was (in this picture the numbering is 1 off because of 0-indexing (so post #1 would 
+be counted as row 0 in the output file)).
+</p>
+
+<h2>Data Analysis</h2>
+<p>
+The primary goal of the data analysis group was to use the data that was collected and try to 
+make sense of it. Some methods we ended up using include: <b>sentiment analysis</b> using 
+the <a href="https://www.ibm.com/watson/services/tone-analyzer/">Watson Tone Analyzer</a> 
+service offered by IBM, <b>dimensionality reduction</b> using the 
+<a href="https://scikit-learn.org/stable/"><code>scikit-learn</code></a> package, and 
+the <b><a href="https://en.wikipedia.org/wiki/K-means_clustering">K-means clustering algorithm</a></b> 
+using the same <code>scikit-learn</code> package (<i>*note: originally, we had written our 
+	own k-means algorithm, however, this was too slow to use, and 
+	<code>scikit-learn</code> was much more optimized</i>).
+</p>
+<h3>Sentiment Analysis</h3>
+<p>
+Sentiment analysis, or having a computer figure out what a sentence "feels like," is a 
+ongoing topic of research in natural language processing. Think about it this way: how do 
+you think we can discern whether a sentence is <font color="red">angry</font> or 
+<font color="blue">sad</font>, or maybe even <font color="purple">tentative</font>? There are 
+numerous algorithms that people much smarter than us thought of, and here we use the one by 
+IBM, called the 
+<a href="https://www.ibm.com/watson/services/tone-analyzer/">Watson Tone Analyzer</a>. This API 
+(Application Programming Interface) allows us to be able to use someone else's algorithm in our 
+own code. Watson Tone Analyzer, for us, solved the problem of doing sentiment analysis and 
+trying to figure out a way to turn textual data into numerical data, that we could process 
+easier.
+</p>
+<p>
+For example (as taken from the <a href="https://tone-analyzer-demo.ng.bluemix.net/">
+Watson Tone Analyzer Demo</a>), we can give this algorithm a piece of text such as
+</p>
+<p><i>I hate these new features On #ThisPhone after the update.</i></p>
+<p>
+and the Watson Tone Analyzer could give us back a value such as <code>Anger: 0.64</code>, 
+indicating that their algorithm was 64% sure that anger was a sentiment that was present in 
+this piece of text. By feeding it other pieces of text data, we can effectively turn our 
+text data that we had retrieved from the mental health forum and turn it into numbers that we 
+could use.
+</p>
+
+<p><i>
+Note: For <a href="/explore.html">the demo</a>, we did not provide pieces of text from the 
+mental health forum. This is to preserve the privacy of the users on that site, and instead 
+we used the <a href="https://newsapi.org/">NewsAPI</a> site to provide us with news headlines 
+that would be more user friendly to read and probably more polar in terms of emotion, to allow 
+for a better user experience.
+</i></p>
+
+<h3>Finding Similar People</h3>
+<p>
+The original goal of the project was to use sentiment analysis in order to find people who were 
+writing posts of a similar sentiment in order to "match" people to other people that they could 
+talk to. Original ideas included:
+</p>
+	<ul>
+		<li>Using keyword analysis to summarize someone's piece of text</li>
+		<li>Using dates and times of postings to see if a forum's posts changed over 
+			time</li>
+		<li>Using "tagged" individuals to possibly create a graph of how users were 
+			related, and what kinds of people seemed to be helped in each form</li>
+	</ul>
+<p>
+But, as you have probably noticed, we have not reached those goals yet. As for completing this 
+goal of finding similar people, we could only use the limited data we have about the sentiments 
+of each post. This is definitely not enough information, <i><b>nor do we have the domain 
+knowledge to make an executive decision about who could be a good candidate for someone else
+</b></i>. Although we would love to be able to analyze this website further, this is about as 
+far as we got. The demo does not include actually finding similar people, although we could, 
+because of the limitation that these demos should be quick and easy to understand for the user. 
+</p>
+
+<h1>The Demo</h1>
+<p>
+The demo consists of two main portions: 1) using the drag and drop interface in order to group 
+different posts that you think have a similar sentiment, and 2) clicking "Generate Analysis" 
+and seeing how the computer managed to group them.
+</p>
+<h3>Drag and Drop Interface</h3>
+<p>
+This interface is made so that you can group the news headlines that are being presented in a 
+way that you think would be the most similar. In other words, two headlines that you think both 
+express an <font color="red">angry</font> emotion should be placed in the same group. You 
+don't have to think about this like a computer; this demonstration is for us as humans to 
+understand the differences between how computers might imagine emotions versus how us 
+as humans might think about emotions.
+</p>
+<h3>Computer's Groupings</h3>
+<p>
+This section is for understanding how the computer actually grouped them. The computer took 
+the values that the Watson Tone Analyzer from before and tried to group them in a few groups so 
+that similar values would be grouped together. Was your result different? If so, in what way? 
+The goal was simply to make you think about how computers think, so there is no right answer.
+</p>
+
+
+<h1>From Here</h1>
+<p>
+From here, although we're unsure of whether we can continue this project, we would like to see 
+what kinds of patterns show up in text corpuses such as these. Could an analysis like this be 
+used on a larger scale to determine what a group of individuals think? There have been many 
+projects using natural language processing, and we hope that we have inspired a few more to 
+start their own.
+</p>
+
+      <footer class="footer">
+        <p>© 2019 ADSA - NLP Healthcare</p>
+      </footer>
+    </div> <!-- /container -->
+  </body>
+</html>

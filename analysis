@@ -1,0 +1,56 @@
+<!-- https://scotch.io/tutorials/getting-started-with-flask-a-python-microframework -->
+
+<!-- https://scotch.io/tutorials/getting-started-with-flask-a-python-microframework -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Analysis</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- moved navbar code inside each page to choose active -->
+      
+<div class="header clearfix">
+	<nav>
+		<ul class="nav nav-tabs justify-content-end">
+			<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+			<li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+			<li class="nav-item"><a class="nav-link active" href="/analysis">Analysis</a></li>
+			<li class="nav-item"><a class="nav-link" href="/explore">Explore</a></li>
+		</ul>
+	</nav>
+</div>
+
+<div class="jumbotron">
+	<h1>Analysis</h1>
+	<p class="lead">Here are some of the things we found through our data
+	collection and analysis.</p>
+</div>
+
+<!-- original stuff
+	<div class="card">
+	<div class="card-header">
+	[Section of Analysis]
+	</div>
+	<div class="card-body">
+	<blockquote class="blockquote mb-0">
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+	</blockquote>
+	</div>
+	</div>
+-->
+<style>
+iframe {height:100vh;width:100vw;max-width:100%}
+</style>
+<iframe src="http://127.0.0.1:5001" frameborder=0></iframe>
+
+      <footer class="footer">
+        <p>© 2019 ADSA - NLP Healthcare</p>
+      </footer>
+    </div> <!-- /container -->
+  </body>
+</html>

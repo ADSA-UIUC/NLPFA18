@@ -1,0 +1,355 @@
+<!-- https://scotch.io/tutorials/getting-started-with-flask-a-python-microframework -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Explore</title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- moved navbar code inside each page to choose active -->
+      
+<div class="header clearfix">
+  <nav>
+    <ul class="nav nav-tabs justify-content-end">
+      <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+      <li class="nav-item"><a class="nav-link" href="/analysis">Analysis</a></li>
+      <li class="nav-item"><a class="nav-link active" href="/explore">Explore</a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="jumbotron">
+  <h1>Test Our Algorithm</h1>
+  <p class="lead">
+      Please categorize these statements by emotion (interpretation is up to
+      you). Similar statements should be in the same group and some groups
+      can be empty. When you're finished, pressed the green button to compare
+      your results with the computer's!
+  </p>
+</div>
+
+
+<style>
+    .holder {
+        height: 50px;
+        width: 80px;
+        border: 1px solid #aaaaaa;
+        padding-bottom: 5px;
+        padding-top: 5px;
+        justify-content: center;
+        display: inline-block;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    .drop-zone {
+        border: 1px solid #aaaaaa;
+        height: 50px;
+        padding-top: 5px;
+    }
+
+    .group-title {
+        border: 1px solid #aaaaaa;
+        height: 50px;
+        text-align: center;
+        padding-top: 12px;
+    }
+</style>
+
+<script>
+    var numTexts;
+    var sentiment_colors = {
+        'Anger'      : 'Crimson',
+        'Fear'       : 'Green',
+        'Joy'        : 'Orange',
+        'Sadness'    : 'RoyalBlue',
+        'Analytical' : 'Teal',
+        'Confident'  : 'Purple',
+        'Tentative'  : 'MediumVioletRed'
+    }
+    var group_colors = {
+        '1' : 'info',
+        '2' : 'warning',
+        '3' : 'danger',
+        '4' : 'primary',
+        '5' : 'success',
+        '6' : 'secondary'
+    }
+    sentiment_order = ['Anger', 'Fear', 'Joy', 'Sadness', 'Analytical', 'Confident', 'Tentative']
+    var sentiment_order = {
+        0 : 'Anger',
+        1 : 'Fear',
+        2 : 'Joy',
+        3 : 'Sadness',
+        4 : 'Analytical',
+        5 : 'Confident',
+        6 : 'Tentative'
+    }
+
+    $( document ).ready(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/test',
+            success: (data) => {
+                numTexts = data.length;
+                for (var i = 0; i < numTexts; i++) {
+                    id = "txt" + i.toString();
+                    document.getElementById(id).innerHTML = data[i].replace(/[^\x00-\x7F]/g, "");
+                }
+            },
+            error: () => {
+                alert("error");
+            }
+        });
+    });
+
+    function generateCompGroups(ev) {
+        var groupings = {};
+        var labeldict = {};
+        for (var i = 0; i < numTexts; i++) {
+            var labelnode = document.getElementById("label" + i.toString());
+            var textnode = document.getElementById("txt" + i.toString());
+            text = textnode.innerHTML;
+            group = labelnode.getAttribute("data-group");
+            if (group == "0") {
+                alert("Please put all the texts into a group");
+                return;
+            }
+            // update groupings
+            if (group in groupings) {
+                groupings[group].push(text);
+            } else {
+                groupings[group] = [text];
+            }
+            // update labeldict
+            labeldict[text] = 'label' + i.toString();
+        }
+        var groupingsList = [];
+        for (var key in groupings) {
+            groupingsList.push(groupings[key]);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/testcomplete',
+            dataType: 'json',
+            data: {
+                groupings : JSON.stringify(groupingsList),
+                labeldict : JSON.stringify(labeldict)
+            },
+            success: (data) => {
+                var res_node = document.getElementById("results");
+                res_node.innerHTML = "";
+                document.getElementById("res-title").innerHTML = "Here's what the computer thought:";
+                var labels = data.labels;
+                var res = data.results;
+                for (var i = 1; i <= res.length; i++) {
+                    var group_color = group_colors[i.toString()];
+                    res_node.innerHTML += "<h5 class=\"btn btn-" + group_color + "\">Group " + i.toString() + ": </h5>";
+                    for (var j = 0; j < res[i-1].length; j++) {
+                        var text = (res[i-1][j]).text.toString();
+                        var textnum = document.getElementById(labels[text]).innerHTML;
+                        var sentiment_value = res[i-1][j].primary_sentiment_value;
+                        var sentiment_percent = ((sentiment_value * 100).toFixed(2)).toString();
+                        var primary_sentiment = (res[i-1][j].primary_sentiment).toString();
+                        var other_sentiments = "";
+                        for (var k = 0; k < res[i-1][j].sentiments.length; k++) {
+                            var sentiment = sentiment_order[k];
+                            var perc = ((res[i-1][j].sentiments[k]) * 100).toFixed(2).toString();
+                            if (res[i-1][j].sentiments[k] && sentiment != primary_sentiment) {
+                                other_sentiments +="<br />- " + sentiment + " with " + perc + "% confidence";
+                            }
+                        }
+
+                        if (!res_node.innerHTML.includes(textnum)) {
+                            res_node.innerHTML += "<p><b>" + textnum + ": " + text + "</b><br />"
+                                + "- " + primary_sentiment + " with " + sentiment_percent + "% confidence"
+                                + other_sentiments + "</p>";
+                        }
+
+                        draggable = document.getElementById("label"+(parseInt(textnum[5])-1).toString());
+                        draggable.className = "btn btn-" + group_color;
+                    }
+                }
+            },
+            error: () => {
+                alert("error");
+            }
+        });
+    }
+
+    function allowDrop(ev) {
+        ev.preventDefault();
+        if (ev.target.getAttribute("draggable") == "true")
+            ev.dataTransfer.dropEffect = "none"; // dropping is not allowed
+        else
+            ev.dataTransfer.dropEffect = "all";
+    }
+
+    function dragenter(ev) {
+        ev.preventDefault();
+    }
+
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+        console.log(ev.target.id)
+    }
+
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        var node = document.getElementById(data);
+        var srcParent = node.parentNode;
+        node.setAttribute("data-group", ev.target.getAttribute("data-group"));
+        if (ev.target.className == "holder" && "label"+ev.target.getAttribute("data-t") != node.id) {
+            ev.dataTransfer.dropEffect = "none";
+            return;
+        }
+        if (srcParent.classList.contains("holder"))
+            srcParent.innerHTML = node.innerHTML;
+        if (ev.target.classList.contains("holder"))
+            ev.target.innerHTML = "";
+        if (ev.target.classList.contains("holder"))
+            ev.target.innerHTML = "";
+        ev.target.appendChild(node);
+    }
+</script>
+
+
+<div class="card-group text-selections">
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-body">
+        <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="0">
+            <p id="label0" class="btn btn-secondary" draggable="true" ondragstart="drag(event)" data-group="0">Text 1</p>
+        </div>
+        <br>
+        <br>
+        <p id="txt0" class="card-text"></p>
+      </div>
+    </div>
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-body">
+        <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="1">
+            <p id="label1" class="btn btn-secondary" draggable="true" ondragstart="drag(event)" data-group="0">Text 2</p>
+        </div>
+        <br>
+        <br>
+        <p id="txt1" class="card-text"></p>
+      </div>
+    </div>
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-body">
+        <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="2">
+            <p id="label2" class="btn btn-secondary" draggable="true" ondragstart="drag(event)" data-group="0">Text 3</p>
+        </div>
+        <br>
+        <br>
+        <p id="txt2" class="card-text"></p>
+      </div>
+    </div>
+</div>
+<div class="card-group text-selections">
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-body">
+        <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="3">
+            <p id="label3" class="btn btn-secondary" draggable="true" ondragstart="drag(event)" data-group="0">Text 4</p>
+        </div>
+        <br>
+        <br>
+        <p id="txt3" class="card-text"></p>
+      </div>
+    </div>
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-body">
+        <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="4">
+            <p id="label4" class="btn btn-secondary" draggable="true" ondragstart="drag(event)" data-group="0">Text 5</p>
+        </div>
+        <br>
+        <br>
+        <p id="txt4" class="card-text"></p>
+      </div>
+    </div>
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-body">
+        <div class="holder" ondragover="allowDrop(event)" ondrop="drop(event)" data-group="0" data-t="5">
+            <p id="label5" class="btn btn-secondary" draggable="true" ondragstart="drag(event)" data-group="0">Text 6</p>
+        </div>
+        <br>
+        <br>
+        <p id="txt5" class="card-text"></p>
+      </div>
+    </div>
+</div>
+
+<br>    <!-- TODO: GET COLORS STRAIGHTENED OUT -->
+
+<div class="row">
+    <div class="col-6">
+        <div class="row">
+            <div class="col-3 group-title"> Group 1: </div>
+            <div class="drop-zone col-9" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="1"> </div>
+        </div>
+        <div class="row">
+            <div class="col-3 group-title"> Group 2: </div>
+            <div class="drop-zone col-9" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="2"> </div>
+        </div>
+        <div class="row">
+            <div class="col-3 group-title"> Group 3: </div>
+            <div class="drop-zone col-9" id="div3" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="3"> </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="row">
+            <div class="col-3 group-title"> Group 4: </div>
+            <div class="drop-zone col-9" id="div4" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="4"> </div>
+        </div>
+        <div class="row">
+            <div class="col-3 group-title"> Group 5: </div>
+            <div class="drop-zone col-9" id="div5" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="5"> </div>
+        </div>
+        <div class="row">
+            <div class="col-3 group-title"> Group 6: </div>
+            <div class="drop-zone col-9" id="div6" ondrop="drop(event)" ondragover="allowDrop(event)" data-group="6"> </div>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<h5>
+    <i>Note that the computer's groupings are slightly dependent on yours! It
+    will try to group the texts using the same number of groups that you use
+    (however, this does <b>not</b> mean the computer's results will contain
+    the same number of groups), so keep that in mind when looking at the results.</i>
+</h5>
+
+<br>
+
+<button class="btn btn-success btn-lg btn-block" onclick="generateCompGroups(event)">Generate Computer Groupings</button>
+
+<br>
+
+<div class="container">
+    <h4 id="res-title"></h4>
+    <div id="results"></div>
+</div>
+
+</br>
+</br>
+
+<p style="float: right;">Powered by IBM Watson Tone Analyzer</p>
+
+</body>
+</html>
+
+      <footer class="footer">
+        <p>© 2019 ADSA - NLP Healthcare</p>
+      </footer>
+    </div> <!-- /container -->
+  </body>
+</html>
