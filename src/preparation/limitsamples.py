@@ -2,7 +2,7 @@ import json
 import sys
 
 
-def remove_zero_sentiments(data, threshold=0.6):
+def remove_zero_sentiments(data, threshold=0.5):
     filtered = {}
 
     for site,info in data.items():
